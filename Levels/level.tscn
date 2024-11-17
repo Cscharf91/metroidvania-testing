@@ -10,6 +10,66 @@
 [node name="Block" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
 position = Vector2(48, 176)
 
+[node name="Block104" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-144, 16)
+
+[node name="Block105" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-144, 48)
+
+[node name="Block106" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-144, 80)
+
+[node name="Block107" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-144, 112)
+
+[node name="Block108" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-144, 144)
+
+[node name="Block109" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-144, 176)
+
+[node name="Block110" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-144, 208)
+
+[node name="Block111" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-144, 240)
+
+[node name="Block112" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-144, 272)
+
+[node name="Block125" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, 16)
+
+[node name="Block126" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, 48)
+
+[node name="Block134" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, -48)
+
+[node name="Block135" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, -16)
+
+[node name="Block127" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, 80)
+
+[node name="Block128" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, 112)
+
+[node name="Block129" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, 144)
+
+[node name="Block130" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, 176)
+
+[node name="Block131" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, 208)
+
+[node name="Block132" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, 240)
+
+[node name="Block133" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2640, 272)
+
 [node name="Block2" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
 position = Vector2(80, 176)
 
@@ -21,6 +81,114 @@ position = Vector2(144, 176)
 
 [node name="Block5" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
 position = Vector2(176, 176)
+
+[node name="Block113" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-112, 272)
+
+[node name="Block114" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-80, 272)
+
+[node name="Block115" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-48, 272)
+
+[node name="Block116" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(-16, 272)
+
+[node name="Block117" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(16, 272)
+
+[node name="Block118" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(48, 272)
+
+[node name="Block119" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(80, 272)
+
+[node name="Block120" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(112, 272)
+
+[node name="Block121" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(144, 272)
+
+[node name="Block122" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(176, 272)
+
+[node name="Block123" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(208, 272)
+
+[node name="Block124" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(240, 272)
+
+[node name="Block80" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(568, -16)
+
+[node name="Block81" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(664, 48)
+
+[node name="Block82" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(760, -16)
+
+[node name="Block83" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(840, -40)
+
+[node name="Block84" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(904, -8)
+
+[node name="Block85" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(976, 48)
+
+[node name="Block86" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(1032, 8)
+
+[node name="Block87" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(1112, -24)
+
+[node name="Block88" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(1360, -16)
+
+[node name="Block89" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(1456, 48)
+
+[node name="Block90" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(1552, -16)
+
+[node name="Block91" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(1632, -40)
+
+[node name="Block92" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(1696, -8)
+
+[node name="Block93" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(1768, 48)
+
+[node name="Block94" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(1824, 8)
+
+[node name="Block95" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(1904, -24)
+
+[node name="Block96" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2024, -32)
+
+[node name="Block97" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2120, 32)
+
+[node name="Block98" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2216, -32)
+
+[node name="Block99" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2296, -56)
+
+[node name="Block100" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2360, -24)
+
+[node name="Block101" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2432, 32)
+
+[node name="Block102" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2488, -8)
+
+[node name="Block103" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
+position = Vector2(2568, -40)
 
 [node name="Block22" parent="Buncha Blocks" instance=ExtResource("1_uyhnj")]
 position = Vector2(1296, 272)
