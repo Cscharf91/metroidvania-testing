@@ -12,12 +12,17 @@ func _enter() -> void:
 	air_dash(is_boosted_dash)
 
 func _exit() -> void:
-	pass
+	print("exiting air dash state")
+	
 func _update(_delta: float) -> void:
 	player.move_and_slide()
 
 	if player.is_on_floor():
-		dispatch("movement_stopped")
+		PlayerStats.current_air_dashes = PlayerStats.max_air_dashes
+		if player.direction != 0:
+			dispatch("movement_started")
+		else:
+			dispatch("movement_stopped")
 
 func air_dash(is_boosted: bool) -> void:
 	if PlayerStats.current_air_dashes <= 0:

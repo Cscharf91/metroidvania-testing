@@ -3,6 +3,7 @@ class_name AirState extends LimboState
 @onready var player: Player = owner
 
 func _enter() -> void:
+	print("Entering Air State from: ", %LimboHSM.get_previous_active_state().name)
 	player.animation_player.play("jump")
 
 func _exit() -> void:
@@ -14,8 +15,15 @@ func _update(_delta: float) -> void:
 
 	if Input.is_action_just_pressed("air_dash") and PlayerStats.current_air_dashes > 0:
 		dispatch("air_dash", true)
+	
+	if Input.is_action_just_pressed("ground_pound"):
+		print("hit ground pound btn")
+		dispatch("ground_pound")
 
 	player.move_and_slide()
 
 	if player.is_on_floor():
-		dispatch("movement_stopped")
+		if player.direction != 0:
+			dispatch("movement_started")
+		else:
+			dispatch("movement_stopped")

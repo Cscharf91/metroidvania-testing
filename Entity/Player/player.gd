@@ -7,6 +7,7 @@ class_name Player
 @onready var move_state: LimboState = $LimboHSM/MoveState
 @onready var air_state: LimboState = $LimboHSM/AirState
 @onready var air_dash_state: LimboState = $LimboHSM/AirDashState
+@onready var ground_pound_state: LimboState = $LimboHSM/GroundPoundState
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -43,10 +44,24 @@ func _ready():
 	_init_state_machine()
 
 func _init_state_machine():
-	hsm.add_transition(idle_state, move_state, &"movement_started") # Idle -> Move
-	hsm.add_transition(hsm.ANYSTATE, idle_state, &"movement_stopped") # Any -> Idle
-	hsm.add_transition(hsm.ANYSTATE, air_state, &"in_air") # Any -> Air
-	hsm.add_transition(air_state, air_dash_state, &"air_dash") # Air -> Air Dash
+	# Transitions into move_state
+	hsm.add_transition(idle_state, move_state, &"movement_started")
+	hsm.add_transition(air_state, move_state, &"movement_started")
+	hsm.add_transition(air_dash_state, move_state, &"movement_started")
+
+	# Transitions into idle_state
+	hsm.add_transition(move_state, idle_state, &"movement_stopped")
+	hsm.add_transition(air_state, idle_state, &"movement_stopped")
+	hsm.add_transition(air_dash_state, idle_state, &"movement_stopped")
+	hsm.add_transition(ground_pound_state, idle_state, &"movement_stopped")
+
+	# Transitions into air_state
+	hsm.add_transition(idle_state, air_state, &"in_air")
+	hsm.add_transition(move_state, air_state, &"in_air")
+	
+	# One way transitions
+	hsm.add_transition(air_state, air_dash_state, &"air_dash")
+	hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
 
 	hsm.initialize(self)
 	hsm.set_initial_state(idle_state)
@@ -134,20 +149,20 @@ func apply_gravity(delta: float):
 # 			$AnimationPlayer.play("idle")
 # 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 
-func jump():
+func jump(is_boosted := false):
 # 	is_jumping = false
 # 	short_hop = false
 # 	is_jump_buffer = false
 
-# 	if landed_after_dash:
-# 		print("Boost jump")
-# 		var boost_jump_direction = 1 if $Sprite2D.flip_h else -1
-		
-# 		terminal_velocity_x = boost_max_speed
-# 		landed_after_dash = false
-# 		velocity.y = air_dash_landing_jump_velocity
-# 		velocity.x = air_dash_speed * boost_jump_direction
-# 	else:
+	if is_boosted:
+		print("Boost jump")
+		var boost_jump_direction = 1 if %Sprite2D.flip_h else -1
+
+		# terminal_velocity_x = boost_max_speed
+		# landed_after_dash = false
+		velocity.y = PlayerStats.jump_velocity * 1.2
+		velocity.x = air_dash_speed * boost_jump_direction
+	else:
 		velocity.y = PlayerStats.jump_velocity
 		# hsm.dispatch("in_air")
 

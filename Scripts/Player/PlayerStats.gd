@@ -8,6 +8,7 @@ var current_air_dashes := max_air_dashes: set = set_current_air_dashes
 var acceleration := 700
 var friction := 1100
 var jump_velocity := -450
+var ground_pound_speed := 2000
 
 func set_health(new_health: int) -> void:
 	health = clamp(new_health, 0, max_health)

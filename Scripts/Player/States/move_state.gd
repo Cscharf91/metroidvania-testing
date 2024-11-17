@@ -2,11 +2,18 @@ class_name MoveState extends LimboState
 
 @onready var player: Player = owner
 
+var previous_state := ""
+var can_boost_jump := false: set = set_can_boost_jump
+var boost_jump_timer := 0.5
+
 func _setup() -> void:
   add_event_handler("movement_stopped", _on_movement_stopped)
   add_event_handler("in_air", _on_in_air)
 
 func _enter() -> void:
+  previous_state = %LimboHSM.get_previous_active_state().name
+  if previous_state == "AirDashState":
+    can_boost_jump = true
   player.animation_player.play("run")
 
 func _exit() -> void:
@@ -20,7 +27,7 @@ func _update(delta: float) -> void:
   handle_movement(delta)
   
   if Input.is_action_just_pressed("jump"):
-    player.jump()
+    player.jump(can_boost_jump)
     dispatch("in_air")
     
 
@@ -44,3 +51,14 @@ func _on_movement_stopped(_cargo = null) -> bool:
 
 func _on_in_air(_cargo = null):
   return false
+
+func set_can_boost_jump(new_val: bool) -> void:
+  can_boost_jump = new_val
+  
+  if new_val == false:
+    return
+  
+  print("Can boost jump")
+  await get_tree().create_timer(boost_jump_timer).timeout
+  can_boost_jump = false
+  print("No mo' boost jump")
