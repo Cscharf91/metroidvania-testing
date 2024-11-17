@@ -14,10 +14,9 @@ func _update(_delta: float) -> void:
 		%Sprite2D.flip_h = player.direction > 0
 
 	if Input.is_action_just_pressed("air_dash") and PlayerStats.current_air_dashes > 0:
-		dispatch("air_dash", true)
+		dispatch("air_dash")
 	
 	if Input.is_action_just_pressed("ground_pound"):
-		print("hit ground pound btn")
 		dispatch("ground_pound")
 
 	player.move_and_slide()
