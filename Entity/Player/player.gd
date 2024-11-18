@@ -45,8 +45,8 @@ func _init_state_machine():
 	hsm.add_transition(air_state, air_dash_state, &"air_dash")
 	hsm.add_transition(ground_pound_state, air_dash_state, &"boosted_air_dash")
 
+	# Transitions into ground_pound_state (if unlocked)
 	if PlayerStats.unlocks.ground_pound:
-		# Transitions into ground_pound_state
 		hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
 		hsm.add_transition(air_dash_state, ground_pound_state, &"ground_pound")
 
