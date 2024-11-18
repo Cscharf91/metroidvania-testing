@@ -22,8 +22,10 @@ var gravity_multiplier := 1.0
 var direction := 0.0
 var is_coyote_time := false: set = set_is_coyote_time
 var can_boost_jump := false: set = set_can_boost_jump
+var can_boost_jump_forward := false
 var jump_buffered := false: set = set_jump_buffered
 var current_active_state := ""
+var previous_active_state := ""
 
 func _ready():
 	_init_state_machine()
@@ -65,6 +67,7 @@ func _init_state_machine():
 	print("Active state: ", hsm.is_active())
 
 func _physics_process(delta: float) -> void:
+	previous_active_state = current_active_state
 	current_active_state = hsm.get_active_state().name
 	apply_gravity(delta)
 	direction = Input.get_axis("move_left", "move_right")
@@ -72,7 +75,6 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("jump") and PlayerStats.current_jumps == 0 and not is_on_floor():
 			jump_buffered = true
-			# gonna have to add a landed state here
 
 func handle_movement(delta: float) -> void:
 	if direction != 0:
@@ -94,11 +96,11 @@ func apply_gravity(delta: float):
 func jump():
 	PlayerStats.current_jumps -= 1
 	if can_boost_jump:
-		print("Boost jump")
 		var boost_jump_direction = 1 if %Sprite2D.flip_h else -1
 
 		velocity.y = PlayerStats.jump_velocity * 1.2
-		velocity.x = air_dash_speed * boost_jump_direction
+		if can_boost_jump_forward:
+			velocity.x = air_dash_speed * boost_jump_direction
 	else:
 		velocity.y = PlayerStats.jump_velocity
 
@@ -114,10 +116,13 @@ func set_can_boost_jump(new_val: bool) -> void:
 
 	if new_val == false:
 		return
+		
+	if previous_active_state == "AirDashState":
+		can_boost_jump_forward = true
 
 	await get_tree().create_timer(boost_jump_timer).timeout
 	can_boost_jump = false
-	print("Boost jump timer expired")
+	can_boost_jump_forward = false
 
 func set_jump_buffered(new_val: bool) -> void:
 	jump_buffered = new_val
@@ -127,4 +132,3 @@ func set_jump_buffered(new_val: bool) -> void:
 
 	await get_tree().create_timer(jump_buffer_timer).timeout
 	jump_buffered = false
-	print("Jump buffer timer expired")
