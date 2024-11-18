@@ -13,13 +13,14 @@ class_name Player
 
 @export var terminal_velocity_y := 1000
 @export var coyote_timer := 0.15
-@export var air_dash_speed := 1200
+@export var air_dash_speed := 900.0
 
 var gravity_multiplier := 1.0
 var direction := 0.0
 var is_coyote_time := false: set = set_is_coyote_time
 var can_boost_jump := false: set = set_can_boost_jump
 var boost_jump_timer := 0.25
+var current_active_state := ""
 
 func _ready():
 	_init_state_machine()
@@ -44,9 +45,10 @@ func _init_state_machine():
 	hsm.add_transition(air_state, air_dash_state, &"air_dash")
 	hsm.add_transition(ground_pound_state, air_dash_state, &"boosted_air_dash")
 
-	# Transitions into ground_pound_state
-	hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
-	hsm.add_transition(air_dash_state, ground_pound_state, &"ground_pound")
+	if PlayerStats.unlocks.ground_pound:
+		# Transitions into ground_pound_state
+		hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
+		hsm.add_transition(air_dash_state, ground_pound_state, &"ground_pound")
 
 	hsm.initialize(self)
 	hsm.set_initial_state(idle_state)
@@ -76,27 +78,9 @@ func apply_gravity(delta: float):
 	if not is_on_floor() and gravity_multiplier > 0.0:
 		velocity += get_gravity() * gravity_multiplier * delta
 		velocity.y = min(velocity.y, terminal_velocity_y)
-		
-		# Apply short hop if jump was released early and we're still moving upward
-		# if short_hop and velocity.y < 0:
-			# velocity.y *= 0.5 * gravity_multiplier # Reduce upward velocity to create short hop effect
-
-# 		# Check if character is moving in the opposite direction of the input
-# 		if velocity.x != 0 and sign(velocity.x) != sign(direction.x) and current_air_dashes:
-# 			# Start halfway from the current speed, in the opposite direction
-# 			velocity.x = min(direction.x * abs(velocity.x) * 0.5, terminal_velocity_x)
-# 		else:
-# 			# Gradually reach full speed in the current direction
-			# velocity.x = move_toward(velocity.x, direction.x * speed, acceleration * delta)
-# 			if direction.x != 0:
-# 				$Sprite2D.flip_h = direction.x > 0
-# 	else:
-# 		# Apply friction when there's no input
-# 		if not is_currently_air_dashing:
-# 			$AnimationPlayer.play("idle")
-# 		velocity.x = move_toward(velocity.x, 0, friction * delta)
 
 func jump():
+	PlayerStats.current_jumps -= 1
 	if can_boost_jump:
 		print("Boost jump")
 		var boost_jump_direction = 1 if %Sprite2D.flip_h else -1

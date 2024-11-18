@@ -12,11 +12,17 @@ func _enter() -> void:
 	air_dash(is_boosted_dash)
 
 func _exit() -> void:
-	PlayerStats.current_air_dashes = PlayerStats.max_air_dashes
+	player.gravity_multiplier = 1.0
+	if player.is_on_floor():
+		PlayerStats.current_air_dashes = PlayerStats.max_air_dashes
+		PlayerStats.current_jumps = PlayerStats.max_jumps
 	
 func _update(_delta: float) -> void:
 	if Input.is_action_just_pressed("ground_pound"):
 		dispatch("ground_pound")
+
+	if Input.is_action_just_pressed("jump") and PlayerStats.current_jumps > 0:
+		player.jump()
 
 	player.move_and_slide()
 
@@ -36,7 +42,7 @@ func air_dash(is_boosted: bool) -> void:
 
 	# Directly set velocity.x with respect to direction and terminal velocity
 	var dash_tween = create_tween()
-	var total_air_dash_speed = player.air_dash_speed if not is_boosted else player.air_dash_speed * 2
+	var total_air_dash_speed = player.air_dash_speed if not is_boosted else player.air_dash_speed * 1.2
 	dash_tween.tween_property(player, "velocity:x", air_dash_direction * total_air_dash_speed, 0.1)
 	dash_tween.connect("finished", _on_dash_tween_completed)
 
