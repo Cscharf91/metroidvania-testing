@@ -4,6 +4,9 @@ class_name AirDashState extends LimboState
 
 func _enter() -> void:
 	var previous_state = %LimboHSM.get_previous_active_state().name
+
+	# print("Entering Air Dash State from: ", previous_state)
+	
 	var is_boosted_dash = previous_state == "GroundPoundState"
 
 	var direction = "right" if %Sprite2D.flip_h else "left"

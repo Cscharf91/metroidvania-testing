@@ -13,7 +13,7 @@ func _enter() -> void:
 	if previous_state == "AirDashState":
 		player.can_boost_jump = true
 
-	print("Entering Idle State from: ", previous_state)
+	# print("Entering Idle State from: ", previous_state)
 
 	if previous_state == "GroundPoundState":
 		player.gravity_multiplier = 1.0

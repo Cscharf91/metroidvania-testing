@@ -34,4 +34,3 @@ func set_current_air_dashes(new_air_dashes: int) -> void:
 
 func set_current_jumps(new_jumps: int) -> void:
 	current_jumps = clamp(new_jumps, 0, max_jumps)
-	print("Current jumps: ", current_jumps)

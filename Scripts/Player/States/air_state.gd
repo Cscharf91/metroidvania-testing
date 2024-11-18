@@ -3,7 +3,7 @@ class_name AirState extends LimboState
 @onready var player: Player = owner
 
 func _enter() -> void:
-	print("Entering Air State from: ", %LimboHSM.get_previous_active_state().name)
+	# print("Entering Air State from: ", %LimboHSM.get_previous_active_state().name)
 	player.animation_player.play("jump")
 
 func _exit() -> void:

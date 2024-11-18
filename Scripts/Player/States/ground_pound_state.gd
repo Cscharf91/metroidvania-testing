@@ -3,7 +3,7 @@ class_name GroundPoundState extends LimboState
 @onready var player: Player = owner
 
 func _enter() -> void:
-	print("Entering Ground Pound State from: ", %LimboHSM.get_previous_active_state().name)
+	# print("Entering Ground Pound State from: ", %LimboHSM.get_previous_active_state().name)
 	ground_pound()
 
 func _exit() -> void:

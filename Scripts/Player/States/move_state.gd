@@ -10,6 +10,9 @@ func _setup() -> void:
 
 func _enter() -> void:
   previous_state = %LimboHSM.get_previous_active_state().name
+
+  # print("Entering Move State from: ", previous_state)
+  
   if previous_state == "AirDashState":
     player.can_boost_jump = true
   player.animation_player.play("run")
@@ -25,7 +28,6 @@ func _update(delta: float) -> void:
   handle_movement(delta)
   
   if Input.is_action_just_pressed("jump"):
-    print("Can boost jump: ", player.can_boost_jump)
     player.jump()
     dispatch("in_air")
     
