@@ -31,7 +31,6 @@ func _update(delta: float) -> void:
     player.jump()
     dispatch("in_air")
     
-
   var started_on_floor = player.is_on_floor()
   player.move_and_slide()
   var ended_on_floor = player.is_on_floor()

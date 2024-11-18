@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://7pmlpxqxdfqm"]
+[gd_scene load_steps=18 format=3 uid="uid://7pmlpxqxdfqm"]
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
 [ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://Scripts/Player/States/air_state.gd" id="6_jdmad"]
 [ext_resource type="Script" path="res://Scripts/Player/States/air_dash_state.gd" id="7_82mli"]
 [ext_resource type="Script" path="res://Scripts/Player/States/ground_pound_state.gd" id="8_8np8y"]
+[ext_resource type="Script" path="res://Scripts/Player/States/landing_state.gd" id="9_mbwam"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41ra8"]
 size = Vector2(32, 32)
@@ -308,3 +309,6 @@ script = ExtResource("7_82mli")
 
 [node name="GroundPoundState" type="LimboState" parent="LimboHSM" index="4"]
 script = ExtResource("8_8np8y")
+
+[node name="LandingState" type="LimboState" parent="LimboHSM" index="5"]
+script = ExtResource("9_mbwam")

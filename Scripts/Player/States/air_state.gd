@@ -15,7 +15,7 @@ func _update(_delta: float) -> void:
 	if player.direction != 0:
 		%Sprite2D.flip_h = player.direction > 0
 	
-	if Input.is_action_just_released("jump"):
+	if Input.is_action_just_released("jump") and player.velocity.y < 0:
 		player.velocity.y *= 0.5
 	
 	if Input.is_action_just_pressed("jump") and PlayerStats.current_jumps > 0:
@@ -30,7 +30,4 @@ func _update(_delta: float) -> void:
 	player.move_and_slide()
 
 	if player.is_on_floor():
-		if player.direction != 0:
-			dispatch("movement_started")
-		else:
-			dispatch("movement_stopped")
+		dispatch("landed")

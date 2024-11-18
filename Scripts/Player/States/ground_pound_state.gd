@@ -7,9 +7,7 @@ func _enter() -> void:
 	ground_pound()
 
 func _exit() -> void:
-	if player.is_on_floor():
-		PlayerStats.current_air_dashes = PlayerStats.max_air_dashes
-		PlayerStats.current_jumps = PlayerStats.max_jumps
+	pass
 
 func _update(_delta: float) -> void:
 	if Input.is_action_just_pressed("air_dash") and PlayerStats.current_air_dashes > 0:

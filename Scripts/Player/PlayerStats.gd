@@ -3,7 +3,7 @@ extends Node
 var health := 100: set = set_health
 var max_health := 100: set = set_max_health
 var speed := 300
-var max_jumps := 2
+var max_jumps := 1
 var current_jumps := max_jumps: set = set_current_jumps
 var max_air_dashes := 1
 var current_air_dashes := max_air_dashes: set = set_current_air_dashes

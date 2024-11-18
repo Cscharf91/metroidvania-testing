@@ -8,38 +8,41 @@ class_name Player
 @onready var air_state: LimboState = $LimboHSM/AirState
 @onready var air_dash_state: LimboState = $LimboHSM/AirDashState
 @onready var ground_pound_state: LimboState = $LimboHSM/GroundPoundState
+@onready var landing_state: LimboState = $LimboHSM/LandingState
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
 @export var terminal_velocity_y := 1000
 @export var coyote_timer := 0.15
+@export var boost_jump_timer := 0.25
+@export var jump_buffer_timer := 0.25
 @export var air_dash_speed := 900.0
 
 var gravity_multiplier := 1.0
 var direction := 0.0
 var is_coyote_time := false: set = set_is_coyote_time
 var can_boost_jump := false: set = set_can_boost_jump
-var boost_jump_timer := 0.25
+var jump_buffered := false: set = set_jump_buffered
 var current_active_state := ""
 
 func _ready():
 	_init_state_machine()
 
 func _init_state_machine():
-	# Transitions into move_state
-	hsm.add_transition(idle_state, move_state, &"movement_started")
-	hsm.add_transition(air_state, move_state, &"movement_started")
-	hsm.add_transition(air_dash_state, move_state, &"movement_started")
+	# Transitions into landed_state
+	hsm.add_transition(air_state, landing_state, &"landed")
+	hsm.add_transition(air_dash_state, landing_state, &"landed")
+	hsm.add_transition(ground_pound_state, landing_state, &"ground_pound_landed")
 
-	# Transitions into idle_state
-	hsm.add_transition(move_state, idle_state, &"movement_stopped")
-	hsm.add_transition(air_state, idle_state, &"movement_stopped")
-	hsm.add_transition(air_dash_state, idle_state, &"movement_stopped")
-	hsm.add_transition(ground_pound_state, idle_state, &"ground_pound_landed")
+	# Transitions out of landed_state
+	hsm.add_transition(landing_state, idle_state, &"movement_stopped")
+	hsm.add_transition(landing_state, move_state, &"movement_started")
+	hsm.add_transition(landing_state, air_state, &"in_air")
 
 	# Transitions into air_state
 	hsm.add_transition(idle_state, air_state, &"in_air")
 	hsm.add_transition(move_state, air_state, &"in_air")
+	hsm.add_transition(air_dash_state, air_state, &"in_air")
 	
 	# Transitions into air_dash_state
 	hsm.add_transition(air_state, air_dash_state, &"air_dash")
@@ -49,6 +52,10 @@ func _init_state_machine():
 	if PlayerStats.unlocks.ground_pound:
 		hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
 		hsm.add_transition(air_dash_state, ground_pound_state, &"ground_pound")
+	
+	# One-off transitions
+	hsm.add_transition(move_state, idle_state, &"movement_stopped")
+	hsm.add_transition(idle_state, move_state, &"movement_started")
 
 	hsm.initialize(self)
 	hsm.set_initial_state(idle_state)
@@ -58,9 +65,14 @@ func _init_state_machine():
 	print("Active state: ", hsm.is_active())
 
 func _physics_process(delta: float) -> void:
+	current_active_state = hsm.get_active_state().name
 	apply_gravity(delta)
 	direction = Input.get_axis("move_left", "move_right")
 	handle_movement(delta)
+
+	if Input.is_action_just_pressed("jump") and PlayerStats.current_jumps == 0 and not is_on_floor():
+			jump_buffered = true
+			# gonna have to add a landed state here
 
 func handle_movement(delta: float) -> void:
 	if direction != 0:
@@ -106,3 +118,13 @@ func set_can_boost_jump(new_val: bool) -> void:
 	await get_tree().create_timer(boost_jump_timer).timeout
 	can_boost_jump = false
 	print("Boost jump timer expired")
+
+func set_jump_buffered(new_val: bool) -> void:
+	jump_buffered = new_val
+
+	if new_val == false:
+		return
+
+	await get_tree().create_timer(jump_buffer_timer).timeout
+	jump_buffered = false
+	print("Jump buffer timer expired")
