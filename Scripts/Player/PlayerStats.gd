@@ -9,7 +9,7 @@ var max_air_dashes := 1
 var current_air_dashes := max_air_dashes: set = set_current_air_dashes
 var acceleration := 700
 var friction := 1100
-var jump_velocity := -450
+var jump_velocity := -400
 var ground_pound_speed := 2000
 
 var unlocks := {
