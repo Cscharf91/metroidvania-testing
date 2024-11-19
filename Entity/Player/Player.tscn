@@ -1,8 +1,14 @@
-[gd_scene load_steps=12 format=3 uid="uid://7pmlpxqxdfqm"]
+[gd_scene load_steps=18 format=3 uid="uid://7pmlpxqxdfqm"]
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
 [ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
 [ext_resource type="Texture2D" uid="uid://bpynqmdsw0vvt" path="res://Assets/tilemap-characters.png" id="3_518t5"]
+[ext_resource type="Script" path="res://Scripts/Player/States/idle_state.gd" id="4_k3wbj"]
+[ext_resource type="Script" path="res://Scripts/Player/States/move_state.gd" id="5_blfqf"]
+[ext_resource type="Script" path="res://Scripts/Player/States/air_state.gd" id="6_jdmad"]
+[ext_resource type="Script" path="res://Scripts/Player/States/air_dash_state.gd" id="7_82mli"]
+[ext_resource type="Script" path="res://Scripts/Player/States/ground_pound_state.gd" id="8_8np8y"]
+[ext_resource type="Script" path="res://Scripts/Player/States/landing_state.gd" id="9_mbwam"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41ra8"]
 size = Vector2(32, 32)
@@ -44,6 +50,88 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_eib75"]
+resource_name = "air_dash_left"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [-0.0872665, -0.436332]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.8, 1), Vector2(1, 1), Vector2(0.9, 1), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_syhy0"]
+resource_name = "air_dash_right"
+length = 0.5
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0872665, 0.436332]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(0.9, 1.1)]
 }
 
 [sub_resource type="Animation" id="Animation_lb5y0"]
@@ -171,88 +259,6 @@ tracks/2/keys = {
 "values": [Vector2(1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_eib75"]
-resource_name = "air_dash_left"
-length = 0.5
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [-0.0872665, -0.436332]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.8, 1), Vector2(1, 1), Vector2(0.9, 1), Vector2(1, 1)]
-}
-
-[sub_resource type="Animation" id="Animation_syhy0"]
-resource_name = "air_dash_right"
-length = 0.5
-step = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Sprite2D:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [0.0872665, 0.436332]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Sprite2D:scale")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(1, 1), Vector2(0.9, 1.1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ufq85"]
 _data = {
 "RESET": SubResource("Animation_4r26t"),
@@ -264,9 +270,11 @@ _data = {
 }
 
 [node name="Player" instance=ExtResource("1_l5me4")]
+collision_mask = 4
 script = ExtResource("2_wcreg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+unique_name_in_owner = true
 position = Vector2(0, 4)
 texture = ExtResource("3_518t5")
 hframes = 9
@@ -284,3 +292,24 @@ libraries = {
 "": SubResource("AnimationLibrary_ufq85")
 }
 autoplay = "idle"
+
+[node name="LimboHSM" type="LimboHSM" parent="." index="5"]
+unique_name_in_owner = true
+
+[node name="IdleState" type="LimboState" parent="LimboHSM" index="0"]
+script = ExtResource("4_k3wbj")
+
+[node name="MoveState" type="LimboState" parent="LimboHSM" index="1"]
+script = ExtResource("5_blfqf")
+
+[node name="AirState" type="LimboState" parent="LimboHSM" index="2"]
+script = ExtResource("6_jdmad")
+
+[node name="AirDashState" type="LimboState" parent="LimboHSM" index="3"]
+script = ExtResource("7_82mli")
+
+[node name="GroundPoundState" type="LimboState" parent="LimboHSM" index="4"]
+script = ExtResource("8_8np8y")
+
+[node name="LandingState" type="LimboState" parent="LimboHSM" index="5"]
+script = ExtResource("9_mbwam")

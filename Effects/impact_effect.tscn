@@ -7,7 +7,7 @@ colors = PackedColorArray(0, 0, 0, 1, 0.283018, 0.283018, 0.283018, 1, 1, 1, 1, 
 [node name="ImpactEffect" type="CPUParticles2D"]
 emitting = false
 amount = 30
-lifetime = 0.15
+lifetime = 0.18
 one_shot = true
 speed_scale = 1.5
 emission_shape = 1
