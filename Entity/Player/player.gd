@@ -26,6 +26,7 @@ var can_boost_jump_forward := false
 var jump_buffered := false: set = set_jump_buffered
 var current_active_state := ""
 var previous_active_state := ""
+var can_move := true
 
 func _ready():
 	_init_state_machine()
@@ -70,8 +71,11 @@ func _physics_process(delta: float) -> void:
 	previous_active_state = current_active_state
 	current_active_state = hsm.get_active_state().name
 	apply_gravity(delta)
+
 	direction = Input.get_axis("move_left", "move_right")
-	handle_movement(delta)
+
+	if can_move:
+		handle_movement(delta)
 
 	if Input.is_action_just_pressed("jump") and PlayerStats.current_jumps == 0 and not is_on_floor():
 			jump_buffered = true
@@ -98,7 +102,7 @@ func jump():
 	if can_boost_jump:
 		var boost_jump_direction = 1 if %Sprite2D.flip_h else -1
 
-		velocity.y = PlayerStats.jump_velocity * 1.2
+		velocity.y = PlayerStats.jump_velocity * 1.3
 		if can_boost_jump_forward:
 			velocity.x = air_dash_speed * boost_jump_direction
 	else:

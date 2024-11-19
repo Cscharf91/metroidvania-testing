@@ -5,9 +5,10 @@ class_name GroundPoundState extends LimboState
 func _enter() -> void:
 	# print("Entering Ground Pound State from: ", %LimboHSM.get_previous_active_state().name)
 	ground_pound()
+	player.can_move = false
 
 func _exit() -> void:
-	pass
+	player.can_move = true
 
 func _update(_delta: float) -> void:
 	if Input.is_action_just_pressed("air_dash") and PlayerStats.current_air_dashes > 0:
