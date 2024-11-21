@@ -23,6 +23,10 @@ func _exit() -> void:
 	pass
 
 func _update(_delta: float) -> void:
+	if !player.can_move:
+		dispatch("movement_stopped")
+		return
+	
 	if Input.is_action_just_pressed("jump"):
 		player.jump()
 		dispatch("in_air")

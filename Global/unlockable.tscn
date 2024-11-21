@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://byxkx6wj2ii3i"]
+
+[ext_resource type="Script" path="res://Global/unlockable.gd" id="1_vnc0w"]
+
+[node name="Unlockable" type="Area2D"]
+collision_layer = 128
+collision_mask = 0
+script = ExtResource("1_vnc0w")

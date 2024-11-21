@@ -1,0 +1,9 @@
+~ start
+TestBetch: Hey sexy
+TestBetch: u wanna fuck?
+- Fuck yeah, yous a sexy bitch
+	TestBetch: fuck ya lets do it
+	=> END
+- nah u a crusty ass hoe
+	TestBetch: then prepare to die
+=> END

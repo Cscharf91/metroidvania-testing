@@ -3,22 +3,32 @@ extends Node
 var health := 100: set = set_health
 var max_health := 100: set = set_max_health
 var speed := 300
-var max_jumps := 1
+var max_jumps := 1: set = set_max_jumps
 var current_jumps := max_jumps: set = set_current_jumps
-var max_air_dashes := 1
+var max_air_dashes := 0: set = set_max_air_dashes
 var current_air_dashes := max_air_dashes: set = set_current_air_dashes
 var acceleration := 700
 var friction := 1100
 var jump_velocity := -400
 var ground_pound_speed := 2000
+var facing_direction := 1
+
+const NON_FLIP_SPRITE_STATES = ["GroundPoundState", "AirDashState"]
 
 var unlocks := {
-	"ground_pound": true
+	"ground_pound": false,
+	"air_dash_1": false,
+	"air_dash_2": false,
+	"mid_air_jump_1": false,
 }
 
 func unlock_ability(ability: String) -> void:
 	if ability in unlocks:
 		unlocks[ability] = true
+		if ability.begins_with("air_dash"):
+			max_air_dashes += 1
+		elif ability.begins_with("mid_air_jump"):
+			max_jumps += 1
 
 func set_health(new_health: int) -> void:
 	health = clamp(new_health, 0, max_health)
@@ -34,3 +44,11 @@ func set_current_air_dashes(new_air_dashes: int) -> void:
 
 func set_current_jumps(new_jumps: int) -> void:
 	current_jumps = clamp(new_jumps, 0, max_jumps)
+
+func set_max_jumps(new_jumps: int) -> void:
+	max_jumps = new_jumps
+	current_jumps = max_jumps
+
+func set_max_air_dashes(new_air_dashes: int) -> void:
+	max_air_dashes = new_air_dashes
+	current_air_dashes = max_air_dashes

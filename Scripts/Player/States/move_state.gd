@@ -21,6 +21,10 @@ func _exit() -> void:
   pass
 
 func _update(delta: float) -> void:
+  if !player.can_move:
+    dispatch("movement_stopped")
+
+  
   if not player.is_on_floor() and not player.is_coyote_time:
     dispatch("in_air")
     return
@@ -39,11 +43,8 @@ func _update(delta: float) -> void:
     player.is_coyote_time = true
 
 func handle_movement(_delta: float) -> void:
-  if player.direction != 0:
-    %Sprite2D.flip_h = player.direction > 0
-  else:
-    if player.velocity.x == 0:
-      dispatch("movement_stopped") # Return to idle if fully stopped
+  if player.velocity.x == 0:
+    dispatch("movement_stopped") # Return to idle if fully stopped
 
 
 func _on_movement_stopped(_cargo = null) -> bool:

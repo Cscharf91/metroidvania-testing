@@ -8,15 +8,15 @@ const BOOST_JUMP_STATES = ["AirDashState", "GroundPoundState"]
 
 func _enter() -> void:
 	previous_state = %LimboHSM.get_previous_active_state().name
-	# print("Entering Landing State from: ", previous_state)
+	print("Entering Landing State from: ", previous_state)
 
 	var impact_effect = ImpactEffect.instantiate()
 	impact_effect.global_position = player.global_position
 	get_parent().add_child(impact_effect)
 	impact_effect.emitting = true
 	
-	PlayerStats.current_air_dashes = PlayerStats.max_air_dashes
-	PlayerStats.current_jumps = PlayerStats.max_jumps
+	PlayerConfig.current_air_dashes = PlayerConfig.max_air_dashes
+	PlayerConfig.current_jumps = PlayerConfig.max_jumps
 	player.gravity_multiplier = 1.0
 
 	player.can_boost_jump = previous_state in BOOST_JUMP_STATES

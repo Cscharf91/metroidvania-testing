@@ -11,6 +11,7 @@ class_name Player
 @onready var landing_state: LimboState = $LimboHSM/LandingState
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var direction_pointer: Marker2D = $DirectionPointer
 
 @export var terminal_velocity_y := 1000
 @export var coyote_timer := 0.15
@@ -30,6 +31,7 @@ var can_move := true
 
 func _ready():
 	_init_state_machine()
+	%Sprite2D.flip_h = PlayerConfig.facing_direction > 0
 
 func _init_state_machine():
 	# Transitions into landed_state
@@ -52,9 +54,8 @@ func _init_state_machine():
 	hsm.add_transition(ground_pound_state, air_dash_state, &"boosted_air_dash")
 
 	# Transitions into ground_pound_state (if unlocked)
-	if PlayerStats.unlocks.ground_pound:
-		hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
-		hsm.add_transition(air_dash_state, ground_pound_state, &"ground_pound")
+	hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
+	hsm.add_transition(air_dash_state, ground_pound_state, &"ground_pound")
 	
 	# One-off transitions
 	hsm.add_transition(move_state, idle_state, &"movement_stopped")
@@ -62,10 +63,17 @@ func _init_state_machine():
 
 	hsm.initialize(self)
 	hsm.set_initial_state(idle_state)
-	var initial_state = hsm.get_initial_state()
-	print("Initial state: ", initial_state)
 	hsm.set_active(true)
-	print("Active state: ", hsm.is_active())
+
+func _unhandled_input(_event: InputEvent) -> void:
+	if Input.is_action_just_pressed("ui_accept"):
+		var actionables = %ActionDetectionArea.get_overlapping_areas().filter(
+			func(area): return area is Actionable
+		)
+		if actionables.size() > 0:
+			var actionable: Actionable = actionables[0]
+			actionable.action()
+
 
 func _physics_process(delta: float) -> void:
 	previous_active_state = current_active_state
@@ -74,22 +82,31 @@ func _physics_process(delta: float) -> void:
 
 	direction = Input.get_axis("move_left", "move_right")
 
-	if can_move:
-		handle_movement(delta)
+	var facing_direction = 1 if direction > 0 else -1
+	if PlayerConfig.facing_direction != facing_direction and direction != 0 and current_active_state not in PlayerConfig.NON_FLIP_SPRITE_STATES:
+		PlayerConfig.facing_direction = facing_direction
+		direction_pointer.position.x = facing_direction * 16
+		%Sprite2D.flip_h = facing_direction > 0
 
-	if Input.is_action_just_pressed("jump") and PlayerStats.current_jumps == 0 and not is_on_floor():
+	handle_movement(delta)
+
+	if Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps == 0 and can_move and not is_on_floor():
 			jump_buffered = true
 
 func handle_movement(delta: float) -> void:
-	if direction != 0:
+	if direction != 0 and can_move:
 		velocity.x = move_toward(
 		velocity.x,
-		direction * PlayerStats.speed,
-		PlayerStats.acceleration * delta
+		direction * PlayerConfig.speed,
+		PlayerConfig.acceleration * delta
 		)
-	else:
+	elif direction == 0 and can_move:
 		# Apply friction when no input
-		velocity.x = move_toward(velocity.x, 0, PlayerStats.friction * delta)
+		velocity.x = move_toward(velocity.x, 0, PlayerConfig.friction * delta)
+	else:
+			velocity.x = 0
+			if current_active_state != "GroundPoundState":
+				$AnimationPlayer.play("idle")
 
 
 func apply_gravity(delta: float):
@@ -98,15 +115,15 @@ func apply_gravity(delta: float):
 		velocity.y = min(velocity.y, terminal_velocity_y)
 
 func jump():
-	PlayerStats.current_jumps -= 1
+	PlayerConfig.current_jumps -= 1
 	if can_boost_jump:
 		var boost_jump_direction = 1 if %Sprite2D.flip_h else -1
 
-		velocity.y = PlayerStats.jump_velocity * 1.3
+		velocity.y = PlayerConfig.jump_velocity * 1.3
 		if can_boost_jump_forward:
 			velocity.x = air_dash_speed * boost_jump_direction
 	else:
-		velocity.y = PlayerStats.jump_velocity
+		velocity.y = PlayerConfig.jump_velocity
 
 func set_is_coyote_time(new_value: bool):
 	if new_value != true:
@@ -120,7 +137,7 @@ func set_can_boost_jump(new_val: bool) -> void:
 
 	if new_val == false:
 		return
-		
+	
 	if previous_active_state == "AirDashState":
 		can_boost_jump_forward = true
 
@@ -136,3 +153,10 @@ func set_jump_buffered(new_val: bool) -> void:
 
 	await get_tree().create_timer(jump_buffer_timer).timeout
 	jump_buffered = false
+
+
+func _on_action_detection_area_area_entered(area: Area2D) -> void:
+	if area is Unlockable:
+		var unlockable: Unlockable = area
+		PlayerConfig.unlock_ability(unlockable.unlock_key)
+		area.queue_free()
