@@ -6,19 +6,21 @@ func _enter() -> void:
 	var previous_state = %LimboHSM.get_previous_active_state().name
 
 	# print("Entering Air Dash State from: ", previous_state)
-	
+	 
 	var is_boosted_dash = previous_state == "GroundPoundState"
 
 	var direction = "right" if %Sprite2D.flip_h else "left"
 	player.animation_player.play("air_dash_" + str(direction))
 	
 	air_dash(is_boosted_dash)
+	%FastMovementEffectTimer.start()
 
 func _exit() -> void:
 	player.gravity_multiplier = 1.0
 	if player.is_on_floor():
 		PlayerConfig.current_air_dashes = PlayerConfig.max_air_dashes
 		PlayerConfig.current_jumps = PlayerConfig.max_jumps
+	%FastMovementEffectTimer.stop()
 	
 func _update(_delta: float) -> void:
 	player.move_and_slide()
@@ -32,7 +34,7 @@ func _update(_delta: float) -> void:
 		dispatch("ground_pound")
 
 	if Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps > 0:
-		player.can_boost_jump = true
+		player.can_boost_jump_forward = true
 		player.jump()
 		dispatch("in_air")
 

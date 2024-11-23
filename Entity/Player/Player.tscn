@@ -272,7 +272,7 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_kqtiw"]
 radius = 16.0
 
-[node name="Player" groups=["player"] instance=ExtResource("1_l5me4")]
+[node name="Player" groups=["Persist", "player"] instance=ExtResource("1_l5me4")]
 collision_mask = 38
 script = ExtResource("2_wcreg")
 
@@ -289,6 +289,10 @@ shape = SubResource("RectangleShape2D_41ra8")
 
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
 zoom = Vector2(3, 3)
+
+[node name="FastMovementEffectTimer" type="Timer" parent="Timers" index="0"]
+unique_name_in_owner = true
+wait_time = 0.15
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 libraries = {
@@ -326,6 +330,8 @@ collision_layer = 0
 collision_mask = 192
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DirectionPointer/ActionDetectionArea" index="0"]
+visible = false
 shape = SubResource("CircleShape2D_kqtiw")
 
+[connection signal="timeout" from="Timers/FastMovementEffectTimer" to="." method="_on_fast_movement_effect_timer_timeout"]
 [connection signal="area_entered" from="DirectionPointer/ActionDetectionArea" to="." method="_on_action_detection_area_area_entered"]

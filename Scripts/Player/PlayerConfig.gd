@@ -52,3 +52,13 @@ func set_max_jumps(new_jumps: int) -> void:
 func set_max_air_dashes(new_air_dashes: int) -> void:
 	max_air_dashes = new_air_dashes
 	current_air_dashes = max_air_dashes
+
+func get_player_config_save_data():
+	return {
+		"max_health": max_health,
+		"max_jumps": max_jumps,
+		"max_air_dashes": max_air_dashes,
+		"jump_velocity": jump_velocity,
+		"speed": speed,
+		"unlocks": unlocks,
+	}

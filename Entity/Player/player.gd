@@ -23,7 +23,7 @@ var gravity_multiplier := 1.0
 var direction := 0.0
 var is_coyote_time := false: set = set_is_coyote_time
 var can_boost_jump := false: set = set_can_boost_jump
-var can_boost_jump_forward := false
+var can_boost_jump_forward := false: set = set_can_boost_jump_forward
 var jump_buffered := false: set = set_jump_buffered
 var current_active_state := ""
 var previous_active_state := ""
@@ -115,15 +115,36 @@ func apply_gravity(delta: float):
 		velocity.y = min(velocity.y, terminal_velocity_y)
 
 func jump():
+	if is_on_floor():
+		# one in 10 jumps will be a sick spin or a flipperoo
+		var random_number = randi() % 10
+		if random_number == 0:
+			if randi() % 2:
+				do_sick_spin()
+			else:
+				do_flipperoo()
 	PlayerConfig.current_jumps -= 1
 	if can_boost_jump:
-		var boost_jump_direction = 1 if %Sprite2D.flip_h else -1
 
 		velocity.y = PlayerConfig.jump_velocity * 1.3
-		if can_boost_jump_forward:
-			velocity.x = air_dash_speed * boost_jump_direction
 	else:
+		if can_boost_jump_forward:
+			velocity.x = air_dash_speed * PlayerConfig.facing_direction
+
 		velocity.y = PlayerConfig.jump_velocity
+
+func save():
+	var save_dict = {
+		"filename": get_scene_file_path(),
+		"name": "Player",
+		"parent": get_parent().get_path(),
+		"pos_x": position.x,
+		"pos_y": position.y,
+	}
+
+	var config_data = PlayerConfig.get_player_config_save_data()
+	save_dict.update(config_data)
+	return save_dict
 
 func set_is_coyote_time(new_value: bool):
 	if new_value != true:
@@ -145,6 +166,15 @@ func set_can_boost_jump(new_val: bool) -> void:
 	can_boost_jump = false
 	can_boost_jump_forward = false
 
+func set_can_boost_jump_forward(new_val: bool) -> void:
+	can_boost_jump_forward = new_val
+
+	if new_val == false:
+		return
+	
+	await get_tree().create_timer(boost_jump_timer).timeout
+	can_boost_jump_forward = false
+
 func set_jump_buffered(new_val: bool) -> void:
 	jump_buffered = new_val
 
@@ -160,3 +190,49 @@ func _on_action_detection_area_area_entered(area: Area2D) -> void:
 		var unlockable: Unlockable = area
 		PlayerConfig.unlock_ability(unlockable.unlock_key)
 		area.queue_free()
+
+func create_dash_effect():
+	var dash_effect = %Sprite2D.duplicate()
+	get_parent().add_child(dash_effect)
+	dash_effect.position = position
+	dash_effect.flip_h = %Sprite2D.flip_h
+	var tint_color = Color(0.2, 0.2, 1, 0.4)
+	dash_effect.modulate = dash_effect.modulate.blend(tint_color)
+
+
+	var animation_time = %FastMovementEffectTimer.wait_time / 3
+	await get_tree().create_timer(animation_time).timeout
+	dash_effect.modulate.a = 0.2
+	await get_tree().create_timer(animation_time).timeout
+	dash_effect.queue_free()
+
+
+func _on_fast_movement_effect_timer_timeout() -> void:
+	create_dash_effect()
+
+func do_sick_spin():
+	var jump_squeeze_tween = create_tween()
+
+	jump_squeeze_tween.tween_property(
+		%Sprite2D,
+		"scale",
+		Vector2(-1.0, 1.0),
+		0.25
+	).set_trans(Tween.TRANS_ELASTIC)
+
+	jump_squeeze_tween.tween_property(
+		%Sprite2D,
+		"scale",
+		Vector2(1.0, 1.0),
+		0.5
+	).set_trans(Tween.TRANS_ELASTIC)
+
+func do_flipperoo():
+	var jump_squeeze_tween = create_tween()
+
+	jump_squeeze_tween.tween_property(
+		%Sprite2D,
+		"rotation_degrees",
+		%Sprite2D.rotation_degrees + (360 if randi() % 2 else -360),
+		0.5
+	).set_trans(Tween.TRANS_CIRC)

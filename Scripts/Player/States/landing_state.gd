@@ -4,7 +4,8 @@ class_name LandingState extends LimboState
 @onready var ImpactEffect: PackedScene = preload("res://Effects/impact_effect.tscn")
 
 var previous_state := ""
-const BOOST_JUMP_STATES = ["AirDashState", "GroundPoundState"]
+const BOOST_JUMP_STATES = ["GroundPoundState"]
+const BOOST_JUMP__FORWARDSTATES = ["AirDashState"]
 
 func _enter() -> void:
 	previous_state = %LimboHSM.get_previous_active_state().name
@@ -20,6 +21,7 @@ func _enter() -> void:
 	player.gravity_multiplier = 1.0
 
 	player.can_boost_jump = previous_state in BOOST_JUMP_STATES
+	player.can_boost_jump_forward = previous_state in BOOST_JUMP__FORWARDSTATES
 	handle_next_state()
 
 
