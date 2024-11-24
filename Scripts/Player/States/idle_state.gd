@@ -28,11 +28,16 @@ func _update(_delta: float) -> void:
 		return
 	
 	if Input.is_action_just_pressed("jump"):
+		PlayerConfig.current_jumps -= 1
 		player.jump()
 		dispatch("in_air")
 
+	var started_on_floor = player.is_on_floor()
 	player.move_and_slide()
+	var ended_on_floor = player.is_on_floor()
 
+	if started_on_floor and not ended_on_floor:
+		player.is_coyote_time = true
 
 	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
 		dispatch("movement_started")

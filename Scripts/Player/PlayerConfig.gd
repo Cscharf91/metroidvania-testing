@@ -12,6 +12,7 @@ var friction := 1100
 var jump_velocity := -400
 var ground_pound_speed := 2000
 var facing_direction := 1
+var wall_jump_velocity := 400
 
 const NON_FLIP_SPRITE_STATES = ["GroundPoundState", "AirDashState"]
 
@@ -20,6 +21,7 @@ var unlocks := {
 	"air_dash_1": false,
 	"air_dash_2": false,
 	"mid_air_jump_1": false,
+	"wall_jump": false,
 }
 
 func unlock_ability(ability: String) -> void:

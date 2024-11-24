@@ -9,6 +9,7 @@ class_name Player
 @onready var air_dash_state: LimboState = $LimboHSM/AirDashState
 @onready var ground_pound_state: LimboState = $LimboHSM/GroundPoundState
 @onready var landing_state: LimboState = $LimboHSM/LandingState
+@onready var wall_jump_state: LimboState = $LimboHSM/WallJumpState
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var direction_pointer: Marker2D = $DirectionPointer
@@ -38,6 +39,7 @@ func _init_state_machine():
 	hsm.add_transition(air_state, landing_state, &"landed")
 	hsm.add_transition(air_dash_state, landing_state, &"landed")
 	hsm.add_transition(ground_pound_state, landing_state, &"ground_pound_landed")
+	hsm.add_transition(wall_jump_state, landing_state, &"landed")
 
 	# Transitions out of landed_state
 	hsm.add_transition(landing_state, idle_state, &"movement_stopped")
@@ -48,6 +50,7 @@ func _init_state_machine():
 	hsm.add_transition(idle_state, air_state, &"in_air")
 	hsm.add_transition(move_state, air_state, &"in_air")
 	hsm.add_transition(air_dash_state, air_state, &"in_air")
+	hsm.add_transition(wall_jump_state, air_state, &"in_air")
 	
 	# Transitions into air_dash_state
 	hsm.add_transition(air_state, air_dash_state, &"air_dash")
@@ -56,6 +59,10 @@ func _init_state_machine():
 	# Transitions into ground_pound_state (if unlocked)
 	hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
 	hsm.add_transition(air_dash_state, ground_pound_state, &"ground_pound")
+
+	# Transitions into wall_jump_state
+	hsm.add_transition(air_state, wall_jump_state, &"wall_jump")
+	hsm.add_transition(air_dash_state, wall_jump_state, &"wall_jump")
 	
 	# One-off transitions
 	hsm.add_transition(move_state, idle_state, &"movement_stopped")
@@ -115,6 +122,8 @@ func apply_gravity(delta: float):
 		velocity.y = min(velocity.y, terminal_velocity_y)
 
 func jump():
+	print("jumps left: ", PlayerConfig.current_jumps)
+	jump_buffered = false
 	if is_on_floor():
 		# one in 10 jumps will be a sick spin or a flipperoo
 		var random_number = randi() % 10
@@ -123,7 +132,6 @@ func jump():
 				do_sick_spin()
 			else:
 				do_flipperoo()
-	PlayerConfig.current_jumps -= 1
 	if can_boost_jump:
 
 		velocity.y = PlayerConfig.jump_velocity * 1.3

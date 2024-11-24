@@ -17,7 +17,7 @@ func _enter() -> void:
 	impact_effect.emitting = true
 	
 	PlayerConfig.current_air_dashes = PlayerConfig.max_air_dashes
-	PlayerConfig.current_jumps = PlayerConfig.max_jumps
+	PlayerConfig.current_jumps = PlayerConfig.max_jumps - 1 if player.jump_buffered else PlayerConfig.max_jumps
 	player.gravity_multiplier = 1.0
 
 	player.can_boost_jump = previous_state in BOOST_JUMP_STATES

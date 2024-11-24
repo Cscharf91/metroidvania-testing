@@ -17,6 +17,7 @@ func save_game():
 		save_file.store_line(json_string)
 
 func load_game():
+	# TODO - actually finish this lol
 	if not FileAccess.file_exists("user://savegame.save"):
 		return # Error! We don't have a save to load.
 
