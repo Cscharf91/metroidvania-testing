@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://7pmlpxqxdfqm"]
+[gd_scene load_steps=20 format=3 uid="uid://7pmlpxqxdfqm"]
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
 [ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
@@ -9,9 +9,10 @@
 [ext_resource type="Script" path="res://Scripts/Player/States/air_dash_state.gd" id="7_82mli"]
 [ext_resource type="Script" path="res://Scripts/Player/States/ground_pound_state.gd" id="8_8np8y"]
 [ext_resource type="Script" path="res://Scripts/Player/States/landing_state.gd" id="9_mbwam"]
+[ext_resource type="Script" path="res://Scripts/Player/States/wall_jump_state.gd" id="10_gf6co"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41ra8"]
-size = Vector2(32, 32)
+size = Vector2(16, 16)
 
 [sub_resource type="Animation" id="Animation_4r26t"]
 length = 0.001
@@ -284,7 +285,7 @@ hframes = 9
 vframes = 3
 
 [node name="CollisionShape2D" parent="." index="1"]
-visible = false
+position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_41ra8")
 
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
@@ -320,6 +321,9 @@ script = ExtResource("8_8np8y")
 
 [node name="LandingState" type="LimboState" parent="LimboHSM" index="5"]
 script = ExtResource("9_mbwam")
+
+[node name="WallJumpState" type="LimboState" parent="LimboHSM" index="6"]
+script = ExtResource("10_gf6co")
 
 [node name="DirectionPointer" type="Marker2D" parent="." index="6"]
 position = Vector2(16, 0)

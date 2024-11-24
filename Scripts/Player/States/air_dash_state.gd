@@ -37,6 +37,9 @@ func _update(_delta: float) -> void:
 		player.can_boost_jump_forward = true
 		player.jump()
 		dispatch("in_air")
+	
+	if player.is_on_wall():
+		dispatch("wall_jump")
 
 func air_dash(is_boosted: bool) -> void:
 	if PlayerConfig.current_air_dashes <= 0:
