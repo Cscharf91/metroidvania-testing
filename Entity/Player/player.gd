@@ -122,7 +122,6 @@ func apply_gravity(delta: float):
 		velocity.y = min(velocity.y, terminal_velocity_y)
 
 func jump():
-	print("jumps left: ", PlayerConfig.current_jumps)
 	jump_buffered = false
 	if is_on_floor():
 		# one in 10 jumps will be a sick spin or a flipperoo
@@ -133,7 +132,6 @@ func jump():
 			else:
 				do_flipperoo()
 	if can_boost_jump:
-
 		velocity.y = PlayerConfig.jump_velocity * 1.3
 	else:
 		if can_boost_jump_forward:
