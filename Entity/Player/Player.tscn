@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://7pmlpxqxdfqm"]
+[gd_scene load_steps=25 format=3 uid="uid://7pmlpxqxdfqm"]
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
 [ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
@@ -271,6 +271,44 @@ _data = {
 "run": SubResource("Animation_2gl68")
 }
 
+[sub_resource type="Animation" id="Animation_qt41r"]
+resource_name = "blink"
+length = 1.2
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_ymccg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_en4rh"]
+_data = {
+"RESET": SubResource("Animation_ymccg"),
+"blink": SubResource("Animation_qt41r")
+}
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_kqtiw"]
 radius = 16.0
 
@@ -305,7 +343,12 @@ libraries = {
 }
 autoplay = "idle"
 
-[node name="LimboHSM" type="LimboHSM" parent="." index="5"]
+[node name="BlinkingAnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+libraries = {
+"": SubResource("AnimationLibrary_en4rh")
+}
+
+[node name="LimboHSM" type="LimboHSM" parent="." index="6"]
 unique_name_in_owner = true
 
 [node name="IdleState" type="LimboState" parent="LimboHSM" index="0"]
@@ -329,7 +372,7 @@ script = ExtResource("9_mbwam")
 [node name="WallJumpState" type="LimboState" parent="LimboHSM" index="6"]
 script = ExtResource("10_gf6co")
 
-[node name="DirectionPointer" type="Marker2D" parent="." index="6"]
+[node name="DirectionPointer" type="Marker2D" parent="." index="7"]
 position = Vector2(16, 0)
 
 [node name="ActionDetectionArea" type="Area2D" parent="DirectionPointer" index="0"]
@@ -341,7 +384,7 @@ collision_mask = 192
 visible = false
 shape = SubResource("CircleShape2D_kqtiw")
 
-[node name="Hurtbox" parent="." index="7" instance=ExtResource("11_6amkq")]
+[node name="Hurtbox" parent="." index="8" instance=ExtResource("11_6amkq")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" index="0"]
 position = Vector2(0, 8)

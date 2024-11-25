@@ -251,8 +251,6 @@ func _on_hurtbox_hurt(hitbox: Hitbox, damage: float) -> void:
 	print("owwww! ", hitbox.get_children(), " ", damage)
 	PlayerConfig.health -= damage
 	$Hurtbox.is_invincible = true
-	# TODO blink animation
-	# hurtbox_animation_player.play("blink")
-	# await hurtbox_animation_player.animation_finished
-	await get_tree().create_timer(0.5).timeout
+	$BlinkingAnimationPlayer.play("blink")
+	await $BlinkingAnimationPlayer.animation_finished
 	$Hurtbox.is_invincible = false
