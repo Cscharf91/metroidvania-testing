@@ -120,6 +120,9 @@ func apply_gravity(delta: float):
 	if not is_on_floor() and gravity_multiplier > 0.0:
 		velocity += get_gravity() * gravity_multiplier * delta
 		velocity.y = min(velocity.y, terminal_velocity_y)
+	# Note: The bottom is probably the way it "should be," but maintaining the current y velocity on dash feels more fun so far. Leaving this commented for future reference.
+	# elif not is_on_floor() and gravity_multiplier == 0.0:
+		# velocity.y = 0
 
 func jump():
 	jump_buffered = false

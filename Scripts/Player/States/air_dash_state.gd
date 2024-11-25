@@ -1,6 +1,7 @@
 class_name AirDashState extends LimboState
 
 @onready var player: Player = owner
+var leave_state_timer := 0.5
 
 func _enter() -> void:
 	var previous_state = %LimboHSM.get_previous_active_state().name
@@ -57,3 +58,7 @@ func air_dash(is_boosted: bool) -> void:
 
 func _on_dash_tween_completed() -> void:
 	player.gravity_multiplier = 1.0
+	await get_tree().create_timer(leave_state_timer).timeout
+	if not player.is_on_floor():
+		print('leavin this bitch ass state')
+		dispatch("in_air")
