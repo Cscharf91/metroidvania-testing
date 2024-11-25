@@ -138,6 +138,7 @@ func jump():
 		velocity.y = PlayerConfig.jump_velocity * 1.3
 	else:
 		if can_boost_jump_forward:
+			do_flipperoo()
 			velocity.x = air_dash_speed * PlayerConfig.facing_direction
 
 		velocity.y = PlayerConfig.jump_velocity
@@ -245,3 +246,13 @@ func do_flipperoo():
 		%Sprite2D.rotation_degrees + (360 if randi() % 2 else -360),
 		0.5
 	).set_trans(Tween.TRANS_CIRC)
+
+func _on_hurtbox_hurt(hitbox: Hitbox, damage: float) -> void:
+	print("owwww! ", hitbox.get_children(), " ", damage)
+	PlayerConfig.health -= damage
+	$Hurtbox.is_invincible = true
+	# TODO blink animation
+	# hurtbox_animation_player.play("blink")
+	# await hurtbox_animation_player.animation_finished
+	await get_tree().create_timer(0.5).timeout
+	$Hurtbox.is_invincible = false

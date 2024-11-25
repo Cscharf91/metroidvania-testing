@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://baeyc21hlo5bg"]
+[gd_scene load_steps=12 format=4 uid="uid://baeyc21hlo5bg"]
 
 [ext_resource type="TileSet" uid="uid://dje00memupwir" path="res://Resources/TileSets/grass_tile_layer.tres" id="2_7xcq1"]
 [ext_resource type="PackedScene" uid="uid://7pmlpxqxdfqm" path="res://Entity/Player/Player.tscn" id="2_x10mo"]
@@ -6,13 +6,17 @@
 [ext_resource type="Texture2D" uid="uid://bpynqmdsw0vvt" path="res://Assets/tilemap-characters.png" id="4_5imx8"]
 [ext_resource type="Resource" uid="uid://drhyhkrpi4re1" path="res://test1.dialogue" id="4_5tnwf"]
 [ext_resource type="PackedScene" uid="uid://byxkx6wj2ii3i" path="res://Global/unlockable.tscn" id="6_vbiq0"]
-[ext_resource type="Texture2D" uid="uid://d0nfsc4jcoleg" path="res://icon.svg" id="7_d886l"]
+[ext_resource type="Texture2D" uid="uid://cg0la4swphrct" path="res://icon.svg" id="7_d886l"]
+[ext_resource type="PackedScene" uid="uid://bjf05t6w3ch8t" path="res://Global/hitbox.tscn" id="8_cmsdr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_axexa"]
 radius = 32.3883
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xoxin"]
 radius = 32.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_prtsh"]
+size = Vector2(31, 30)
 
 [node name="Level" type="Node2D"]
 
@@ -67,3 +71,14 @@ shape = SubResource("CircleShape2D_xoxin")
 [node name="Sprite2D" type="Sprite2D" parent="Unlockable3"]
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("7_d886l")
+
+[node name="Hitbox" parent="." instance=ExtResource("8_cmsdr")]
+position = Vector2(288, -1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Hitbox"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("7_d886l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_prtsh")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://7pmlpxqxdfqm"]
+[gd_scene load_steps=22 format=3 uid="uid://7pmlpxqxdfqm"]
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
 [ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://Scripts/Player/States/ground_pound_state.gd" id="8_8np8y"]
 [ext_resource type="Script" path="res://Scripts/Player/States/landing_state.gd" id="9_mbwam"]
 [ext_resource type="Script" path="res://Scripts/Player/States/wall_jump_state.gd" id="10_gf6co"]
+[ext_resource type="PackedScene" uid="uid://bmkcho1uyhjf5" path="res://Global/hurtbox.tscn" id="11_6amkq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41ra8"]
 size = Vector2(16, 16)
@@ -273,6 +274,9 @@ _data = {
 [sub_resource type="CircleShape2D" id="CircleShape2D_kqtiw"]
 radius = 16.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s4dtp"]
+size = Vector2(10, 16)
+
 [node name="Player" groups=["Persist", "player"] instance=ExtResource("1_l5me4")]
 collision_mask = 38
 script = ExtResource("2_wcreg")
@@ -337,5 +341,13 @@ collision_mask = 192
 visible = false
 shape = SubResource("CircleShape2D_kqtiw")
 
+[node name="Hurtbox" parent="." index="7" instance=ExtResource("11_6amkq")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" index="0"]
+position = Vector2(0, 8)
+shape = SubResource("RectangleShape2D_s4dtp")
+debug_color = Color(0.964237, 0.171512, 0.212351, 0.42)
+
 [connection signal="timeout" from="Timers/FastMovementEffectTimer" to="." method="_on_fast_movement_effect_timer_timeout"]
 [connection signal="area_entered" from="DirectionPointer/ActionDetectionArea" to="." method="_on_action_detection_area_area_entered"]
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]
