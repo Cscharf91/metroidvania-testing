@@ -35,8 +35,8 @@ func unlock_ability(ability: String) -> void:
 func set_health(new_health: float) -> void:
 	health = clamp(new_health, 0, max_health)
 	if health <= 0:
-		# Player is dead
-		pass
+		# TODO - handle death logic
+		print("Oh no! U ded!")
 
 func set_max_health(new_max_health: float) -> void:
 	max_health = new_max_health
