@@ -1,56 +1,102 @@
 extends Node
 
 func save_game():
-	var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
+	var save_data = {}
+
+	# Save current level/scene
+	var current_scene = get_tree().current_scene
+	var current_level = current_scene.scene_file_path
+	save_data["current_level"] = current_level
+
+	# Save PlayerConfig data
+	save_data["player_config"] = PlayerConfig.get_player_config_save_data()
+
+	# Save other persistent nodes
 	var save_nodes = get_tree().get_nodes_in_group("Persist")
+	var nodes_data = []
 	for node in save_nodes:
+		if node is Player:
+			var player_data = node.save()
+			save_data["player_data"] = player_data
+
 		if node.scene_file_path.is_empty():
-			print("persistent node '%s' is not an instanced scene, skipped" % node.name)
+			print("Persistent node '%s' is not an instanced scene, skipped" % node.name)
 			continue
-
-		if !node.has_method("save"):
-			print("persistent node '%s' is missing a save() function, skipped" % node.name)
+		if not node.has_method("save"):
+			print("Persistent node '%s' is missing a save() function, skipped" % node.name)
 			continue
+		var node_data = node.save()
+		nodes_data.append(node_data)
+	save_data["nodes"] = nodes_data
 
-		var node_data = node.call("save")
-		var json_string = JSON.stringify(node_data)
-		save_file.store_line(json_string)
+	# Write the save_data to file
+	var save_file = FileAccess.open("user://savegame.save", FileAccess.WRITE)
+	print(JSON.stringify(save_data))
+	save_file.store_string(JSON.stringify(save_data))
+	save_file.close()
 
 func load_game():
-	# TODO - actually finish this lol
 	if not FileAccess.file_exists("user://savegame.save"):
-		return # Error! We don't have a save to load.
+		return # No save file to load
 
-	var save_nodes = get_tree().get_nodes_in_group("Persist")
-	for i in save_nodes:
-		i.queue_free()
-
+	# Read the save_data from the file
 	var save_file = FileAccess.open("user://savegame.save", FileAccess.READ)
-	while save_file.get_position() < save_file.get_length():
-		var json_string = save_file.get_line()
+	var json_string = save_file.get_as_text()
+	save_file.close()
 
-		# Creates the helper class to interact with JSON.
-		var json = JSON.new()
+	var json = JSON.new()
+	var parse_result = json.parse(json_string)
+	if parse_result != OK:
+		print("JSON Parse Error: ", json.get_error_message())
+		return
 
-		# Check if there is any error while parsing the JSON string, skip in case of failure.
-		var parse_result = json.parse(json_string)
-		if not parse_result == OK:
-			print("JSON Parse Error: ", json.get_error_message(), " in ", json_string, " at line ", json.get_error_line())
-			continue
+	var save_data = json.data
 
-		# Get the data from the JSON object.
-		var node_data = json.data
+	# Load the current level/scene
+	var current_level = save_data.get("current_level", "")
+	if current_level != "":
+		# Load the scene
+		get_tree().change_scene_to_file(current_level)
+	else:
+		print("No current_level found in save data")
+		return
 
-		# Firstly, we need to create the object and add it to the tree and set its position.
+	# Wait for the new scene to load
+	await get_tree().process_frame
+
+	# Load checkpoint data
+	var checkpoint_data = save_data.get("checkpoint_data", null)
+	if checkpoint_data != null:
+		PlayerConfig.current_checkpoint = checkpoint_data
+	else:
+		print("No checkpoint_data found in save data")
+
+	# Load the player's data
+	var player_data = save_data.get("player_data", null)
+	if player_data != null:
+		var player_node = get_tree().get_first_node_in_group("Player")
+		if player_node != null:
+			# Load PlayerConfig data
+			PlayerConfig.set_player_config_data(player_data.get("config_data", {}))
+			# Load the player data
+			player_node.load(player_data)
+		else:
+			print("Player node not found in the scene")
+	else:
+		print("No player_data found in save data")
+
+	# Load other persistent nodes
+	var nodes_data = save_data.get("nodes", [])
+	for node_data in nodes_data:
+		if node_data['name'] == "Player": continue
+		# Instantiate and add node to scene
 		var new_object = load(node_data["filename"]).instantiate()
 		get_node(node_data["parent"]).add_child(new_object)
-		new_object.position = Vector2(node_data["pos_x"], node_data["pos_y"])
-
-		# Now we set the remaining variables.
-		for i in node_data.keys():
-			if i == "filename" or i == "parent" or i == "pos_x" or i == "pos_y":
+		# Set the node's properties
+		for key in node_data.keys():
+			if key in ["filename", "parent"]:
 				continue
-			new_object.set(i, node_data[i])
+			new_object.set(key, node_data[key])
 
 func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("save_game"):
