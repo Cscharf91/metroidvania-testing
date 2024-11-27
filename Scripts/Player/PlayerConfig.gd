@@ -13,6 +13,7 @@ var jump_velocity := -400
 var ground_pound_speed := 2000
 var facing_direction := 1
 var wall_jump_velocity := 400
+var current_checkpoint := Vector2.ZERO
 
 const NON_FLIP_SPRITE_STATES = ["GroundPoundState", "AirDashState"]
 
@@ -63,4 +64,14 @@ func get_player_config_save_data():
 		"jump_velocity": jump_velocity,
 		"speed": speed,
 		"unlocks": unlocks,
+		"current_checkpoint": current_checkpoint,
 	}
+
+func set_player_config_data(data: Dictionary):
+	max_health = data.get("max_health", max_health)
+	max_jumps = data.get("max_jumps", max_jumps)
+	max_air_dashes = data.get("max_air_dashes", max_air_dashes)
+	jump_velocity = data.get("jump_velocity", jump_velocity)
+	speed = data.get("speed", speed)
+	unlocks = data.get("unlocks", unlocks)
+	current_checkpoint = data.get("current_checkpoint", current_checkpoint)

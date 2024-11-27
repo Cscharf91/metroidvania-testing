@@ -25,7 +25,6 @@ func _update(_delta: float) -> void:
 	# 	player.velocity.y *= 0.5
 	
 	if Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps > 0:
-		print("ello puppet", PlayerConfig.current_jumps)
 		PlayerConfig.current_jumps -= 1
 		player.jump()
 	elif Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps == 0:

@@ -152,9 +152,10 @@ func save():
 		"pos_y": position.y,
 	}
 
-	var config_data = PlayerConfig.get_player_config_save_data()
-	save_dict.update(config_data)
 	return save_dict
+
+func load(data: Dictionary) -> void:
+	print("loading data: ", data)
 
 func set_is_coyote_time(new_value: bool):
 	if new_value != true:
