@@ -3,13 +3,14 @@ class_name Player
 
 @onready var ImpactEffect: PackedScene = preload("res://Effects/impact_effect.tscn")
 @onready var hsm: LimboHSM = $LimboHSM
-@onready var idle_state: LimboState = $LimboHSM/IdleState
-@onready var move_state: LimboState = $LimboHSM/MoveState
-@onready var air_state: LimboState = $LimboHSM/AirState
-@onready var air_dash_state: LimboState = $LimboHSM/AirDashState
-@onready var ground_pound_state: LimboState = $LimboHSM/GroundPoundState
-@onready var landing_state: LimboState = $LimboHSM/LandingState
-@onready var wall_jump_state: LimboState = $LimboHSM/WallJumpState
+@onready var idle_state: IdleState = $LimboHSM/IdleState
+@onready var move_state: MoveState = $LimboHSM/MoveState
+@onready var air_state: AirState = $LimboHSM/AirState
+@onready var air_dash_state: AirDashState = $LimboHSM/AirDashState
+@onready var ground_pound_state: GroundPoundState = $LimboHSM/GroundPoundState
+@onready var landing_state: LandingState = $LimboHSM/LandingState
+@onready var wall_jump_state: WallJumpState = $LimboHSM/WallJumpState
+@onready var glide_state: GlideState = $LimboHSM/GlideState
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var direction_pointer: Marker2D = $DirectionPointer
@@ -40,6 +41,7 @@ func _init_state_machine():
 	hsm.add_transition(air_dash_state, landing_state, &"landed")
 	hsm.add_transition(ground_pound_state, landing_state, &"ground_pound_landed")
 	hsm.add_transition(wall_jump_state, landing_state, &"landed")
+	hsm.add_transition(glide_state, landing_state, &"landed")
 
 	# Transitions out of landed_state
 	hsm.add_transition(landing_state, idle_state, &"movement_stopped")
@@ -51,9 +53,11 @@ func _init_state_machine():
 	hsm.add_transition(move_state, air_state, &"in_air")
 	hsm.add_transition(air_dash_state, air_state, &"in_air")
 	hsm.add_transition(wall_jump_state, air_state, &"in_air")
+	hsm.add_transition(glide_state, air_state, &"in_air")
 	
 	# Transitions into air_dash_state
 	hsm.add_transition(air_state, air_dash_state, &"air_dash")
+	hsm.add_transition(glide_state, air_dash_state, &"air_dash")
 	hsm.add_transition(ground_pound_state, air_dash_state, &"boosted_air_dash")
 
 	# Transitions into ground_pound_state (if unlocked)
@@ -63,6 +67,11 @@ func _init_state_machine():
 	# Transitions into wall_jump_state
 	hsm.add_transition(air_state, wall_jump_state, &"wall_jump")
 	hsm.add_transition(air_dash_state, wall_jump_state, &"wall_jump")
+	hsm.add_transition(glide_state, wall_jump_state, &"wall_jump")
+
+	# Transitions into glide_state
+	hsm.add_transition(air_state, glide_state, &"glide")
+	hsm.add_transition(air_dash_state, glide_state, &"glide")
 	
 	# One-off transitions
 	hsm.add_transition(move_state, idle_state, &"movement_stopped")

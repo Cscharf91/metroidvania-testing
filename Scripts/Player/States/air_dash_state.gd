@@ -31,6 +31,9 @@ func _update(_delta: float) -> void:
 	if not player.can_move:
 		return
 
+	if Input.is_action_pressed("glide"):
+		dispatch("glide")
+	
 	if Input.is_action_just_pressed("ground_pound") and PlayerConfig.unlocks.ground_pound:
 		dispatch("ground_pound")
 
@@ -60,5 +63,4 @@ func _on_dash_tween_completed() -> void:
 	player.gravity_multiplier = 1.0
 	await get_tree().create_timer(leave_state_timer).timeout
 	if not player.is_on_floor():
-		print('leavin this bitch ass state')
 		dispatch("in_air")
