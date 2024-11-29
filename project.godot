@@ -8,10 +8,14 @@
 
 config_version=5
 
+[addons]
+
+metroidvania_system/settings_file="res://MetSysSettings.tres"
+
 [application]
 
 config/name="practice mv"
-run/main_scene="res://Levels/level.tscn"
+run/main_scene="res://Global/Game.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 config/icon="res://icon.svg"
 
@@ -21,6 +25,7 @@ PlayerConfig="*res://Scripts/Player/PlayerConfig.gd"
 TransitionLayer="*res://Global/transition_layer.tscn"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 State="*res://Global/State.gd"
+MetSys="*res://addons/MetroidvaniaSystem/Nodes/Singleton.tscn"
 
 [dialogue_manager]
 
@@ -35,7 +40,7 @@ window/size/window_height_override=1080
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dialogue_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/MetroidvaniaSystem/EditorExtension/plugin.cfg", "res://addons/MetroidvaniaSystem/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
 
 [global_group]
 

@@ -52,7 +52,6 @@ shape = SubResource("CircleShape2D_axexa")
 
 [node name="Unlockable" parent="." instance=ExtResource("6_vbiq0")]
 position = Vector2(112, 0)
-unlock_key = "air_dash_1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Unlockable"]
 shape = SubResource("CircleShape2D_xoxin")
@@ -63,7 +62,6 @@ texture = ExtResource("7_d886l")
 
 [node name="Unlockable2" parent="." instance=ExtResource("6_vbiq0")]
 position = Vector2(152, 0)
-unlock_key = "ground_pound"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Unlockable2"]
 shape = SubResource("CircleShape2D_xoxin")
@@ -74,7 +72,6 @@ texture = ExtResource("7_d886l")
 
 [node name="Unlockable3" parent="." instance=ExtResource("6_vbiq0")]
 position = Vector2(200, 0)
-unlock_key = "mid_air_jump_1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Unlockable3"]
 shape = SubResource("CircleShape2D_xoxin")

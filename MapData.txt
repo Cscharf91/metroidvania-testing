@@ -1,0 +1,4 @@
+[0,0,0]
+0,0,1,0|||Maps/TestMap.tscn
+[-1,0,0]
+1,0,0,0|||Maps/Test2.tscn

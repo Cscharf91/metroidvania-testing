@@ -34,7 +34,7 @@ func _update(_delta: float) -> void:
 	if Input.is_action_pressed("glide"):
 		dispatch("glide")
 	
-	if Input.is_action_just_pressed("ground_pound") and PlayerConfig.unlocks.ground_pound:
+	if Input.is_action_just_pressed("ground_pound") and &"ground_pound" in PlayerConfig.abilities:
 		dispatch("ground_pound")
 
 	if Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps > 0:

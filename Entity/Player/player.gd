@@ -21,6 +21,7 @@ class_name Player
 @export var jump_buffer_timer := 0.25
 @export var air_dash_speed := 900.0
 
+var reset_position: Vector2
 var gravity_multiplier := 1.0
 var direction := 0.0
 var is_coyote_time := false: set = set_is_coyote_time
@@ -32,6 +33,8 @@ var previous_active_state := ""
 var can_move := true
 
 func _ready():
+	print("readyoooo")
+	handle_unlocks()
 	_init_state_machine()
 	%Sprite2D.flip_h = PlayerConfig.facing_direction > 0
 
@@ -152,20 +155,6 @@ func jump():
 
 		velocity.y = PlayerConfig.jump_velocity
 
-func save():
-	var save_dict = {
-		"filename": get_scene_file_path(),
-		"name": "Player",
-		"parent": get_parent().get_path(),
-		"pos_x": position.x,
-		"pos_y": position.y,
-	}
-
-	return save_dict
-
-func load(data: Dictionary) -> void:
-	print("loading data: ", data)
-
 func set_is_coyote_time(new_value: bool):
 	if new_value != true:
 		return
@@ -209,7 +198,8 @@ func _on_action_detection_area_area_entered(area: Area2D) -> void:
 	if area is Unlockable:
 		var unlockable: Unlockable = area
 		PlayerConfig.unlock_ability(unlockable.unlock_key)
-		area.queue_free()
+		MetSys.store_object(unlockable)
+		unlockable.queue_free()
 
 func create_dash_effect():
 	var dash_effect = %Sprite2D.duplicate()
@@ -264,3 +254,17 @@ func _on_hurtbox_hurt(hitbox: Hitbox, damage: float) -> void:
 	$BlinkingAnimationPlayer.play("blink")
 	await $BlinkingAnimationPlayer.animation_finished
 	$Hurtbox.is_invincible = false
+
+func handle_unlocks():
+	if PlayerConfig.abilities.size() == 0:
+		return
+
+	for ability in PlayerConfig.abilities:
+		if ability == &"double_jump":
+			PlayerConfig.max_jumps = 2
+		if ability == &"air_dash":
+			PlayerConfig.max_air_dashes = 1
+
+func on_enter():
+	# Position for kill system. Assigned when entering new room (see Game.gd).
+	reset_position = position
