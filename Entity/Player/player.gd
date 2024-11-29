@@ -17,7 +17,7 @@ class_name Player
 
 @export var terminal_velocity_y := 1000
 @export var coyote_timer := 0.15
-@export var boost_jump_timer := 0.25
+@export var boost_jump_timer := 0.15
 @export var jump_buffer_timer := 0.25
 @export var air_dash_speed := 900.0
 
