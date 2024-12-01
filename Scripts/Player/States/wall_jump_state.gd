@@ -28,7 +28,7 @@ func _update(_delta: float) -> void:
 	elif is_touching_wall() and not wall_coyote_timer_active:
 		var direction = sign(player.direction)
 		var is_holding_towards_wall = direction != 0 and direction == wall_direction_x
-		if is_holding_towards_wall:
+		if is_holding_towards_wall and player.velocity.y > 0:
 			player.velocity.y = wall_slide_velocity / 2
 		can_wall_jump = true
 	elif not wall_coyote_timer_active:

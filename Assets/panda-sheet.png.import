@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bptc411plsik8"
-path="res://.godot/imported/tilemap.png-fbb7d040985d294f094a5740961103d2.ctex"
+uid="uid://bhmvm86b6mqn7"
+path="res://.godot/imported/panda-sheet.png-aff7eebf65bc8ba2573ff351e5fac062.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/tilemap.png"
-dest_files=["res://.godot/imported/tilemap.png-fbb7d040985d294f094a5740961103d2.ctex"]
+source_file="res://Assets/panda-sheet.png"
+dest_files=["res://.godot/imported/panda-sheet.png-aff7eebf65bc8ba2573ff351e5fac062.ctex"]
 
 [params]
 

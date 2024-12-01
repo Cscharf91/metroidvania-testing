@@ -36,7 +36,7 @@ func _ready():
 	print("readyoooo")
 	handle_unlocks()
 	_init_state_machine()
-	%Sprite2D.flip_h = PlayerConfig.facing_direction > 0
+	%Sprite2D.flip_h = PlayerConfig.facing_direction < 0
 
 func _init_state_machine():
 	# Transitions into landed_state
@@ -105,7 +105,7 @@ func _physics_process(delta: float) -> void:
 	if PlayerConfig.facing_direction != facing_direction and direction != 0 and current_active_state not in PlayerConfig.NON_FLIP_SPRITE_STATES:
 		PlayerConfig.facing_direction = facing_direction
 		direction_pointer.position.x = facing_direction * 16
-		%Sprite2D.flip_h = facing_direction > 0
+		%Sprite2D.flip_h = facing_direction < 0
 
 	handle_movement(delta)
 
@@ -243,7 +243,7 @@ func do_flipperoo():
 	jump_squeeze_tween.tween_property(
 		%Sprite2D,
 		"rotation_degrees",
-		%Sprite2D.rotation_degrees + (360 if randi() % 2 else -360),
+		%Sprite2D.rotation_degrees + (360 * PlayerConfig.facing_direction),
 		0.5
 	).set_trans(Tween.TRANS_CIRC)
 

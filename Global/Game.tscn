@@ -109,7 +109,7 @@ script = ExtResource("1_44ntw")
 starting_map = "AnotherTest.tscn"
 
 [node name="Player" parent="." instance=ExtResource("4_tmbcq")]
-position = Vector2(38, 36)
+position = Vector2(75, 114)
 
 [node name="UI" type="CanvasLayer" parent="."]
 

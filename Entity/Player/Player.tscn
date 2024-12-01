@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
 [ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
-[ext_resource type="Texture2D" uid="uid://bpynqmdsw0vvt" path="res://Assets/tilemap-characters.png" id="3_518t5"]
+[ext_resource type="Texture2D" uid="uid://bhmvm86b6mqn7" path="res://Assets/panda-sheet.png" id="3_fnc2y"]
 [ext_resource type="Script" path="res://Scripts/Player/States/idle_state.gd" id="4_k3wbj"]
 [ext_resource type="Script" path="res://Scripts/Player/States/move_state.gd" id="5_blfqf"]
 [ext_resource type="Script" path="res://Scripts/Player/States/air_state.gd" id="6_jdmad"]
@@ -14,7 +14,7 @@
 [ext_resource type="Script" path="res://Scripts/Player/States/glide_state.gd" id="11_cvyh6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41ra8"]
-size = Vector2(16, 16)
+size = Vector2(16, 32)
 
 [sub_resource type="Animation" id="Animation_4r26t"]
 length = 0.001
@@ -69,7 +69,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [9]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -110,7 +110,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0]
+"values": [9]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -193,7 +193,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [1]
+"values": [9]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -222,7 +222,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_2gl68"]
 resource_name = "run"
-length = 0.2
+length = 0.8
 loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
@@ -232,10 +232,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [1, 0]
+"values": [1, 2, 3, 4, 5, 6, 7, 8]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -322,17 +322,15 @@ script = ExtResource("2_wcreg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]
 unique_name_in_owner = true
-position = Vector2(0, 4)
-texture = ExtResource("3_518t5")
-hframes = 9
-vframes = 3
+texture = ExtResource("3_fnc2y")
+hframes = 10
 
 [node name="CollisionShape2D" parent="." index="1"]
-position = Vector2(0, 8)
+visible = false
 shape = SubResource("RectangleShape2D_41ra8")
 
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
-zoom = Vector2(3, 3)
+zoom = Vector2(5, 5)
 
 [node name="FastMovementEffectTimer" type="Timer" parent="Timers" index="0"]
 unique_name_in_owner = true
@@ -391,6 +389,7 @@ shape = SubResource("CircleShape2D_kqtiw")
 [node name="Hurtbox" parent="." index="8" instance=ExtResource("11_6amkq")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" index="0"]
+visible = false
 position = Vector2(0, 8)
 shape = SubResource("RectangleShape2D_s4dtp")
 debug_color = Color(0.964237, 0.171512, 0.212351, 0.42)

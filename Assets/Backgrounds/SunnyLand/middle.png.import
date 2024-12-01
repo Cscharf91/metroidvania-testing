@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bpynqmdsw0vvt"
-path="res://.godot/imported/tilemap-characters.png-37c6c7c604fba2f680b987f8bc2ab0b7.ctex"
+uid="uid://ci4f10ygt80qv"
+path="res://.godot/imported/middle.png-e006908095854976f2f8d203faa438a3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/tilemap-characters.png"
-dest_files=["res://.godot/imported/tilemap-characters.png-37c6c7c604fba2f680b987f8bc2ab0b7.ctex"]
+source_file="res://Assets/Backgrounds/SunnyLand/middle.png"
+dest_files=["res://.godot/imported/middle.png-e006908095854976f2f8d203faa438a3.ctex"]
 
 [params]
 
