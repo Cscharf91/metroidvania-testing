@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=4 uid="uid://byb15tcl7tmqr"]
+[gd_scene load_steps=9 format=4 uid="uid://byb15tcl7tmqr"]
 
 [ext_resource type="PackedScene" uid="uid://bsg0351mx3b4u" path="res://addons/MetroidvaniaSystem/Nodes/RoomInstance.tscn" id="1_ci4v2"]
 [ext_resource type="Texture2D" uid="uid://bmi11t7ijmywt" path="res://Assets/Backgrounds/SunnyLand/back.png" id="1_kjbgr"]
+[ext_resource type="Script" path="res://Scripts/Global/dynamic_parallax.gd" id="2_2h263"]
 [ext_resource type="TileSet" uid="uid://bdxsuqsqed26x" path="res://Resources/TileSets/new_tileset_template.tres" id="2_44eb2"]
 [ext_resource type="Texture2D" uid="uid://ci4f10ygt80qv" path="res://Assets/Backgrounds/SunnyLand/middle.png" id="2_mgcnk"]
 [ext_resource type="PackedScene" uid="uid://byxkx6wj2ii3i" path="res://Global/unlockable.tscn" id="3_x38jk"]
@@ -19,17 +20,18 @@ z_index = -99
 scroll_scale = Vector2(0, 0)
 repeat_size = Vector2(384, 0)
 repeat_times = 10
+script = ExtResource("2_2h263")
 
 [node name="Sprite2D" type="Sprite2D" parent="Background"]
 texture = ExtResource("1_kjbgr")
 centered = false
 
 [node name="MiddleBackground" type="Parallax2D" parent="."]
-visible = false
 z_index = -99
-scroll_scale = Vector2(0.4, 1)
+scroll_scale = Vector2(0.1, 0)
 repeat_size = Vector2(176, 0)
 repeat_times = 15
+script = ExtResource("2_2h263")
 
 [node name="Sprite2D" type="Sprite2D" parent="MiddleBackground"]
 position = Vector2(0, 125)
