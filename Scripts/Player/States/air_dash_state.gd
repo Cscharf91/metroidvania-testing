@@ -10,7 +10,7 @@ func _enter() -> void:
 	 
 	var is_boosted_dash = previous_state == "GroundPoundState"
 
-	var direction = "right" if %Sprite2D.flip_h else "left"
+	var direction = "left" if %Sprite2D.flip_h else "right"
 	player.animation_player.play("air_dash_" + str(direction))
 	
 	air_dash(is_boosted_dash)
@@ -34,7 +34,7 @@ func _update(_delta: float) -> void:
 	if Input.is_action_pressed("glide"):
 		dispatch("glide")
 	
-	if Input.is_action_just_pressed("ground_pound") and PlayerConfig.unlocks.ground_pound:
+	if Input.is_action_just_pressed("ground_pound") and &"ground_pound" in PlayerConfig.abilities:
 		dispatch("ground_pound")
 
 	if Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps > 0:
@@ -51,7 +51,7 @@ func air_dash(is_boosted: bool) -> void:
 	
 	PlayerConfig.current_air_dashes -= 1
 	player.gravity_multiplier = 0.0
-	var air_dash_direction = 1 if %Sprite2D.flip_h else -1
+	var air_dash_direction = -1 if %Sprite2D.flip_h else 1
 
 	# Directly set velocity.x with respect to direction and terminal velocity
 	var dash_tween = create_tween()

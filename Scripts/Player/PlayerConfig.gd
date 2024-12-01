@@ -17,21 +17,16 @@ var current_checkpoint := Vector2.ZERO
 
 const NON_FLIP_SPRITE_STATES = ["GroundPoundState", "AirDashState"]
 
-var unlocks := {
-	"ground_pound": false,
-	"air_dash_1": false,
-	"air_dash_2": false,
-	"mid_air_jump_1": false,
-	"wall_jump": false,
-}
+var abilities: Array[StringName] = []
 
-func unlock_ability(ability: String) -> void:
-	if ability in unlocks:
-		unlocks[ability] = true
-		if ability.begins_with("air_dash"):
-			max_air_dashes += 1
-		elif ability.begins_with("mid_air_jump"):
-			max_jumps += 1
+func unlock_ability(ability: StringName) -> void:
+	abilities.append(ability)
+	if ability == &"double_jump":
+		max_jumps = 2
+		current_jumps = max_jumps
+	if ability == &"air_dash":
+		max_air_dashes = 1
+		current_air_dashes = max_air_dashes
 
 func set_health(new_health: float) -> void:
 	health = clamp(new_health, 0, max_health)
@@ -55,23 +50,3 @@ func set_max_jumps(new_jumps: int) -> void:
 func set_max_air_dashes(new_air_dashes: int) -> void:
 	max_air_dashes = new_air_dashes
 	current_air_dashes = max_air_dashes
-
-func get_player_config_save_data():
-	return {
-		"max_health": max_health,
-		"max_jumps": max_jumps,
-		"max_air_dashes": max_air_dashes,
-		"jump_velocity": jump_velocity,
-		"speed": speed,
-		"unlocks": unlocks,
-		"current_checkpoint": current_checkpoint,
-	}
-
-func set_player_config_data(data: Dictionary):
-	max_health = data.get("max_health", max_health)
-	max_jumps = data.get("max_jumps", max_jumps)
-	max_air_dashes = data.get("max_air_dashes", max_air_dashes)
-	jump_velocity = data.get("jump_velocity", jump_velocity)
-	speed = data.get("speed", speed)
-	unlocks = data.get("unlocks", unlocks)
-	current_checkpoint = data.get("current_checkpoint", current_checkpoint)

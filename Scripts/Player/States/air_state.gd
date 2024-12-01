@@ -27,11 +27,12 @@ func _update(_delta: float) -> void:
 	if Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps > 0:
 		PlayerConfig.current_jumps -= 1
 		player.jump()
+		player.do_flipperoo()
 
 	if Input.is_action_just_pressed("air_dash") and PlayerConfig.current_air_dashes > 0:
 		dispatch("air_dash")
 	
-	if Input.is_action_just_pressed("ground_pound") and PlayerConfig.unlocks.ground_pound:
+	if Input.is_action_just_pressed("ground_pound") and &"ground_pound" in PlayerConfig.abilities:
 		dispatch("ground_pound")
 
 	if Input.is_action_pressed("glide"):
