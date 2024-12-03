@@ -160,11 +160,11 @@ func apply_gravity(delta: float):
 func jump():
 	jump_buffered = false
 	if can_boost_jump:
-		velocity.y = PlayerConfig.jump_velocity * 1.3
+		velocity.y = PlayerConfig.jump_velocity * 1.2
 	else:
 		if can_boost_jump_forward:
 			do_sick_flip()
-			velocity.x = air_dash_speed * PlayerConfig.facing_direction
+			velocity.x = (air_dash_speed / 1.4) * PlayerConfig.facing_direction
 
 		velocity.y = PlayerConfig.jump_velocity
 
