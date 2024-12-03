@@ -66,6 +66,7 @@ func _init_state_machine():
 	# Transitions into ground_pound_state (if unlocked)
 	hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
 	hsm.add_transition(air_dash_state, ground_pound_state, &"ground_pound")
+	hsm.add_transition(glide_state, ground_pound_state, &"ground_pound")
 
 	# Transitions into wall_jump_state
 	hsm.add_transition(air_state, wall_jump_state, &"wall_jump")

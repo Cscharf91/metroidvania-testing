@@ -8,7 +8,6 @@ var started_falling := false
 func _enter() -> void:
 	previous_state = %LimboHSM.get_previous_active_state().name
 	# print("Entering Air State from: ", previous_state)
-	print("howdy?")
 	player.animation_player.play("jump")
 
 func _exit() -> void:
@@ -45,7 +44,7 @@ func _update(_delta: float) -> void:
 	if Input.is_action_just_pressed("ground_pound") and &"ground_pound" in PlayerConfig.abilities:
 		dispatch("ground_pound")
 
-	if Input.is_action_pressed("glide"):
+	if Input.is_action_pressed("glide") and &"glide" in PlayerConfig.abilities:
 		dispatch("glide")
 
 	player.move_and_slide()
@@ -53,5 +52,5 @@ func _update(_delta: float) -> void:
 	if player.is_on_floor():
 		dispatch("landed")
 	
-	if player.is_on_wall():
+	if player.is_on_wall() and &"wall_jump" in PlayerConfig.abilities:
 		dispatch("wall_jump")

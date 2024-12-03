@@ -693,6 +693,13 @@ size = Vector2(10, 16)
 z_index = 50
 collision_mask = 38
 script = ExtResource("2_wcreg")
+terminal_velocity_y = null
+coyote_timer = null
+boost_jump_timer = null
+jump_buffer_timer = null
+no_turnaround_timer = null
+air_dash_speed = null
+turnaround_friction_multiplier = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]
 unique_name_in_owner = true

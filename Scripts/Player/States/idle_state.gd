@@ -19,26 +19,34 @@ func _enter() -> void:
 		player.gravity_multiplier = 1.0
 
 	if player.animation_player.current_animation == "land":
+		if player.animation_player.current_animation == "land" and player.velocity.x != 0:
+			player.animation_player.play("run")
+			return
 		await player.animation_player.animation_finished
 		if player.current_active_state == "IdleState":
 			player.animation_player.play("idle")
 	elif player.animation_player.current_animation != "jump":
-		player.animation_player.play("idle")
+		player.animation_player.play("idle" if player.velocity.x == 0 else "run")
 
 func _exit() -> void:
 	pass
 
 func _update(_delta: float) -> void:
 	if !player.can_move:
+		player.animation_player.play("idle")
+		player.velocity.x = 0
 		dispatch("movement_stopped")
 		return
+	
+	if player.velocity.x == 0 and player.is_on_floor() and player.animation_player.current_animation == "run":
+		player.animation_player.play("idle")
 	
 	if Input.is_action_just_pressed("jump"):
 		PlayerConfig.current_jumps -= 1
 		player.jump()
 		dispatch("in_air")
 	
-	if player.is_on_floor() and Input.is_action_just_pressed("ground_pound"):
+	if player.is_on_floor() and Input.is_action_just_pressed("ground_pound") and &"ground_pound" in PlayerConfig.abilities:
 		dispatch("slide")
 
 	var started_on_floor = player.is_on_floor()
