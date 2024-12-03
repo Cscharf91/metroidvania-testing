@@ -39,7 +39,8 @@ func _ready() -> void:
 		collectibles = save_manager.get_value("collectible_count")
 		generated_rooms.assign(save_manager.get_value("generated_rooms"))
 		events.assign(save_manager.get_value("events"))
-		PlayerConfig.abilities.assign(save_manager.get_value("abilities"))
+		for ability in save_manager.get_value("abilities"):
+			PlayerConfig.unlock_ability(ability)
 		
 		if not custom_run:
 			var loaded_starting_map: String = save_manager.get_value("current_room")

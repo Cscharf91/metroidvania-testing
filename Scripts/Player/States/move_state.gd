@@ -35,6 +35,9 @@ func _update(delta: float) -> void:
     PlayerConfig.current_jumps -= 1
     player.jump()
     dispatch("in_air")
+  
+  if player.is_on_floor() and Input.is_action_just_pressed("ground_pound"):
+    dispatch("slide")
     
   var started_on_floor = player.is_on_floor()
   player.move_and_slide()

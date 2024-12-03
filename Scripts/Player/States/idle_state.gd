@@ -17,7 +17,13 @@ func _enter() -> void:
 
 	if previous_state == "GroundPoundState":
 		player.gravity_multiplier = 1.0
-	player.animation_player.play("idle")
+
+	if player.animation_player.current_animation == "land":
+		await player.animation_player.animation_finished
+		if player.current_active_state == "IdleState":
+			player.animation_player.play("idle")
+	elif player.animation_player.current_animation != "jump":
+		player.animation_player.play("idle")
 
 func _exit() -> void:
 	pass
@@ -31,6 +37,9 @@ func _update(_delta: float) -> void:
 		PlayerConfig.current_jumps -= 1
 		player.jump()
 		dispatch("in_air")
+	
+	if player.is_on_floor() and Input.is_action_just_pressed("ground_pound"):
+		dispatch("slide")
 
 	var started_on_floor = player.is_on_floor()
 	player.move_and_slide()

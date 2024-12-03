@@ -2,18 +2,19 @@ extends Node
 
 var health := 100.0: set = set_health
 var max_health := 100.0: set = set_max_health
-var speed := 300
+var speed := 200
 var max_jumps := 1: set = set_max_jumps
 var current_jumps := max_jumps: set = set_current_jumps
 var max_air_dashes := 0: set = set_max_air_dashes
 var current_air_dashes := max_air_dashes: set = set_current_air_dashes
-var acceleration := 700
+var acceleration := 1000
 var friction := 2100
 var jump_velocity := -400
 var ground_pound_speed := 2000
 var facing_direction := 1
 var wall_jump_velocity := 400
 var current_checkpoint := Vector2.ZERO
+var slide_speed := 300.0
 
 const NON_FLIP_SPRITE_STATES = ["GroundPoundState", "AirDashState"]
 

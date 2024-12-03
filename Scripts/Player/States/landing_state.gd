@@ -8,6 +8,7 @@ const BOOST_JUMP_STATES = ["GroundPoundState"]
 const BOOST_JUMP__FORWARDSTATES = ["AirDashState"]
 
 func _enter() -> void:
+	player.animation_player.play("land")
 	previous_state = %LimboHSM.get_previous_active_state().name
 	print("Entering Landing State from: ", previous_state)
 
@@ -16,6 +17,8 @@ func _enter() -> void:
 	get_parent().add_child(impact_effect)
 	impact_effect.emitting = true
 	
+	%Sprite2D.scale = Vector2(1.0, 1.0)
+	%Sprite2D.rotation_degrees = 0.0
 	PlayerConfig.current_air_dashes = PlayerConfig.max_air_dashes
 	PlayerConfig.current_jumps = PlayerConfig.max_jumps - 1 if player.jump_buffered else PlayerConfig.max_jumps
 	player.gravity_multiplier = 1.0

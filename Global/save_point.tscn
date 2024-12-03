@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://51brs2on101t"]
+
+[ext_resource type="Script" path="res://Scripts/Global/save_point.gd" id="1_xatq0"]
+
+[node name="SavePoint" type="Area2D"]
+script = ExtResource("1_xatq0")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

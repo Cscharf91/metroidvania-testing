@@ -11,6 +11,7 @@ class_name Player
 @onready var landing_state: LandingState = $LimboHSM/LandingState
 @onready var wall_jump_state: WallJumpState = $LimboHSM/WallJumpState
 @onready var glide_state: GlideState = $LimboHSM/GlideState
+@onready var slide_state: SlideState = $LimboHSM/SlideState
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var direction_pointer: Marker2D = $DirectionPointer
@@ -19,7 +20,9 @@ class_name Player
 @export var coyote_timer := 0.15
 @export var boost_jump_timer := 0.15
 @export var jump_buffer_timer := 0.25
+@export var no_turnaround_timer := 0.15
 @export var air_dash_speed := 900.0
+@export var turnaround_friction_multiplier := 2.0
 
 var reset_position: Vector2
 var gravity_multiplier := 1.0
@@ -27,13 +30,13 @@ var direction := 0.0
 var is_coyote_time := false: set = set_is_coyote_time
 var can_boost_jump := false: set = set_can_boost_jump
 var can_boost_jump_forward := false: set = set_can_boost_jump_forward
+var cannot_turnaround := false: set = set_cannot_turnaround
 var jump_buffered := false: set = set_jump_buffered
 var current_active_state := ""
 var previous_active_state := ""
 var can_move := true
 
 func _ready():
-	print("readyoooo")
 	handle_unlocks()
 	_init_state_machine()
 	%Sprite2D.flip_h = PlayerConfig.facing_direction < 0
@@ -46,17 +49,14 @@ func _init_state_machine():
 	hsm.add_transition(wall_jump_state, landing_state, &"landed")
 	hsm.add_transition(glide_state, landing_state, &"landed")
 
-	# Transitions out of landed_state
-	hsm.add_transition(landing_state, idle_state, &"movement_stopped")
-	hsm.add_transition(landing_state, move_state, &"movement_started")
-	hsm.add_transition(landing_state, air_state, &"in_air")
-
 	# Transitions into air_state
+	hsm.add_transition(landing_state, air_state, &"in_air")
 	hsm.add_transition(idle_state, air_state, &"in_air")
 	hsm.add_transition(move_state, air_state, &"in_air")
 	hsm.add_transition(air_dash_state, air_state, &"in_air")
 	hsm.add_transition(wall_jump_state, air_state, &"in_air")
 	hsm.add_transition(glide_state, air_state, &"in_air")
+	hsm.add_transition(slide_state, air_state, &"in_air")
 	
 	# Transitions into air_dash_state
 	hsm.add_transition(air_state, air_dash_state, &"air_dash")
@@ -75,10 +75,20 @@ func _init_state_machine():
 	# Transitions into glide_state
 	hsm.add_transition(air_state, glide_state, &"glide")
 	hsm.add_transition(air_dash_state, glide_state, &"glide")
-	
-	# One-off transitions
+
+	# Transitions into slide_state
+	hsm.add_transition(idle_state, slide_state, &"slide")
+	hsm.add_transition(move_state, slide_state, &"slide")
+
+	# Transitions into idle_state
 	hsm.add_transition(move_state, idle_state, &"movement_stopped")
+	hsm.add_transition(landing_state, idle_state, &"movement_stopped")
+	hsm.add_transition(slide_state, idle_state, &"movement_stopped")
+
+	# Transitions into move_state
 	hsm.add_transition(idle_state, move_state, &"movement_started")
+	hsm.add_transition(landing_state, move_state, &"movement_started")
+	hsm.add_transition(slide_state, move_state, &"movement_started")
 
 	hsm.initialize(self)
 	hsm.set_initial_state(idle_state)
@@ -102,7 +112,7 @@ func _physics_process(delta: float) -> void:
 	direction = Input.get_axis("move_left", "move_right")
 
 	var facing_direction = 1 if direction > 0 else -1
-	if PlayerConfig.facing_direction != facing_direction and direction != 0 and current_active_state not in PlayerConfig.NON_FLIP_SPRITE_STATES:
+	if PlayerConfig.facing_direction != facing_direction and direction != 0 and current_active_state not in PlayerConfig.NON_FLIP_SPRITE_STATES and not cannot_turnaround:
 		PlayerConfig.facing_direction = facing_direction
 		direction_pointer.position.x = facing_direction * 16
 		%Sprite2D.flip_h = facing_direction < 0
@@ -114,18 +124,28 @@ func _physics_process(delta: float) -> void:
 
 func handle_movement(delta: float) -> void:
 	if direction != 0 and can_move:
-		velocity.x = move_toward(
-		velocity.x,
-		direction * PlayerConfig.speed,
-		PlayerConfig.acceleration * delta
-		)
+		var is_turning_around = (sign(velocity.x) != direction and velocity.x != 0)
+		if is_turning_around:
+			# Apply stronger friction to stop the character quickly
+			velocity.x = move_toward(
+				velocity.x,
+				0,
+				PlayerConfig.friction * turnaround_friction_multiplier * delta
+			)
+		else:
+			# Normal movement
+			velocity.x = move_toward(
+				velocity.x,
+				direction * PlayerConfig.speed,
+				PlayerConfig.acceleration * delta
+			)
 	elif direction == 0 and can_move:
-		# Apply friction when no input
+		# Apply normal friction when no input
 		velocity.x = move_toward(velocity.x, 0, PlayerConfig.friction * delta)
 	else:
-			velocity.x = 0
-			if current_active_state != "GroundPoundState":
-				$AnimationPlayer.play("idle")
+		velocity.x = 0
+		if current_active_state != "GroundPoundState":
+			$AnimationPlayer.play("idle")
 
 
 func apply_gravity(delta: float):
@@ -138,19 +158,11 @@ func apply_gravity(delta: float):
 
 func jump():
 	jump_buffered = false
-	if is_on_floor():
-		# one in 10 jumps will be a sick spin or a flipperoo
-		var random_number = randi() % 10
-		if random_number == 0:
-			if randi() % 2:
-				do_sick_spin()
-			else:
-				do_flipperoo()
 	if can_boost_jump:
 		velocity.y = PlayerConfig.jump_velocity * 1.3
 	else:
 		if can_boost_jump_forward:
-			do_flipperoo()
+			do_sick_flip()
 			velocity.x = air_dash_speed * PlayerConfig.facing_direction
 
 		velocity.y = PlayerConfig.jump_velocity
@@ -220,24 +232,7 @@ func create_dash_effect():
 func _on_fast_movement_effect_timer_timeout() -> void:
 	create_dash_effect()
 
-func do_sick_spin():
-	var jump_squeeze_tween = create_tween()
-
-	jump_squeeze_tween.tween_property(
-		%Sprite2D,
-		"scale",
-		Vector2(-1.0, 1.0),
-		0.25
-	).set_trans(Tween.TRANS_ELASTIC)
-
-	jump_squeeze_tween.tween_property(
-		%Sprite2D,
-		"scale",
-		Vector2(1.0, 1.0),
-		0.5
-	).set_trans(Tween.TRANS_ELASTIC)
-
-func do_flipperoo():
+func do_sick_flip():
 	var jump_squeeze_tween = create_tween()
 
 	jump_squeeze_tween.tween_property(
@@ -268,3 +263,8 @@ func handle_unlocks():
 func on_enter():
 	# Position for kill system. Assigned when entering new room (see Game.gd).
 	reset_position = position
+
+func set_cannot_turnaround(new_val: bool):
+	cannot_turnaround = new_val
+	await get_tree().create_timer(no_turnaround_timer).timeout
+	cannot_turnaround = false

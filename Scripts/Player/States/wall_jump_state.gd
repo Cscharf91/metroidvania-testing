@@ -7,8 +7,10 @@ var wall_coyote_timer_active := false
 var wall_coyote_timer := 0.15
 var can_wall_jump := true
 var wall_slide_velocity := 80.0
+var wall_landed := false
 
 func _enter() -> void:
+	wall_landed = false
 	can_wall_jump = true
 	wall_coyote_timer_active = false
 
@@ -22,17 +24,25 @@ func _exit() -> void:
 	wall_coyote_timer_active = false
 
 func _update(_delta: float) -> void:
+	var direction = sign(player.direction)
 	if Input.is_action_just_pressed("jump") and can_wall_jump or player.jump_buffered:
 		perform_wall_jump()
 		player.jump_buffered = false
 	elif is_touching_wall() and not wall_coyote_timer_active:
-		var direction = sign(player.direction)
 		var is_holding_towards_wall = direction != 0 and direction == wall_direction_x
 		if is_holding_towards_wall and player.velocity.y > 0:
 			player.velocity.y = wall_slide_velocity / 2
+			if player.animation_player.current_animation != "wall_slide" and player.animation_player.current_animation != "wall_land" and not wall_landed:
+				player.animation_player.play("wall_land")
+
 		can_wall_jump = true
 	elif not wall_coyote_timer_active:
 		start_wall_coyote_timer()
+		player.animation_player.play("fall")
+	
+	var is_holding_away_from_wall = direction != 0 and direction != wall_direction_x
+	if is_holding_away_from_wall:
+		player.animation_player.play("fall")
 
 	if player.is_on_floor():
 		dispatch("landed")
@@ -42,6 +52,13 @@ func _update(_delta: float) -> void:
 	player.move_and_slide()
 
 func perform_wall_jump():
+	if not wall_coyote_timer_active:
+		player.animation_player.play("jump")
+		player.direction = player.direction * -1
+		PlayerConfig.facing_direction = PlayerConfig.facing_direction * -1
+		%Sprite2D.flip_h = false if %Sprite2D.flip_h else true
+		player.cannot_turnaround = true
+
 	player.velocity.y = PlayerConfig.jump_velocity
 	player.velocity.x = (wall_direction_x * -1) * PlayerConfig.wall_jump_velocity
 	can_wall_jump = false
@@ -49,16 +66,13 @@ func perform_wall_jump():
 
 func start_wall_coyote_timer():
 	wall_coyote_timer_active = true
-	print("Coyote start!")
 	await get_tree().create_timer(wall_coyote_timer).timeout
 	if not is_touching_wall():
-		print("Wall coyote time expired")
 		can_wall_jump = false
 		wall_coyote_timer_active = false
 		dispatch("landed" if player.is_on_floor() else "in_air")
 	else:
 		wall_coyote_timer_active = false
-		print("Wall contact regained, coyote timer canceled")
 
 func is_touching_wall() -> bool:
 	var collision_margin = 1.0
@@ -72,3 +86,8 @@ func is_touching_wall() -> bool:
 		wall_direction_x = 1
 		return true
 	return false
+
+func _on_wall_land_animation_finished() -> void:
+	if player.current_active_state == "WallJumpState" and not player.animation_player.current_animation == "wall_slide":
+		wall_landed = true
+		player.animation_player.play("wall_slide")

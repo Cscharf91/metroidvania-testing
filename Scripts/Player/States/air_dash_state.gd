@@ -10,8 +10,7 @@ func _enter() -> void:
 	 
 	var is_boosted_dash = previous_state == "GroundPoundState"
 
-	var direction = "left" if %Sprite2D.flip_h else "right"
-	player.animation_player.play("air_dash_" + str(direction))
+	player.animation_player.play("air_dash")
 	
 	air_dash(is_boosted_dash)
 	%FastMovementEffectTimer.start()
@@ -51,12 +50,11 @@ func air_dash(is_boosted: bool) -> void:
 	
 	PlayerConfig.current_air_dashes -= 1
 	player.gravity_multiplier = 0.0
-	var air_dash_direction = -1 if %Sprite2D.flip_h else 1
 
 	# Directly set velocity.x with respect to direction and terminal velocity
 	var dash_tween = create_tween()
 	var total_air_dash_speed = player.air_dash_speed if not is_boosted else player.air_dash_speed * 1.2
-	dash_tween.tween_property(player, "velocity:x", air_dash_direction * total_air_dash_speed, 0.1)
+	dash_tween.tween_property(player, "velocity:x", PlayerConfig.facing_direction * total_air_dash_speed, 0.1)
 	dash_tween.connect("finished", _on_dash_tween_completed)
 
 func _on_dash_tween_completed() -> void:
