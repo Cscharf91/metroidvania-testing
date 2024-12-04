@@ -26,6 +26,7 @@ TransitionLayer="*res://Global/transition_layer.tscn"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 State="*res://Global/State.gd"
 MetSys="*res://addons/MetroidvaniaSystem/Nodes/Singleton.tscn"
+InputBuffer="*res://Scripts/Global/input_buffer.gd"
 
 [dialogue_manager]
 

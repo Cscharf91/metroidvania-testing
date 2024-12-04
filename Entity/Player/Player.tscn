@@ -736,7 +736,7 @@ tracks/4/keys = {
 
 [sub_resource type="Animation" id="Animation_uunqd"]
 resource_name = "slide"
-length = 0.8
+length = 0.4
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -961,6 +961,11 @@ zoom = Vector2(5, 5)
 [node name="FastMovementEffectTimer" type="Timer" parent="Timers" index="0"]
 unique_name_in_owner = true
 wait_time = 0.15
+
+[node name="SlideCooldown" type="Timer" parent="Timers" index="1"]
+unique_name_in_owner = true
+wait_time = 0.4
+one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 libraries = {

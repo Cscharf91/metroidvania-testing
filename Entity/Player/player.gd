@@ -39,7 +39,7 @@ var current_active_state := ""
 var previous_active_state := ""
 
 var can_move := true
-var can_attack := true: set = set_can_attack
+var can_attack := true
 
 func _ready():
 	handle_unlocks()
@@ -288,7 +288,3 @@ func set_cannot_turnaround(new_val: bool):
 
 func allow_attack():
 	can_attack = true
-
-func set_can_attack(new_val: bool):
-	print("setting can_attack to: ", new_val)
-	can_attack = new_val

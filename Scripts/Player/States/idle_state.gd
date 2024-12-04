@@ -46,7 +46,7 @@ func _update(_delta: float) -> void:
 		player.jump()
 		dispatch("in_air")
 	
-	if player.is_on_floor() and Input.is_action_just_pressed("ground_pound") and &"ground_pound" in PlayerConfig.abilities:
+	if player.is_on_floor() and Input.is_action_just_pressed("ground_pound") and &"slide" in PlayerConfig.abilities and not %SlideCooldown.time_left:
 		dispatch("slide")
 
 	var started_on_floor = player.is_on_floor()

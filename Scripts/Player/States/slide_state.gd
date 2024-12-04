@@ -19,9 +19,13 @@ func _enter() -> void:
 	%FastMovementEffectTimer.start()
 
 func _exit() -> void:
+	if player.animation_player.is_connected("animation_finished", _on_animation_finished):
+		player.animation_player.disconnect("animation_finished", _on_animation_finished)
+	
 	%CollisionShape2D.shape.size = Vector2(10, 20)
 	%CollisionShape2D.position = Vector2(0, 6)
 	%FastMovementEffectTimer.stop()
+	%SlideCooldown.start()
 	
 func _update(_delta: float) -> void:
 	check_for_overhead_platform()
@@ -62,7 +66,7 @@ func _on_animation_finished(anim_name: String) -> void:
 			dispatch("movement_stopped" if player.direction == 0 else "movement_started")
 		
 func check_for_overhead_platform() -> void:
-	if %OverheadPlatformDetector.is_colliding():
+	if %OverheadPlatformDetector and %OverheadPlatformDetector.is_colliding():
 		print("Sliding under platform")
 		is_sliding_under_platform = true
 	else:
