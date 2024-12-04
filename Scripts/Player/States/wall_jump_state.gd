@@ -25,9 +25,8 @@ func _exit() -> void:
 
 func _update(_delta: float) -> void:
 	var direction = sign(player.direction)
-	if Input.is_action_just_pressed("jump") and can_wall_jump or player.jump_buffered:
+	if Input.is_action_just_pressed("jump") and can_wall_jump:
 		perform_wall_jump()
-		player.jump_buffered = false
 	elif is_touching_wall() and not wall_coyote_timer_active:
 		var is_holding_towards_wall = direction != 0 and direction == wall_direction_x
 		if is_holding_towards_wall and player.velocity.y > 0:

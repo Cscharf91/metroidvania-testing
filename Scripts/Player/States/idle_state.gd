@@ -41,7 +41,7 @@ func _update(_delta: float) -> void:
 	if player.velocity.x == 0 and player.is_on_floor() and player.animation_player.current_animation == "run":
 		player.animation_player.play("idle")
 	
-	if Input.is_action_just_pressed("jump"):
+	if InputBuffer.is_action_press_buffered("jump"):
 		PlayerConfig.current_jumps -= 1
 		player.jump()
 		dispatch("in_air")
@@ -59,7 +59,7 @@ func _update(_delta: float) -> void:
 	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
 		dispatch("movement_started")
 	
-	if Input.is_action_just_pressed("attack"):
+	if InputBuffer.is_action_press_buffered("attack"):
 		dispatch("melee_attack1")
 
 func _on_movement_started(_cargo = null) -> bool:

@@ -36,7 +36,7 @@ func _update(_delta: float) -> void:
 	if Input.is_action_just_pressed("ground_pound") and &"ground_pound" in PlayerConfig.abilities:
 		dispatch("ground_pound")
 
-	if Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps > 0:
+	if InputBuffer.is_action_press_buffered("jump") and PlayerConfig.current_jumps > 0:
 		player.can_boost_jump_forward = true
 		player.jump()
 		dispatch("in_air")

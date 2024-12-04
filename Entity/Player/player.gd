@@ -22,7 +22,6 @@ class_name Player
 @export var terminal_velocity_y := 1000
 @export var coyote_timer := 0.15
 @export var boost_jump_timer := 0.15
-@export var jump_buffer_timer := 0.25
 @export var no_turnaround_timer := 0.15
 @export var air_dash_speed := 900.0
 @export var turnaround_friction_multiplier := 2.0
@@ -34,7 +33,6 @@ var is_coyote_time := false: set = set_is_coyote_time
 var can_boost_jump := false: set = set_can_boost_jump
 var can_boost_jump_forward := false: set = set_can_boost_jump_forward
 var cannot_turnaround := false: set = set_cannot_turnaround
-var jump_buffered := false: set = set_jump_buffered
 var current_active_state := ""
 var previous_active_state := ""
 
@@ -62,6 +60,9 @@ func _init_state_machine():
 	hsm.add_transition(wall_jump_state, air_state, &"in_air")
 	hsm.add_transition(glide_state, air_state, &"in_air")
 	hsm.add_transition(slide_state, air_state, &"in_air")
+	hsm.add_transition(melee_attack1_state, air_state, &"in_air")
+	hsm.add_transition(melee_attack2_state, air_state, &"in_air")
+	hsm.add_transition(melee_attack3_state, air_state, &"in_air")
 	
 	# Transitions into air_dash_state
 	hsm.add_transition(air_state, air_dash_state, &"air_dash")
@@ -85,6 +86,9 @@ func _init_state_machine():
 	# Transitions into slide_state
 	hsm.add_transition(idle_state, slide_state, &"slide")
 	hsm.add_transition(move_state, slide_state, &"slide")
+	hsm.add_transition(melee_attack1_state, slide_state, &"slide")
+	hsm.add_transition(melee_attack2_state, slide_state, &"slide")
+	hsm.add_transition(melee_attack3_state, slide_state, &"slide")
 
 	# Transitions into idle_state
 	hsm.add_transition(move_state, idle_state, &"movement_stopped")
@@ -98,6 +102,9 @@ func _init_state_machine():
 	hsm.add_transition(idle_state, move_state, &"movement_started")
 	hsm.add_transition(landing_state, move_state, &"movement_started")
 	hsm.add_transition(slide_state, move_state, &"movement_started")
+	hsm.add_transition(melee_attack1_state, move_state, &"movement_started")
+	hsm.add_transition(melee_attack2_state, move_state, &"movement_started")
+	hsm.add_transition(melee_attack3_state, move_state, &"movement_started")
 
 	# Transitions into melee_attack_states
 	hsm.add_transition(idle_state, melee_attack1_state, &"melee_attack1")
@@ -132,9 +139,6 @@ func _physics_process(delta: float) -> void:
 		%Sprite2D.flip_h = facing_direction < 0
 
 	handle_movement(delta)
-
-	if Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps == 0 and can_move and not is_on_floor():
-			jump_buffered = true
 
 func handle_movement(delta: float) -> void:
 	if direction != 0 and can_move:
@@ -174,7 +178,6 @@ func apply_gravity(delta: float):
 		# velocity.y = 0
 
 func jump():
-	jump_buffered = false
 	if can_boost_jump:
 		velocity.y = PlayerConfig.jump_velocity * 1.2
 	else:
@@ -212,16 +215,6 @@ func set_can_boost_jump_forward(new_val: bool) -> void:
 	
 	await get_tree().create_timer(boost_jump_timer).timeout
 	can_boost_jump_forward = false
-
-func set_jump_buffered(new_val: bool) -> void:
-	jump_buffered = new_val
-
-	if new_val == false:
-		return
-
-	await get_tree().create_timer(jump_buffer_timer).timeout
-	jump_buffered = false
-
 
 func _on_action_detection_area_area_entered(area: Area2D) -> void:
 	if area is Unlockable:

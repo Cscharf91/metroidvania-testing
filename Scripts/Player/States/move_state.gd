@@ -31,7 +31,7 @@ func _update(delta: float) -> void:
   
   handle_movement(delta)
   
-  if Input.is_action_just_pressed("jump"):
+  if InputBuffer.is_action_press_buffered("jump"):
     PlayerConfig.current_jumps -= 1
     player.jump()
     dispatch("in_air")

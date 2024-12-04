@@ -24,34 +24,31 @@ func _exit() -> void:
 func _update(_delta: float) -> void:
 	if not player.can_attack:
 		player.velocity = Vector2(0, player.velocity.y)
-	if Input.is_action_just_pressed("attack") and player.can_attack and next_state_dispatch != "":
+	if InputBuffer.is_action_press_buffered("attack") and player.can_attack and next_state_dispatch != "":
 		dispatch(next_state_dispatch)
 	if not player.is_on_floor() and not player.is_coyote_time:
 		player.animation_player.stop()
 		dispatch("in_air")
 		return
   
-	if Input.is_action_just_pressed("jump"):
-		# TODO - buffer jump?
-		# PlayerConfig.current_jumps -= 1
-		# player.jump()
-		# dispatch("in_air")
-		pass
+	if InputBuffer.is_action_press_buffered("jump") and player.can_attack:
+		dispatch("in_air")
   
-	if player.is_on_floor() and Input.is_action_just_pressed("ground_pound"):
-		# TODO - buffer ground pound?
-		pass
+	if player.is_on_floor() and InputBuffer.is_action_press_buffered("ground_pound") and player.can_attack:
+		dispatch("slide")
+	
+	if player.direction != 0 and player.can_attack:
+		dispatch("movement_started")
 	
 	var started_on_floor = player.is_on_floor()
 	player.move_and_slide()
 	var ended_on_floor = player.is_on_floor()
 
-	if started_on_floor and not ended_on_floor and not Input.is_action_pressed("jump"):
+	if started_on_floor and not ended_on_floor and not InputBuffer.is_action_press_buffered("jump"):
 		PlayerConfig.current_jumps -= 1
 		player.is_coyote_time = true
 
 func _on_animation_finished(anim_name: String) -> void:
 	if anim_name == animation:
-		print("hi??????")
 		dispatch("attack_ended")
 		return
