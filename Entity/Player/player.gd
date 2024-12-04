@@ -14,7 +14,6 @@ class_name Player
 @onready var slide_state: SlideState = $LimboHSM/SlideState
 @onready var melee_attack1_state: AttackState = $LimboHSM/MeleeAttack1State
 @onready var melee_attack2_state: AttackState = $LimboHSM/MeleeAttack2State
-@onready var melee_attack3_state: AttackState = $LimboHSM/MeleeAttack3State
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var direction_pointer: Marker2D = $DirectionPointer
@@ -62,7 +61,6 @@ func _init_state_machine():
 	hsm.add_transition(slide_state, air_state, &"in_air")
 	hsm.add_transition(melee_attack1_state, air_state, &"in_air")
 	hsm.add_transition(melee_attack2_state, air_state, &"in_air")
-	hsm.add_transition(melee_attack3_state, air_state, &"in_air")
 	
 	# Transitions into air_dash_state
 	hsm.add_transition(air_state, air_dash_state, &"air_dash")
@@ -88,7 +86,6 @@ func _init_state_machine():
 	hsm.add_transition(move_state, slide_state, &"slide")
 	hsm.add_transition(melee_attack1_state, slide_state, &"slide")
 	hsm.add_transition(melee_attack2_state, slide_state, &"slide")
-	hsm.add_transition(melee_attack3_state, slide_state, &"slide")
 
 	# Transitions into idle_state
 	hsm.add_transition(move_state, idle_state, &"movement_stopped")
@@ -96,7 +93,6 @@ func _init_state_machine():
 	hsm.add_transition(slide_state, idle_state, &"movement_stopped")
 	hsm.add_transition(melee_attack1_state, idle_state, &"attack_ended")
 	hsm.add_transition(melee_attack2_state, idle_state, &"attack_ended")
-	hsm.add_transition(melee_attack3_state, idle_state, &"attack_ended")
 
 	# Transitions into move_state
 	hsm.add_transition(idle_state, move_state, &"movement_started")
@@ -104,12 +100,10 @@ func _init_state_machine():
 	hsm.add_transition(slide_state, move_state, &"movement_started")
 	hsm.add_transition(melee_attack1_state, move_state, &"movement_started")
 	hsm.add_transition(melee_attack2_state, move_state, &"movement_started")
-	hsm.add_transition(melee_attack3_state, move_state, &"movement_started")
 
 	# Transitions into melee_attack_states
 	hsm.add_transition(idle_state, melee_attack1_state, &"melee_attack1")
 	hsm.add_transition(melee_attack1_state, melee_attack2_state, &"melee_attack2")
-	hsm.add_transition(melee_attack2_state, melee_attack3_state, &"melee_attack3")
 
 	hsm.initialize(self)
 	hsm.set_initial_state(idle_state)
@@ -182,7 +176,6 @@ func jump():
 		velocity.y = PlayerConfig.jump_velocity * 1.2
 	else:
 		if can_boost_jump_forward:
-			do_sick_flip()
 			velocity.x = (air_dash_speed / 1.4) * PlayerConfig.facing_direction
 
 		velocity.y = PlayerConfig.jump_velocity

@@ -266,7 +266,6 @@ tracks/2/keys = {
 [sub_resource type="Animation" id="Animation_2rkyo"]
 resource_name = "fall"
 length = 0.3
-loop_mode = 1
 step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -1015,11 +1014,6 @@ next_state_dispatch = "melee_attack2"
 animation = "melee_attack_jab"
 
 [node name="MeleeAttack2State" type="LimboState" parent="LimboHSM" index="10"]
-script = ExtResource("21_e0ogm")
-next_state_dispatch = "melee_attack3"
-animation = "melee_attack_jab"
-
-[node name="MeleeAttack3State" type="LimboState" parent="LimboHSM" index="11"]
 script = ExtResource("21_e0ogm")
 animation = "melee_attack_cross"
 

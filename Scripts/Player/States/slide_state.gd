@@ -30,7 +30,6 @@ func _exit() -> void:
 func _update(_delta: float) -> void:
 	check_for_overhead_platform()
 	if PlayerConfig.facing_direction == 1 and player.velocity.x >= PlayerConfig.slide_speed or PlayerConfig.facing_direction == -1 and player.velocity.x <= -PlayerConfig.slide_speed:
-		print("zoom zoom!")
 		player.velocity.x = lerp(player.velocity.x, PlayerConfig.slide_speed * PlayerConfig.facing_direction, 0.1)
 	else:
 		player.velocity.x = PlayerConfig.slide_speed * PlayerConfig.facing_direction
