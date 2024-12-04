@@ -15,6 +15,7 @@ var facing_direction := 1
 var wall_jump_velocity := 400
 var current_checkpoint := Vector2.ZERO
 var slide_speed := 300.0
+var max_speed := 1000.0
 
 const NON_FLIP_SPRITE_STATES = ["GroundPoundState", "AirDashState"]
 

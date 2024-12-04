@@ -12,6 +12,9 @@ class_name Player
 @onready var wall_jump_state: WallJumpState = $LimboHSM/WallJumpState
 @onready var glide_state: GlideState = $LimboHSM/GlideState
 @onready var slide_state: SlideState = $LimboHSM/SlideState
+@onready var melee_attack1_state: AttackState = $LimboHSM/MeleeAttack1State
+@onready var melee_attack2_state: AttackState = $LimboHSM/MeleeAttack2State
+@onready var melee_attack3_state: AttackState = $LimboHSM/MeleeAttack3State
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var direction_pointer: Marker2D = $DirectionPointer
@@ -34,7 +37,9 @@ var cannot_turnaround := false: set = set_cannot_turnaround
 var jump_buffered := false: set = set_jump_buffered
 var current_active_state := ""
 var previous_active_state := ""
+
 var can_move := true
+var can_attack := true: set = set_can_attack
 
 func _ready():
 	handle_unlocks()
@@ -85,11 +90,19 @@ func _init_state_machine():
 	hsm.add_transition(move_state, idle_state, &"movement_stopped")
 	hsm.add_transition(landing_state, idle_state, &"movement_stopped")
 	hsm.add_transition(slide_state, idle_state, &"movement_stopped")
+	hsm.add_transition(melee_attack1_state, idle_state, &"attack_ended")
+	hsm.add_transition(melee_attack2_state, idle_state, &"attack_ended")
+	hsm.add_transition(melee_attack3_state, idle_state, &"attack_ended")
 
 	# Transitions into move_state
 	hsm.add_transition(idle_state, move_state, &"movement_started")
 	hsm.add_transition(landing_state, move_state, &"movement_started")
 	hsm.add_transition(slide_state, move_state, &"movement_started")
+
+	# Transitions into melee_attack_states
+	hsm.add_transition(idle_state, melee_attack1_state, &"melee_attack1")
+	hsm.add_transition(melee_attack1_state, melee_attack2_state, &"melee_attack2")
+	hsm.add_transition(melee_attack2_state, melee_attack3_state, &"melee_attack3")
 
 	hsm.initialize(self)
 	hsm.set_initial_state(idle_state)
@@ -147,6 +160,9 @@ func handle_movement(delta: float) -> void:
 		velocity.x = 0
 		if current_active_state != "GroundPoundState":
 			$AnimationPlayer.play("idle")
+	
+	velocity.x = clamp(velocity.x, -PlayerConfig.max_speed, PlayerConfig.max_speed)
+	velocity.y = clamp(velocity.y, -terminal_velocity_y, terminal_velocity_y)
 
 
 func apply_gravity(delta: float):
@@ -269,3 +285,10 @@ func set_cannot_turnaround(new_val: bool):
 	cannot_turnaround = new_val
 	await get_tree().create_timer(no_turnaround_timer).timeout
 	cannot_turnaround = false
+
+func allow_attack():
+	can_attack = true
+
+func set_can_attack(new_val: bool):
+	print("setting can_attack to: ", new_val)
+	can_attack = new_val

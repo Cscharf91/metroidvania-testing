@@ -58,6 +58,9 @@ func _update(_delta: float) -> void:
 
 	if Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
 		dispatch("movement_started")
+	
+	if Input.is_action_just_pressed("attack"):
+		dispatch("melee_attack1")
 
 func _on_movement_started(_cargo = null) -> bool:
 	return false
