@@ -18,6 +18,7 @@ repeat_times = 20
 
 [node name="Sprite2D" parent="BackgroundLayers/Bg1" index="0"]
 texture = ExtResource("3_lfbqy")
+centered = false
 
 [node name="Bg2" parent="BackgroundLayers" index="1"]
 scroll_scale = Vector2(0.2, 0.02)
@@ -25,8 +26,8 @@ repeat_size = Vector2(414.4, 0)
 repeat_times = 20
 
 [node name="Sprite2D" parent="BackgroundLayers/Bg2" index="0"]
-scale = Vector2(0.7, 0.7)
 texture = ExtResource("6_2ed40")
+centered = false
 
 [node name="Bg3" type="Parallax2D" parent="BackgroundLayers" index="2"]
 scroll_scale = Vector2(0.3, 0.05)
@@ -36,19 +37,21 @@ script = ExtResource("5_hmhvf")
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundLayers/Bg3" index="0"]
-scale = Vector2(0.7, 0.7)
 texture = ExtResource("7_3jtld")
+centered = false
 
 [node name="Bg4" type="Parallax2D" parent="BackgroundLayers" index="3"]
 scroll_scale = Vector2(0.4, 0.06)
-repeat_size = Vector2(414.4, 190)
+scroll_offset = Vector2(0, 8)
+repeat_size = Vector2(414.4, 0)
 repeat_times = 20
 script = ExtResource("5_hmhvf")
+background_color = Color(0.0862745, 0.188235, 0.235294, 1)
 metadata/_edit_lock_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="BackgroundLayers/Bg4" index="0"]
-scale = Vector2(0.7, 0.7)
 texture = ExtResource("4_kcqsq")
+centered = false
 
 [node name="TileMapLayer" parent="TileMapLayers" index="0"]
 tile_set = ExtResource("2_wv5sx")
