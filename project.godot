@@ -27,6 +27,7 @@ DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 State="*res://Global/State.gd"
 MetSys="*res://addons/MetroidvaniaSystem/Nodes/Singleton.tscn"
 InputBuffer="*res://Scripts/Global/input_buffer.gd"
+BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 
 [dialogue_manager]
 
@@ -34,19 +35,21 @@ general/balloon_path="res://Dialogue/balloon.tscn"
 
 [display]
 
-window/size/viewport_width=320
-window/size/viewport_height=180
+window/size/viewport_width=768
+window/size/viewport_height=432
 window/size/window_width_override=1920
 window/size/window_height_override=1080
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/MetroidvaniaSystem/EditorExtension/plugin.cfg", "res://addons/MetroidvaniaSystem/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/MetroidvaniaSystem/EditorExtension/plugin.cfg", "res://addons/MetroidvaniaSystem/plugin.cfg", "res://addons/better-terrain/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
 
 [global_group]
 
 player="it's the player, duh"
 Persist=""
+enemies=""
 
 [input]
 

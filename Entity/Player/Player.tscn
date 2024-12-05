@@ -955,7 +955,7 @@ position = Vector2(0, 6)
 shape = SubResource("RectangleShape2D_41ra8")
 
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
-zoom = Vector2(5, 5)
+zoom = Vector2(2, 2)
 
 [node name="FastMovementEffectTimer" type="Timer" parent="Timers" index="0"]
 unique_name_in_owner = true

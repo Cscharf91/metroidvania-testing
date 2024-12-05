@@ -7,7 +7,7 @@
 script = ExtResource("1_xjm7n")
 theme = ExtResource("2_hio6n")
 map_root_folder = "res://Maps/"
-scene_template = ""
+scene_template = "res://MapAreaBases/area_1_base.tscn"
 in_game_cell_size = Vector2(1152, 648)
 discover_whole_rooms = false
 collectible_list = Array[Dictionary]([])

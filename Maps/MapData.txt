@@ -1,4 +1,4 @@
 [0,0,0]
-0,0,1,0|||AnotherTest.tscn
+0,0,1,0|||WoodsStart.tscn
 [-1,0,0]
 1,0,0,0|||AnotherTest2.tscn

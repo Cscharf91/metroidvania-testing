@@ -36,6 +36,7 @@ scroll_scale = Vector2(0.1, 0.05)
 repeat_size = Vector2(176, 0)
 repeat_times = 15
 script = ExtResource("2_2h263")
+additional_offset = Vector2(0, -80)
 
 [node name="Sprite2D" type="Sprite2D" parent="MiddleBackground"]
 position = Vector2(0, 125)

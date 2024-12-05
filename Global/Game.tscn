@@ -106,7 +106,7 @@ func update():
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_44ntw")
-starting_map = "AnotherTest.tscn"
+starting_map = "WoodsStart.tscn"
 
 [node name="Player" parent="." instance=ExtResource("4_tmbcq")]
 position = Vector2(75, 114)
@@ -117,10 +117,10 @@ position = Vector2(75, 114)
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -260.0
+offset_left = -200.0
 offset_top = 8.0
-offset_right = -10.4
-offset_bottom = 164.0
+offset_right = -8.0
+offset_bottom = 128.0
 grow_horizontal = 0
 display_player_location = true
 
