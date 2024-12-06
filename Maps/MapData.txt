@@ -1,4 +1,6 @@
 [0,0,0]
-0,0,1,0|||WoodsStart.tscn
+1,0,1,0|||DemonWoods/game_start.tscn
 [-1,0,0]
-1,0,0,0|||AnotherTest2.tscn
+1,0,0,0|||DemonWoods/basic_platforming.tscn
+[1,0,0]
+0,0,1,0|||DemonWoods/test.tscn

@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8m8yjk4e2lx7"]
+
+[ext_resource type="Script" path="res://Scripts/Objects/collectible.gd" id="1_16y6x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v5e3t"]
+size = Vector2(32, 32)
+
+[node name="Collectible" type="Area2D"]
+collision_layer = 128
+script = ExtResource("1_16y6x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_v5e3t")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="collect"]

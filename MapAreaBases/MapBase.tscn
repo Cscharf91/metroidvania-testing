@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://fdrg68y5hy4e"]
+[gd_scene load_steps=5 format=3 uid="uid://fdrg68y5hy4e"]
 
 [ext_resource type="PackedScene" uid="uid://bsg0351mx3b4u" path="res://addons/MetroidvaniaSystem/Nodes/RoomInstance.tscn" id="1_1ldla"]
 [ext_resource type="Script" path="res://Scripts/Global/dynamic_parallax.gd" id="1_cscb8"]
+[ext_resource type="Script" path="res://MapAreaBases/background_layers.gd" id="2_6uxgg"]
 
 [sub_resource type="TileSet" id="TileSet_81b40"]
 
@@ -10,6 +11,7 @@
 [node name="RoomInstance" parent="." instance=ExtResource("1_1ldla")]
 
 [node name="BackgroundLayers" type="Node" parent="."]
+script = ExtResource("2_6uxgg")
 
 [node name="Bg1" type="Parallax2D" parent="BackgroundLayers"]
 script = ExtResource("1_cscb8")
@@ -29,5 +31,7 @@ metadata/_edit_lock_ = true
 tile_set = SubResource("TileSet_81b40")
 
 [node name="Unlockables" type="Node" parent="."]
+
+[node name="Collectibles" type="Node" parent="."]
 
 [node name="Enemies" type="Node" parent="." groups=["enemies"]]

@@ -5,10 +5,30 @@
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_62hjl"]
 texture = ExtResource("1_kdkup")
 2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrain = 2
+2:0/0/terrains_peering_bit/right_side = 2
+2:0/0/terrains_peering_bit/left_side = 2
 3:0/0 = 0
+3:0/0/terrain_set = 0
+3:0/0/terrain = 2
+3:0/0/terrains_peering_bit/right_side = 2
+3:0/0/terrains_peering_bit/left_side = 2
 4:0/0 = 0
+4:0/0/terrain_set = 0
+4:0/0/terrain = 2
+4:0/0/terrains_peering_bit/right_side = 2
+4:0/0/terrains_peering_bit/left_side = 2
 5:0/0 = 0
+5:0/0/terrain_set = 0
+5:0/0/terrain = 2
+5:0/0/terrains_peering_bit/right_side = 2
+5:0/0/terrains_peering_bit/left_side = 2
 6:0/0 = 0
+6:0/0/terrain_set = 0
+6:0/0/terrain = 2
+6:0/0/terrains_peering_bit/right_side = 2
+6:0/0/terrains_peering_bit/left_side = 2
 8:0/0 = 0
 8:0/0/terrain_set = 0
 8:0/0/terrain = 0
@@ -110,7 +130,6 @@ texture = ExtResource("1_kdkup")
 12: [1],
 "type": 1
 }
-0:2/0 = 0
 2:2/0 = 0
 2:2/0/terrain_set = 0
 2:2/0/terrain = 0
@@ -162,7 +181,16 @@ texture = ExtResource("1_kdkup")
 }
 12:2/0 = 0
 12:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+0:3/next_alternative_id = 3
 0:3/0 = 0
+0:3/0/terrain_set = 0
+0:3/0/terrain = 2
+0:3/0/terrains_peering_bit/top_side = 2
+0:3/1 = 1
+0:3/1/flip_h = true
+0:3/1/terrain_set = 0
+0:3/1/terrain = 2
+0:3/1/terrains_peering_bit/top_side = 2
 2:4/0 = 0
 2:4/0/terrain_set = 0
 2:4/0/terrain = 1
@@ -332,6 +360,16 @@ texture = ExtResource("1_kdkup")
 12:6/0/terrains_peering_bit/bottom_side = 1
 12:6/0/terrains_peering_bit/left_side = 1
 12:6/0/terrains_peering_bit/top_side = 1
+0:2/next_alternative_id = 3
+0:2/0 = 0
+0:2/0/terrain_set = 0
+0:2/0/terrain = 2
+0:2/0/terrains_peering_bit/bottom_side = 2
+0:2/1 = 1
+0:2/1/flip_h = true
+0:2/1/terrain_set = 0
+0:2/1/terrain = 2
+0:2/1/terrains_peering_bit/bottom_side = 2
 
 [resource]
 physics_layer_0/collision_layer = 4
@@ -341,6 +379,8 @@ terrain_set_0/terrain_0/name = "Temple Platforms"
 terrain_set_0/terrain_0/color = Color(0.447144, 0.651922, 1.92523e-07, 1)
 terrain_set_0/terrain_1/name = "Overgrown Platforms 1"
 terrain_set_0/terrain_1/color = Color(1, 0.439216, 0.25098, 1)
+terrain_set_0/terrain_2/name = "Decorative"
+terrain_set_0/terrain_2/color = Color(0.849876, 1.05888e-06, 0.49407, 1)
 navigation_layer_0/layers = 1
 sources/2 = SubResource("TileSetAtlasSource_62hjl")
 metadata/_better_terrain = {
