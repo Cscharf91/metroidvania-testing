@@ -51,8 +51,8 @@ func add_room(room: Node2D, direction: int, offset: Vector2):
 		MetroidvaniaSystem.D:
 			size = Vector2(cell_size.x, cell_size.y * 0.2)
 		MetroidvaniaSystem.L:
-			size = Vector2(cell_size.x * 0.2, cell_size.y)
-			position.x += size.x * 4
+			size = Vector2(cell_size.x, cell_size.y)
+			#position.x += size.x * 4
 			room.position.x -= size.x * 4
 		MetroidvaniaSystem.U:
 			size = Vector2(cell_size.x, cell_size.y * 0.2)
@@ -122,4 +122,5 @@ anchor_right = 1.0
 offset_top = -26.0
 offset_bottom = 23.0
 grow_horizontal = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 horizontal_alignment = 1
