@@ -35,6 +35,11 @@ var cannot_turnaround := false: set = set_cannot_turnaround
 var current_active_state := ""
 var previous_active_state := ""
 
+var combo := 0: set = set_combo
+var combo_charges := 0
+var combo_charged := false
+var last_jump_position: Vector2
+
 var can_move := true
 var can_attack := true
 
@@ -117,6 +122,10 @@ func _unhandled_input(_event: InputEvent) -> void:
 		if actionables.size() > 0:
 			var actionable: Actionable = actionables[0]
 			actionable.action()
+	
+	if Input.is_action_just_pressed("combo_charge") and combo_charges > 0:
+		combo_charged = true
+		combo_charges -= 1
 
 
 func _physics_process(delta: float) -> void:
@@ -172,8 +181,13 @@ func apply_gravity(delta: float):
 		# velocity.y = 0
 
 func jump():
-	if can_boost_jump:
-		velocity.y = PlayerConfig.jump_velocity * 1.2
+	if combo == 0 or position.distance_to(last_jump_position) > 80:
+		last_jump_position = position
+		combo += 1
+	if can_boost_jump or combo_charged:
+		%FastMovementEffectTimer.start()
+		combo_charged = false
+		velocity.y = PlayerConfig.jump_velocity * 1.25
 	else:
 		if can_boost_jump_forward:
 			velocity.x = (air_dash_speed / 1.4) * PlayerConfig.facing_direction
@@ -274,3 +288,18 @@ func set_cannot_turnaround(new_val: bool):
 
 func allow_attack():
 	can_attack = true
+
+
+func _on_combo_timer_timeout() -> void:
+	print("Combo ended!")
+	combo = 0
+	combo_charges = 0
+
+func set_combo(new_combo: int):
+	if %ComboTimer.time_left:
+		%ComboTimer.stop()
+	combo = new_combo
+	if combo % PlayerConfig.combo_charge_threshold == 0 and combo != 0:
+		combo_charges += 1
+		print("Combo charge added! Total: ", combo_charges)
+	print("Combo added to: ", combo)

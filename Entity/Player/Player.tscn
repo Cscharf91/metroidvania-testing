@@ -966,6 +966,11 @@ unique_name_in_owner = true
 wait_time = 0.4
 one_shot = true
 
+[node name="ComboTimer" type="Timer" parent="Timers" index="2"]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 libraries = {
 "": SubResource("AnimationLibrary_ufq85")
@@ -1053,5 +1058,6 @@ shape = SubResource("RectangleShape2D_s4dtp")
 debug_color = Color(0.964237, 0.171512, 0.212351, 0.42)
 
 [connection signal="timeout" from="Timers/FastMovementEffectTimer" to="." method="_on_fast_movement_effect_timer_timeout"]
+[connection signal="timeout" from="Timers/ComboTimer" to="." method="_on_combo_timer_timeout"]
 [connection signal="area_entered" from="DirectionPointer/ActionDetectionArea" to="." method="_on_action_detection_area_area_entered"]
 [connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]

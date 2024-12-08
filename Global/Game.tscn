@@ -106,7 +106,7 @@ func update():
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_44ntw")
-starting_map = "DemonWoods/WoodsStart.tscn"
+starting_map = "DemonWoods/game_start.tscn"
 
 [node name="Player" parent="." instance=ExtResource("4_tmbcq")]
 position = Vector2(75, 114)

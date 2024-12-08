@@ -10,6 +10,8 @@ const BOOST_JUMP__FORWARDSTATES = ["AirDashState"]
 func _enter() -> void:
 	player.animation_player.play("land")
 	previous_state = %LimboHSM.get_previous_active_state().name
+	if player.combo > 0:
+		%ComboTimer.start()
 	print("Entering Landing State from: ", previous_state)
 
 	var impact_effect = ImpactEffect.instantiate()
