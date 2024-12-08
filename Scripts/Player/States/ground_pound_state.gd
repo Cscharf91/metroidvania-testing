@@ -1,6 +1,7 @@
 class_name GroundPoundState extends LimboState
 
 @onready var player: Player = owner
+var active_tween: Tween = null
 
 func _enter() -> void:
 	# print("Entering Ground Pound State from: ", %LimboHSM.get_previous_active_state().name)
@@ -9,6 +10,11 @@ func _enter() -> void:
 
 func _exit() -> void:
 	player.can_move = true
+	if active_tween:
+		active_tween.stop()
+		active_tween = null
+	%Sprite2D.scale = Vector2.ONE
+	%Sprite2D.rotation_degrees = 0
 
 func _update(_delta: float) -> void:
 	if Input.is_action_just_pressed("air_dash") and PlayerConfig.current_air_dashes > 0:
@@ -24,14 +30,14 @@ func ground_pound():
 	player.velocity = Vector2.ZERO
 	player.gravity_multiplier = 0.0
 
-	var ground_pound_tween = create_tween()
-	ground_pound_tween.tween_property(%Sprite2D, "rotation_degrees", %Sprite2D.rotation_degrees + 360 * spin_direction, 0.25)
-	ground_pound_tween.connect("finished", _on_ground_pound_spin_completed)
+	active_tween = create_tween()
+	active_tween.tween_property(%Sprite2D, "rotation_degrees", %Sprite2D.rotation_degrees + 360 * spin_direction, 0.25)
+	active_tween.connect("finished", _on_ground_pound_spin_completed)
 
 func _on_ground_pound_spin_completed():
-	var stretch_tween = create_tween()
+	active_tween = create_tween()
 	# Set to ease in and out
-	stretch_tween.tween_property(%Sprite2D, "scale", Vector2(0.6, 1.3), 0.05)
+	active_tween.tween_property(%Sprite2D, "scale", Vector2(0.6, 1.3), 0.05)
 	%Sprite2D.rotation_degrees = 0
 	player.gravity_multiplier = 5.0
 	player.velocity.y = PlayerConfig.ground_pound_speed

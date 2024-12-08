@@ -12,6 +12,8 @@ class_name Player
 @onready var wall_jump_state: WallJumpState = $LimboHSM/WallJumpState
 @onready var glide_state: GlideState = $LimboHSM/GlideState
 @onready var slide_state: SlideState = $LimboHSM/SlideState
+@onready var melee_attack1_state: AttackState = $LimboHSM/MeleeAttack1State
+@onready var melee_attack2_state: AttackState = $LimboHSM/MeleeAttack2State
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var direction_pointer: Marker2D = $DirectionPointer
@@ -19,7 +21,6 @@ class_name Player
 @export var terminal_velocity_y := 1000
 @export var coyote_timer := 0.15
 @export var boost_jump_timer := 0.15
-@export var jump_buffer_timer := 0.25
 @export var no_turnaround_timer := 0.15
 @export var air_dash_speed := 900.0
 @export var turnaround_friction_multiplier := 2.0
@@ -31,10 +32,16 @@ var is_coyote_time := false: set = set_is_coyote_time
 var can_boost_jump := false: set = set_can_boost_jump
 var can_boost_jump_forward := false: set = set_can_boost_jump_forward
 var cannot_turnaround := false: set = set_cannot_turnaround
-var jump_buffered := false: set = set_jump_buffered
 var current_active_state := ""
 var previous_active_state := ""
+
+var combo := 0: set = set_combo
+var combo_charges := 0
+var combo_charged := false
+var last_jump_position: Vector2
+
 var can_move := true
+var can_attack := true
 
 func _ready():
 	handle_unlocks()
@@ -57,6 +64,8 @@ func _init_state_machine():
 	hsm.add_transition(wall_jump_state, air_state, &"in_air")
 	hsm.add_transition(glide_state, air_state, &"in_air")
 	hsm.add_transition(slide_state, air_state, &"in_air")
+	hsm.add_transition(melee_attack1_state, air_state, &"in_air")
+	hsm.add_transition(melee_attack2_state, air_state, &"in_air")
 	
 	# Transitions into air_dash_state
 	hsm.add_transition(air_state, air_dash_state, &"air_dash")
@@ -66,6 +75,7 @@ func _init_state_machine():
 	# Transitions into ground_pound_state (if unlocked)
 	hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
 	hsm.add_transition(air_dash_state, ground_pound_state, &"ground_pound")
+	hsm.add_transition(glide_state, ground_pound_state, &"ground_pound")
 
 	# Transitions into wall_jump_state
 	hsm.add_transition(air_state, wall_jump_state, &"wall_jump")
@@ -79,16 +89,26 @@ func _init_state_machine():
 	# Transitions into slide_state
 	hsm.add_transition(idle_state, slide_state, &"slide")
 	hsm.add_transition(move_state, slide_state, &"slide")
+	hsm.add_transition(melee_attack1_state, slide_state, &"slide")
+	hsm.add_transition(melee_attack2_state, slide_state, &"slide")
 
 	# Transitions into idle_state
 	hsm.add_transition(move_state, idle_state, &"movement_stopped")
 	hsm.add_transition(landing_state, idle_state, &"movement_stopped")
 	hsm.add_transition(slide_state, idle_state, &"movement_stopped")
+	hsm.add_transition(melee_attack1_state, idle_state, &"attack_ended")
+	hsm.add_transition(melee_attack2_state, idle_state, &"attack_ended")
 
 	# Transitions into move_state
 	hsm.add_transition(idle_state, move_state, &"movement_started")
 	hsm.add_transition(landing_state, move_state, &"movement_started")
 	hsm.add_transition(slide_state, move_state, &"movement_started")
+	hsm.add_transition(melee_attack1_state, move_state, &"movement_started")
+	hsm.add_transition(melee_attack2_state, move_state, &"movement_started")
+
+	# Transitions into melee_attack_states
+	hsm.add_transition(idle_state, melee_attack1_state, &"melee_attack1")
+	hsm.add_transition(melee_attack1_state, melee_attack2_state, &"melee_attack2")
 
 	hsm.initialize(self)
 	hsm.set_initial_state(idle_state)
@@ -102,6 +122,10 @@ func _unhandled_input(_event: InputEvent) -> void:
 		if actionables.size() > 0:
 			var actionable: Actionable = actionables[0]
 			actionable.action()
+	
+	if Input.is_action_just_pressed("combo_charge") and combo_charges > 0:
+		combo_charged = true
+		combo_charges -= 1
 
 
 func _physics_process(delta: float) -> void:
@@ -118,9 +142,6 @@ func _physics_process(delta: float) -> void:
 		%Sprite2D.flip_h = facing_direction < 0
 
 	handle_movement(delta)
-
-	if Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps == 0 and can_move and not is_on_floor():
-			jump_buffered = true
 
 func handle_movement(delta: float) -> void:
 	if direction != 0 and can_move:
@@ -146,6 +167,9 @@ func handle_movement(delta: float) -> void:
 		velocity.x = 0
 		if current_active_state != "GroundPoundState":
 			$AnimationPlayer.play("idle")
+	
+	velocity.x = clamp(velocity.x, -PlayerConfig.max_speed, PlayerConfig.max_speed)
+	velocity.y = clamp(velocity.y, -terminal_velocity_y, terminal_velocity_y)
 
 
 func apply_gravity(delta: float):
@@ -157,13 +181,16 @@ func apply_gravity(delta: float):
 		# velocity.y = 0
 
 func jump():
-	jump_buffered = false
-	if can_boost_jump:
-		velocity.y = PlayerConfig.jump_velocity * 1.3
+	if combo == 0 or position.distance_to(last_jump_position) > 80:
+		last_jump_position = position
+		combo += 1
+	if can_boost_jump or combo_charged:
+		%FastMovementEffectTimer.start()
+		combo_charged = false
+		velocity.y = PlayerConfig.jump_velocity * 1.25
 	else:
 		if can_boost_jump_forward:
-			do_sick_flip()
-			velocity.x = air_dash_speed * PlayerConfig.facing_direction
+			velocity.x = (air_dash_speed / 1.4) * PlayerConfig.facing_direction
 
 		velocity.y = PlayerConfig.jump_velocity
 
@@ -195,16 +222,6 @@ func set_can_boost_jump_forward(new_val: bool) -> void:
 	
 	await get_tree().create_timer(boost_jump_timer).timeout
 	can_boost_jump_forward = false
-
-func set_jump_buffered(new_val: bool) -> void:
-	jump_buffered = new_val
-
-	if new_val == false:
-		return
-
-	await get_tree().create_timer(jump_buffer_timer).timeout
-	jump_buffered = false
-
 
 func _on_action_detection_area_area_entered(area: Area2D) -> void:
 	if area is Unlockable:
@@ -268,3 +285,21 @@ func set_cannot_turnaround(new_val: bool):
 	cannot_turnaround = new_val
 	await get_tree().create_timer(no_turnaround_timer).timeout
 	cannot_turnaround = false
+
+func allow_attack():
+	can_attack = true
+
+
+func _on_combo_timer_timeout() -> void:
+	print("Combo ended!")
+	combo = 0
+	combo_charges = 0
+
+func set_combo(new_combo: int):
+	if %ComboTimer.time_left:
+		%ComboTimer.stop()
+	combo = new_combo
+	if combo % PlayerConfig.combo_charge_threshold == 0 and combo != 0:
+		combo_charges += 1
+		print("Combo charge added! Total: ", combo_charges)
+	print("Combo added to: ", combo)

@@ -9,10 +9,7 @@ const SAVE_PATH = "user://save_data.sav"
 @export var starting_map: String
 
 # Number of collected collectibles. Setting it also updates the counter.
-var collectibles: int:
-	set(count):
-		collectibles = count
-		%CollectibleCount.text = "%d/6" % count
+var collectibles: Dictionary = {}
 
 # The coordinates of generated rooms. MetSys does not keep this list, so it needs to be done manually.
 var generated_rooms: Array[Vector3i]
@@ -29,6 +26,7 @@ func _ready() -> void:
 	MetSys.reset_state()
 	# Assign player for MetSysGame.
 	set_player($Player)
+	init_collectibles()
 	
 	if FileAccess.file_exists(SAVE_PATH):
 		print("Save data found.")
@@ -86,3 +84,27 @@ func reset_map_starting_coords():
 func init_room():
 	MetSys.get_current_room_instance().adjust_camera_limits($Player/Camera2D)
 	player.on_enter()
+
+func init_collectibles():
+	var dir = DirAccess.open("res://Resources/Collectibles")
+	if dir:
+		dir.list_dir_begin() # Start reading the directory
+		var file_name = dir.get_next()
+		while file_name != "":
+			# Skip ".", "..", or non-resource files
+			if file_name.ends_with(".tres"):
+				var path = "res://Resources/Collectibles/" + file_name
+				var collectible_type = load(path) # Load the resource
+				if collectible_type is CollectibleType:
+					collectibles[collectible_type.name] = {
+						"description": collectible_type.description,
+						"icon": collectible_type.icon,
+						"count": 0,
+					}
+			file_name = dir.get_next()
+		dir.list_dir_end()
+	print("Collectibles initialized: ", collectibles)
+
+func collect(type_name: String):
+	collectibles[type_name]["count"] += 1
+	%CollectibleCount.text = str(+ + collectibles[type_name]["count"])

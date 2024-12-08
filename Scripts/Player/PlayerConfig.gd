@@ -6,7 +6,7 @@ var speed := 200
 var max_jumps := 1: set = set_max_jumps
 var current_jumps := max_jumps: set = set_current_jumps
 var max_air_dashes := 0: set = set_max_air_dashes
-var current_air_dashes := max_air_dashes: set = set_current_air_dashes
+var current_air_dashes := max_air_dashes
 var acceleration := 1000
 var friction := 2100
 var jump_velocity := -400
@@ -15,6 +15,8 @@ var facing_direction := 1
 var wall_jump_velocity := 400
 var current_checkpoint := Vector2.ZERO
 var slide_speed := 300.0
+var max_speed := 1000.0
+var combo_charge_threshold := 3
 
 const NON_FLIP_SPRITE_STATES = ["GroundPoundState", "AirDashState"]
 
@@ -37,9 +39,6 @@ func set_health(new_health: float) -> void:
 
 func set_max_health(new_max_health: float) -> void:
 	max_health = new_max_health
-
-func set_current_air_dashes(new_air_dashes: int) -> void:
-	current_air_dashes = clamp(new_air_dashes, 0, max_air_dashes)
 
 func set_current_jumps(new_jumps: int) -> void:
 	current_jumps = clamp(new_jumps, 0, max_jumps)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://byb15tcl7tmqr"]
+[gd_scene load_steps=11 format=4 uid="uid://byb15tcl7tmqr"]
 
 [ext_resource type="PackedScene" uid="uid://bsg0351mx3b4u" path="res://addons/MetroidvaniaSystem/Nodes/RoomInstance.tscn" id="1_ci4v2"]
 [ext_resource type="Texture2D" uid="uid://bmi11t7ijmywt" path="res://Assets/Backgrounds/SunnyLand/back.png" id="1_kjbgr"]
@@ -7,9 +7,13 @@
 [ext_resource type="Texture2D" uid="uid://ci4f10ygt80qv" path="res://Assets/Backgrounds/SunnyLand/middle.png" id="2_mgcnk"]
 [ext_resource type="PackedScene" uid="uid://byxkx6wj2ii3i" path="res://Global/unlockable.tscn" id="3_x38jk"]
 [ext_resource type="Texture2D" uid="uid://cg0la4swphrct" path="res://icon.svg" id="4_r53we"]
+[ext_resource type="PackedScene" uid="uid://51brs2on101t" path="res://Global/save_point.tscn" id="8_55s3j"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_pfatw"]
 radius = 20.0998
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jusld"]
+radius = 16.0312
 
 [node name="Map" type="Node2D"]
 
@@ -32,6 +36,7 @@ scroll_scale = Vector2(0.1, 0.05)
 repeat_size = Vector2(176, 0)
 repeat_times = 15
 script = ExtResource("2_2h263")
+additional_offset = Vector2(0, -80)
 
 [node name="Sprite2D" type="Sprite2D" parent="MiddleBackground"]
 position = Vector2(0, 125)
@@ -74,3 +79,39 @@ texture = ExtResource("4_r53we")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Unlockable3"]
 shape = SubResource("CircleShape2D_pfatw")
+
+[node name="Unlockable4" parent="." instance=ExtResource("3_x38jk")]
+position = Vector2(413, 162)
+unlock_key = &"wall_jump"
+
+[node name="Sprite2D" type="Sprite2D" parent="Unlockable4"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_r53we")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Unlockable4"]
+shape = SubResource("CircleShape2D_pfatw")
+
+[node name="Unlockable5" parent="." instance=ExtResource("3_x38jk")]
+position = Vector2(464, 160)
+unlock_key = &"slide"
+
+[node name="Sprite2D" type="Sprite2D" parent="Unlockable5"]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_r53we")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Unlockable5"]
+shape = SubResource("CircleShape2D_pfatw")
+
+[node name="SavePoint" parent="." instance=ExtResource("8_55s3j")]
+position = Vector2(667, 138)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SavePoint"]
+shape = SubResource("CircleShape2D_jusld")
+
+[node name="Label" type="Label" parent="SavePoint"]
+offset_left = -3.0
+offset_top = -12.0
+offset_right = 37.0
+offset_bottom = 11.0
+text = "S"
+metadata/_edit_use_anchors_ = true

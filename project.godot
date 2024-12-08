@@ -26,6 +26,8 @@ TransitionLayer="*res://Global/transition_layer.tscn"
 DialogueManager="*res://addons/dialogue_manager/dialogue_manager.gd"
 State="*res://Global/State.gd"
 MetSys="*res://addons/MetroidvaniaSystem/Nodes/Singleton.tscn"
+InputBuffer="*res://Scripts/Global/input_buffer.gd"
+BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 
 [dialogue_manager]
 
@@ -33,19 +35,21 @@ general/balloon_path="res://Dialogue/balloon.tscn"
 
 [display]
 
-window/size/viewport_width=320
-window/size/viewport_height=180
+window/size/viewport_width=768
+window/size/viewport_height=432
 window/size/window_width_override=1920
 window/size/window_height_override=1080
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/MetroidvaniaSystem/EditorExtension/plugin.cfg", "res://addons/MetroidvaniaSystem/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
+enabled=PackedStringArray("res://addons/MetroidvaniaSystem/EditorExtension/plugin.cfg", "res://addons/MetroidvaniaSystem/plugin.cfg", "res://addons/better-terrain/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg")
 
 [global_group]
 
 player="it's the player, duh"
 Persist=""
+enemies=""
 
 [input]
 
@@ -101,6 +105,19 @@ glide={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194326,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+attack={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":1,"position":Vector2(146, 43),"global_position":Vector2(165, 134),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":2,"pressure":0.0,"pressed":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":70,"key_label":0,"unicode":102,"location":0,"echo":false,"script":null)
+]
+}
+combo_charge={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":69,"key_label":0,"unicode":101,"location":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":9,"pressure":0.0,"pressed":false,"script":null)
+]
+}
 
 [internationalization]
 
@@ -116,6 +133,10 @@ locale/translations_pot_files=PackedStringArray("res://test1.dialogue")
 2d_physics/layer_6="TransitionGate"
 2d_physics/layer_7="Actionable"
 2d_physics/layer_8="Pickups/Unlocks"
+
+[physics]
+
+2d/default_gravity=1000.0
 
 [rendering]
 

@@ -30,18 +30,18 @@ func _update(_delta: float) -> void:
 	if not player.can_move:
 		return
 
-	if Input.is_action_pressed("glide"):
+	if Input.is_action_pressed("glide") and &"glide" in PlayerConfig.abilities:
 		dispatch("glide")
 	
 	if Input.is_action_just_pressed("ground_pound") and &"ground_pound" in PlayerConfig.abilities:
 		dispatch("ground_pound")
 
-	if Input.is_action_just_pressed("jump") and PlayerConfig.current_jumps > 0:
+	if InputBuffer.is_action_press_buffered("jump") and PlayerConfig.current_jumps > 0:
 		player.can_boost_jump_forward = true
 		player.jump()
 		dispatch("in_air")
 	
-	if player.is_on_wall():
+	if player.is_on_wall() and &"wall_jump" in PlayerConfig.abilities:
 		dispatch("wall_jump")
 
 func air_dash(is_boosted: bool) -> void:
