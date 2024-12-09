@@ -14,6 +14,8 @@ class_name Player
 @onready var slide_state: SlideState = $LimboHSM/SlideState
 @onready var melee_attack1_state: AttackState = $LimboHSM/MeleeAttack1State
 @onready var melee_attack2_state: AttackState = $LimboHSM/MeleeAttack2State
+@onready var melee_air_attack1_state: AttackState = $LimboHSM/MeleeAirAttack1State
+@onready var melee_air_attack2_state: AttackState = $LimboHSM/MeleeAirAttack2State
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var direction_pointer: Marker2D = $DirectionPointer
@@ -108,7 +110,15 @@ func _init_state_machine():
 
 	# Transitions into melee_attack_states
 	hsm.add_transition(idle_state, melee_attack1_state, &"melee_attack1")
+	hsm.add_transition(idle_state, melee_attack2_state, &"melee_attack2")
+	hsm.add_transition(move_state, melee_attack1_state, &"melee_attack1")
+	hsm.add_transition(move_state, melee_attack2_state, &"melee_attack2")
 	hsm.add_transition(melee_attack1_state, melee_attack2_state, &"melee_attack2")
+
+	hsm.add_transition(air_state, melee_air_attack1_state, &"melee_air_attack1")
+	hsm.add_transition(air_state, melee_air_attack2_state, &"melee_air_attack2")
+	hsm.add_transition(melee_attack1_state, melee_air_attack2_state, &"melee_air_attack2")
+
 
 	hsm.initialize(self)
 	hsm.set_initial_state(idle_state)

@@ -7,9 +7,14 @@ var previous_state := ""
 @export var damage := 5
 @export var next_state_dispatch: String
 @export var animation: String
+@export var is_air_attack := false
 
 func _enter() -> void:
+	%Attack2DelayTimer.stop()
 	player.can_attack = false
+	if is_air_attack:
+		print("gravity stoppo")
+		player.gravity_multiplier = 0.0
 	previous_state = %LimboHSM.get_previous_active_state().name
 	# print("Entering Attack State from: ", previous_state)
 
@@ -18,8 +23,12 @@ func _enter() -> void:
 		player.animation_player.connect("animation_finished", _on_animation_finished)
   
 func _exit() -> void:
+	print("hello?")
+	player.gravity_multiplier = 1.0
 	player.can_attack = true
 	player.animation_player.stop()
+	if animation.ends_with("1"):
+		%Attack2DelayTimer.start()
 
 func _update(_delta: float) -> void:
 	if not player.can_attack:
@@ -50,5 +59,6 @@ func _update(_delta: float) -> void:
 
 func _on_animation_finished(anim_name: String) -> void:
 	if anim_name == animation:
+		player.animation_player.play("idle")
 		dispatch("attack_ended")
 		return

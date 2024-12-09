@@ -60,7 +60,7 @@ func _update(_delta: float) -> void:
 		dispatch("movement_started")
 	
 	if InputBuffer.is_action_press_buffered("attack"):
-		dispatch("melee_attack1")
+		dispatch("melee_attack1" if not %Attack2DelayTimer.time_left else "melee_attack2")
 
 func _on_movement_started(_cargo = null) -> bool:
 	return false
