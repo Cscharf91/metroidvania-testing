@@ -68,6 +68,8 @@ func _init_state_machine():
 	hsm.add_transition(slide_state, air_state, &"in_air")
 	hsm.add_transition(melee_attack1_state, air_state, &"in_air")
 	hsm.add_transition(melee_attack2_state, air_state, &"in_air")
+	hsm.add_transition(melee_air_attack1_state, air_state, &"in_air")
+	hsm.add_transition(melee_air_attack2_state, air_state, &"in_air")
 	
 	# Transitions into air_dash_state
 	hsm.add_transition(air_state, air_dash_state, &"air_dash")
@@ -110,14 +112,16 @@ func _init_state_machine():
 
 	# Transitions into melee_attack_states
 	hsm.add_transition(idle_state, melee_attack1_state, &"melee_attack1")
-	hsm.add_transition(idle_state, melee_attack2_state, &"melee_attack2")
+	hsm.add_transition(idle_state, melee_attack2_state, &"attack2")
 	hsm.add_transition(move_state, melee_attack1_state, &"melee_attack1")
 	hsm.add_transition(move_state, melee_attack2_state, &"melee_attack2")
 	hsm.add_transition(melee_attack1_state, melee_attack2_state, &"melee_attack2")
-
 	hsm.add_transition(air_state, melee_air_attack1_state, &"melee_air_attack1")
 	hsm.add_transition(air_state, melee_air_attack2_state, &"melee_air_attack2")
-	hsm.add_transition(melee_attack1_state, melee_air_attack2_state, &"melee_air_attack2")
+	hsm.add_transition(melee_air_attack1_state, melee_attack2_state, &"melee_attack2")
+	hsm.add_transition(melee_air_attack1_state, melee_attack1_state, &"landed_melee_attack1")
+	hsm.add_transition(melee_air_attack2_state, melee_attack2_state, &"landed_melee_attack2")
+	hsm.add_transition(melee_air_attack1_state, melee_air_attack2_state, &"melee_air_attack2")
 
 
 	hsm.initialize(self)
@@ -298,7 +302,7 @@ func set_cannot_turnaround(new_val: bool):
 
 func allow_attack():
 	can_attack = true
-
+	%Attack1Cooldown.start()
 
 func _on_combo_timer_timeout() -> void:
 	print("Combo ended!")

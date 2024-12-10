@@ -39,8 +39,8 @@ func _update(delta: float) -> void:
 	if player.is_on_floor() and Input.is_action_just_pressed("ground_pound") and &"slide" in PlayerConfig.abilities and not %SlideCooldown.time_left:
 		dispatch("slide")
 	
-	if InputBuffer.is_action_press_buffered("attack"):
-		dispatch("melee_attack1" if not %Attack2DelayTimer.time_left else "melee_attack2")
+	if InputBuffer.is_action_press_buffered("attack") and not %Attack1Cooldown.time_left:
+		dispatch("melee_attack1")
 		
 	var started_on_floor = player.is_on_floor()
 	player.move_and_slide()

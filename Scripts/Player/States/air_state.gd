@@ -53,7 +53,7 @@ func _update(_delta: float) -> void:
 		dispatch("glide")
 	
 	if InputBuffer.is_action_press_buffered("attack"):
-		dispatch("melee_air_attack1" if not %Attack2DelayTimer.time_left else "melee_air_attack2")
+		dispatch("melee_air_attack1")
 
 	player.move_and_slide()
 
