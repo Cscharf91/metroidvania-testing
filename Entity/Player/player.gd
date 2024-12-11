@@ -273,9 +273,9 @@ func do_sick_flip():
 		0.5
 	).set_trans(Tween.TRANS_CIRC)
 
-func _on_hurtbox_hurt(hitbox: Hitbox, damage: float) -> void:
-	print("owwww! ", hitbox.get_children(), " ", damage)
-	PlayerConfig.health -= damage
+func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
+	print("owwww! ", hitbox.get_children(), " ", hitbox.damage)
+	PlayerConfig.health -= hitbox.damage
 	$Hurtbox.is_invincible = true
 	$BlinkingAnimationPlayer.play("blink")
 	await $BlinkingAnimationPlayer.animation_finished

@@ -1,15 +1,15 @@
 class_name Hurtbox
 extends Area2D
 
-signal hurt(hitbox, damage: float)
+signal hurt(hitbox)
 
 var is_invincible = false:
 	set(value):
 		is_invincible = value
 		disable.call_deferred(value)
 
-func hit(hitbox: Hitbox, damage: float) -> void:
-	hurt.emit(hitbox, damage)
+func hit(hitbox: Hitbox) -> void:
+	hurt.emit(hitbox)
 
 func disable(value):
 	for child in get_children():

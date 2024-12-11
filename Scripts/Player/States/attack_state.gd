@@ -28,7 +28,6 @@ func _enter() -> void:
 		player.animation_player.connect("animation_finished", _on_animation_finished)
   
 func _exit() -> void:
-	print("leaving this attack state: ", animation)
 	player.gravity_multiplier = 1.0
 	player.can_attack = true
 	if player.animation_player.is_connected("animation_finished", _on_animation_finished):
