@@ -51,6 +51,9 @@ func _update(_delta: float) -> void:
 
 	if Input.is_action_pressed("glide") and &"glide" in PlayerConfig.abilities:
 		dispatch("glide")
+	
+	if InputBuffer.is_action_press_buffered("attack"):
+		dispatch("melee_air_attack1")
 
 	player.move_and_slide()
 

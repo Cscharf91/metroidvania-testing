@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=3 uid="uid://7pmlpxqxdfqm"]
+[gd_scene load_steps=54 format=3 uid="uid://7pmlpxqxdfqm"]
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
 [ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
@@ -21,12 +21,14 @@
 [ext_resource type="Script" path="res://Scripts/Player/States/glide_state.gd" id="11_cvyh6"]
 [ext_resource type="Texture2D" uid="uid://d1hr3mqxuamge" path="res://Assets/Sprites/Player/Player Jab 48x48.png" id="11_wur2f"]
 [ext_resource type="Texture2D" uid="uid://bko6uvr67kopn" path="res://Assets/Sprites/Player/Player Punch Cross 64x64.png" id="12_em20i"]
+[ext_resource type="Texture2D" uid="uid://c5ntwo17vcf8g" path="res://Assets/Sprites/Player/player katana continuous attack 80x64.png" id="13_2ebu1"]
+[ext_resource type="Texture2D" uid="uid://sat1ghjy6a0e" path="res://Assets/Sprites/Player/player katana air attack full 80x64-Sheet.png" id="14_vrhh8"]
 [ext_resource type="Script" path="res://Scripts/Player/States/slide_state.gd" id="17_xkbqy"]
 [ext_resource type="Script" path="res://Scripts/Player/States/attack_state.gd" id="21_e0ogm"]
 [ext_resource type="PackedScene" uid="uid://bjf05t6w3ch8t" path="res://Global/hitbox.tscn" id="22_yopii"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41ra8"]
-size = Vector2(10, 20)
+size = Vector2(11, 20)
 
 [sub_resource type="Animation" id="Animation_4r26t"]
 length = 0.001
@@ -432,6 +434,390 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [6]
+}
+
+[sub_resource type="Animation" id="Animation_0d4m4"]
+resource_name = "katana_air_attack_1"
+length = 0.48
+step = 0.07
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.142857),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:shape:radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [15.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:shape:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [54.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:texture")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("14_vrhh8")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D:hframes")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.07, 0.14, 0.21, 0.276161, 0.346161, 0.415714),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 2, 2, 2, 2]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.142857),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"allow_attack"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_rntoe"]
+resource_name = "katana_air_attack_2"
+length = 0.35
+step = 0.07
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0714286, 0.214286),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:shape:radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [15.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:shape:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [54.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:texture")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("14_vrhh8")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D:hframes")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.07, 0.14, 0.21, 0.28),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 5, 6, 7]
+}
+
+[sub_resource type="Animation" id="Animation_vb2ym"]
+resource_name = "katana_attack_1"
+length = 0.48
+step = 0.07
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.142857),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:shape:radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [15.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:shape:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [54.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:texture")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("13_2ebu1")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D:hframes")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.07, 0.14, 0.214286, 0.280446, 0.350446, 0.42),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 2, 2, 2, 2]
+}
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0.142857),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"allow_attack"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_m7glf"]
+resource_name = "katana_attack_2"
+length = 0.35
+step = 0.07
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:disabled")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0714286, 0.214286),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:shape:radius")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [15.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:shape:height")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [54.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(16, 0)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Sprite2D:texture")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("13_2ebu1")]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Sprite2D:hframes")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [9]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Sprite2D:frame")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.07, 0.14, 0.21, 0.28),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [3, 4, 5, 6, 7]
 }
 
 [sub_resource type="Animation" id="Animation_qw87k"]
@@ -879,6 +1265,10 @@ _data = {
 "fall": SubResource("Animation_2rkyo"),
 "idle": SubResource("Animation_lb5y0"),
 "jump": SubResource("Animation_5idqk"),
+"katana_air_attack_1": SubResource("Animation_0d4m4"),
+"katana_air_attack_2": SubResource("Animation_rntoe"),
+"katana_attack_1": SubResource("Animation_vb2ym"),
+"katana_attack_2": SubResource("Animation_m7glf"),
 "land": SubResource("Animation_qw87k"),
 "melee_attack_cross": SubResource("Animation_v2o7k"),
 "melee_attack_jab": SubResource("Animation_1rkb6"),
@@ -971,6 +1361,11 @@ unique_name_in_owner = true
 wait_time = 0.2
 one_shot = true
 
+[node name="Attack1Cooldown" type="Timer" parent="Timers" index="3"]
+unique_name_in_owner = true
+wait_time = 0.4
+one_shot = true
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 libraries = {
 "": SubResource("AnimationLibrary_ufq85")
@@ -1016,11 +1411,22 @@ script = ExtResource("17_xkbqy")
 [node name="MeleeAttack1State" type="LimboState" parent="LimboHSM" index="9"]
 script = ExtResource("21_e0ogm")
 next_state_dispatch = "melee_attack2"
-animation = "melee_attack_jab"
+animation = "katana_attack_1"
 
 [node name="MeleeAttack2State" type="LimboState" parent="LimboHSM" index="10"]
 script = ExtResource("21_e0ogm")
-animation = "melee_attack_cross"
+animation = "katana_attack_2"
+
+[node name="MeleeAirAttack1State" type="LimboState" parent="LimboHSM" index="11"]
+script = ExtResource("21_e0ogm")
+next_state_dispatch = "melee_air_attack2"
+animation = "katana_air_attack_1"
+is_air_attack = true
+
+[node name="MeleeAirAttack2State" type="LimboState" parent="LimboHSM" index="12"]
+script = ExtResource("21_e0ogm")
+animation = "katana_air_attack_2"
+is_air_attack = true
 
 [node name="DirectionPointer" type="Marker2D" parent="." index="7"]
 position = Vector2(16, 0)
