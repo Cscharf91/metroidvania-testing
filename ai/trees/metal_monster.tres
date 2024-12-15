@@ -42,9 +42,6 @@ script = ExtResource("3_8mvvd")
 target_var = &"target"
 tolerance = 25.0
 
-[sub_resource type="BTWait" id="BTWait_uipca"]
-duration = 0.1
-
 [sub_resource type="BBNode" id="BBNode_qx0ci"]
 saved_value = NodePath("AnimationPlayer")
 resource_name = "AnimationPlayer"
@@ -62,9 +59,12 @@ animation_player = SubResource("BBNode_aa14d")
 animation_name = &"melee_attack"
 max_time = 5.0
 
+[sub_resource type="BTWait" id="BTWait_uipca"]
+duration = 0.1
+
 [sub_resource type="BTSequence" id="BTSequence_2441c"]
 custom_name = "Pursue Player"
-children = [SubResource("BTPlayAnimation_m1v6v"), SubResource("BTAction_n44jr"), SubResource("BTWait_uipca"), SubResource("BTPlayAnimation_mvhhj"), SubResource("BTAwaitAnimation_ueoe5")]
+children = [SubResource("BTPlayAnimation_m1v6v"), SubResource("BTAction_n44jr"), SubResource("BTPlayAnimation_mvhhj"), SubResource("BTAwaitAnimation_ueoe5"), SubResource("BTWait_uipca")]
 
 [sub_resource type="BTRepeat" id="BTRepeat_n4j7v"]
 forever = true

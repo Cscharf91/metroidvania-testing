@@ -12,7 +12,7 @@ script = ExtResource("2_o8sm0")
 
 [node name="Hurtbox" parent="." index="3" instance=ExtResource("3_3lxis")]
 
-[node name="Hitboxes" type="Node" parent="." index="4"]
+[node name="Hitboxes" type="Node2D" parent="." index="4"]
 
 [node name="RayCasts" type="Marker2D" parent="." index="5"]
 

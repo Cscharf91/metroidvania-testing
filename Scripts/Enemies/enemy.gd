@@ -5,6 +5,7 @@ extends CharacterBody2D
 @onready var ray_casts_pivot: Marker2D = $RayCasts
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var player_detection_area: PlayerDetectionArea  = $PlayerDetectionArea
+@onready var hitboxes_parent = $Hitboxes
 
 @export var default_sprite_dir := 1
 @export var is_flying: bool = false
@@ -18,16 +19,22 @@ var gravity_multiplier: float = 1.0
 var player_detected: bool = false
 var facing_dir: float
 var ray_casts: Array[RayCast2D] = []
+var hitboxes: Array[Hitbox] = []
 
 func _ready() -> void:
 	current_health = max_health
 	facing_dir = default_sprite_dir
+	
+	for node in hitboxes_parent.get_children():
+		if node is Hitbox:
+			hitboxes.append(node)
 
 	if facing_dir == 1:
 		# TODO: radius is gonna be a problem if I use other collision shapes down the line, figure it out later lol
 		ray_casts_pivot.position.x = collision_shape.shape.radius
 	else:
 		ray_casts_pivot.position.x = -collision_shape.shape.radius
+		reverse_all_hitboxes_direction()
 	
 	for node in ray_casts_pivot.get_children():
 		if node is RayCast2D:
@@ -61,17 +68,22 @@ func reverse_direction() -> void:
 	update_facing()
 	move_in_direction(facing_dir, true)
 	player_detection_area.reverse_ray_directions()
+	reverse_all_hitboxes_direction()
+
+func reverse_all_hitboxes_direction() -> void:
+	for hitbox in hitboxes:
+			hitbox.position.x *= -1
 
 func apply_knockback(amount: Vector2) -> void:
 	print("amount of knockback: ", amount)
 
 func die() -> void:
-	pass
+	print("'oh noooo! I'm dead' -Enemy")
 
 func _physics_process(_delta: float) -> void:
 	if not is_flying and not is_on_floor():
 		apply_gravity(_delta)
-
+	
 func apply_gravity(delta: float):
 	if not is_on_floor() and gravity_multiplier > 0.0:
 		velocity += get_gravity() * gravity_multiplier * delta
