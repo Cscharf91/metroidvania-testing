@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://d4kd8mcb3noes"]
+
+[ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_13mys"]
+[ext_resource type="Script" path="res://Scripts/Enemies/enemy.gd" id="2_o8sm0"]
+[ext_resource type="PackedScene" uid="uid://bmkcho1uyhjf5" path="res://Global/hurtbox.tscn" id="3_3lxis"]
+[ext_resource type="PackedScene" uid="uid://dqbqbo57sgirs" path="res://Entity/Enemies/player_detection_area.tscn" id="4_5nq2v"]
+
+[node name="Enemy" instance=ExtResource("1_13mys")]
+script = ExtResource("2_o8sm0")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+
+[node name="Hurtbox" parent="." index="3" instance=ExtResource("3_3lxis")]
+
+[node name="Hitboxes" type="Node" parent="." index="4"]
+
+[node name="RayCasts" type="Marker2D" parent="." index="5"]
+
+[node name="PlayerDetectionArea" parent="." index="6" instance=ExtResource("4_5nq2v")]
+
+[connection signal="hurt" from="Hurtbox" to="." method="_on_hurtbox_hurt"]

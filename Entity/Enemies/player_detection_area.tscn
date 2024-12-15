@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqbqbo57sgirs"]
+
+[ext_resource type="Script" path="res://Scripts/Enemies/player_detection_area.gd" id="1_kn1kj"]
+
+[node name="PlayerDetectionArea" type="Area2D"]
+script = ExtResource("1_kn1kj")
