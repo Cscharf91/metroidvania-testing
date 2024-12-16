@@ -46,11 +46,11 @@ func _ready() -> void:
 func _on_hurtbox_hurt(hitbox: Variant) -> void:
 	print("you hurt the enemy for: ", hitbox.damage)
 	
+	current_health -= hitbox.damage
 	if current_health <= 0.0:
 		die()
 		return
 		
-	current_health -= hitbox.damage
 	apply_knockback(hitbox.knockback)
 
 func move_in_direction(dir: float, skip_ledge_check: bool = false) -> void:
@@ -77,8 +77,9 @@ func reverse_all_hitboxes_direction() -> void:
 func apply_knockback(amount: Vector2) -> void:
 	print("amount of knockback: ", amount)
 
-func die() -> void:
+func die() -> void:	
 	print("'oh noooo! I'm dead' -Enemy")
+	queue_free()
 
 func _physics_process(_delta: float) -> void:
 	if not is_flying and not is_on_floor():
