@@ -28,7 +28,7 @@
 [ext_resource type="PackedScene" uid="uid://bjf05t6w3ch8t" path="res://Global/hitbox.tscn" id="22_yopii"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41ra8"]
-size = Vector2(11, 20)
+size = Vector2(11, 29)
 
 [sub_resource type="Animation" id="Animation_4r26t"]
 length = 0.001
@@ -1326,11 +1326,11 @@ radius = 9.0
 height = 32.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4dtp"]
-size = Vector2(10, 16)
+size = Vector2(10, 27)
 
 [node name="Player" groups=["Persist", "player"] instance=ExtResource("1_l5me4")]
 z_index = 50
-collision_mask = 38
+collision_mask = 36
 script = ExtResource("2_wcreg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]
@@ -1341,7 +1341,7 @@ hframes = 10
 [node name="CollisionShape2D" parent="." index="1"]
 unique_name_in_owner = true
 visible = false
-position = Vector2(0, 6)
+position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_41ra8")
 
 [node name="Camera2D" type="Camera2D" parent="." index="2"]
@@ -1442,6 +1442,7 @@ shape = SubResource("CircleShape2D_kqtiw")
 
 [node name="Hitbox" parent="DirectionPointer" index="1" instance=ExtResource("22_yopii")]
 position = Vector2(-16, 0)
+damage = 34.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DirectionPointer/Hitbox" index="0"]
 position = Vector2(14, -2)
@@ -1458,8 +1459,7 @@ collision_mask = 4
 [node name="Hurtbox" parent="." index="9" instance=ExtResource("11_6amkq")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" index="0"]
-visible = false
-position = Vector2(0, 8)
+position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_s4dtp")
 debug_color = Color(0.964237, 0.171512, 0.212351, 0.42)
 

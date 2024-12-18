@@ -1,0 +1,208 @@
+[gd_scene load_steps=20 format=3 uid="uid://qg0d7ubor7v0"]
+
+[ext_resource type="Script" path="res://Scripts/Components/health.gd" id="1_v0cnp"]
+[ext_resource type="Texture2D" uid="uid://c2pklexn4ogyw" path="res://Assets/Sprites/Enemies/MetalMonster/sheet-metal-monster-lila.png" id="2_3c0qv"]
+[ext_resource type="Script" path="res://Global/hurtbox.gd" id="3_6ad23"]
+[ext_resource type="Script" path="res://Scripts/Components/enemy_movement.gd" id="4_odhtv"]
+[ext_resource type="Script" path="res://Scripts/Components/gravity.gd" id="4_wj0d0"]
+[ext_resource type="Script" path="res://Global/hitbox.gd" id="5_6m0up"]
+[ext_resource type="Script" path="res://Scripts/Components/enemy_orientation.gd" id="5_vtjg7"]
+[ext_resource type="Script" path="res://Scripts/Enemies/player_detection_area.gd" id="6_6dv0v"]
+[ext_resource type="BehaviorTree" uid="uid://boi82yfashbm6" path="res://ai/trees/pace_and_pursue.tres" id="7_3o1cd"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rfnon"]
+radius = 8.0
+height = 22.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_16swl"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u36pg"]
+height = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s26pq"]
+radius = 108.042
+
+[sub_resource type="Animation" id="Animation_dpn8p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitboxes/MeleeHitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_2qfle"]
+resource_name = "idle"
+length = 0.7
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [11, 12, 13, 14, 15, 16, 17]
+}
+
+[sub_resource type="Animation" id="Animation_s3ufb"]
+resource_name = "melee_attack"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitboxes/MeleeHitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_yjb2s"]
+resource_name = "move_forward"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [1, 1, 2, 3, 4, 5, 6, 7]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jhflf"]
+_data = {
+"RESET": SubResource("Animation_dpn8p"),
+"idle": SubResource("Animation_2qfle"),
+"melee_attack": SubResource("Animation_s3ufb"),
+"move_forward": SubResource("Animation_yjb2s")
+}
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_t1be8"]
+
+[node name="MetalMonster" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_rfnon")
+
+[node name="Health" type="Node2D" parent="." node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("1_v0cnp")
+hurtbox = NodePath("../Hurtbox")
+max_health = 80.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3c0qv")
+hframes = 11
+vframes = 8
+frame = 1
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 8
+script = ExtResource("3_6ad23")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape2D_16swl")
+
+[node name="Gravity" type="Node2D" parent="."]
+script = ExtResource("4_wj0d0")
+
+[node name="EnemyOrientation" type="Node" parent="." node_paths=PackedStringArray("sprite", "collision_shape", "ray_casts_pivot", "hitboxes_parent", "player_detection_area")]
+script = ExtResource("5_vtjg7")
+sprite = NodePath("../Sprite2D")
+collision_shape = NodePath("../CollisionShape2D")
+ray_casts_pivot = NodePath("../RayCastPivot")
+hitboxes_parent = NodePath("../Hitboxes")
+player_detection_area = NodePath("../PlayerDetectionArea")
+
+[node name="EnemyMovement" type="Node2D" parent="." node_paths=PackedStringArray("ledge_ray_cast", "orientation", "player_detection_area")]
+script = ExtResource("4_odhtv")
+ledge_ray_cast = NodePath("../RayCastPivot/LedgeRayCast")
+orientation = NodePath("../EnemyOrientation")
+player_detection_area = NodePath("../PlayerDetectionArea")
+
+[node name="Hitboxes" type="Node2D" parent="."]
+
+[node name="MeleeHitbox" type="Area2D" parent="Hitboxes"]
+collision_layer = 8
+collision_mask = 16
+script = ExtResource("5_6m0up")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/MeleeHitbox"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_u36pg")
+disabled = true
+
+[node name="PlayerDetectionArea" type="Area2D" parent="." node_paths=PackedStringArray("primary_raycast")]
+script = ExtResource("6_6dv0v")
+primary_raycast = NodePath("../RayCastPivot/PlayerDetectionRayCast")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
+visible = false
+shape = SubResource("CircleShape2D_s26pq")
+
+[node name="RayCastPivot" type="Marker2D" parent="."]
+
+[node name="LedgeRayCast" type="RayCast2D" parent="RayCastPivot"]
+target_position = Vector2(0, 17)
+collision_mask = 4
+
+[node name="PlayerDetectionRayCast" type="RayCast2D" parent="RayCastPivot"]
+rotation = -1.5708
+target_position = Vector2(-4.54598e-06, 104)
+collision_mask = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jhflf")
+}
+
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("7_3o1cd")
+blackboard_plan = SubResource("BlackboardPlan_t1be8")

@@ -1,0 +1,78 @@
+[gd_resource type="BehaviorTree" load_steps=22 format=3 uid="uid://boi82yfashbm6"]
+
+[ext_resource type="Script" path="res://ai/tasks/get_first_in_group.gd" id="1_xwyqq"]
+[ext_resource type="Script" path="res://ai/tasks/move_back_and_forth.gd" id="2_5pxbd"]
+[ext_resource type="Script" path="res://ai/tasks/move_toward_player.gd" id="3_3qq1i"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_vekl3"]
+
+[sub_resource type="BTAction" id="BTAction_qn4xq"]
+script = ExtResource("1_xwyqq")
+group = &"player"
+output_var = &"target"
+
+[sub_resource type="BTRunLimit" id="BTRunLimit_ij1bv"]
+children = [SubResource("BTAction_qn4xq")]
+
+[sub_resource type="BBNode" id="BBNode_r83hm"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_mvlcq"]
+animation_player = SubResource("BBNode_r83hm")
+animation_name = &"move_forward"
+
+[sub_resource type="BTAction" id="BTAction_mnnv5"]
+script = ExtResource("2_5pxbd")
+
+[sub_resource type="BTSequence" id="BTSequence_ou5o3"]
+custom_name = "Patrol (requires enemy_movement component)"
+children = [SubResource("BTPlayAnimation_mvlcq"), SubResource("BTAction_mnnv5")]
+
+[sub_resource type="BBNode" id="BBNode_5tfko"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_m1v6v"]
+animation_player = SubResource("BBNode_5tfko")
+animation_name = &"move_forward"
+
+[sub_resource type="BTAction" id="BTAction_n44jr"]
+script = ExtResource("3_3qq1i")
+target_var = &"target"
+tolerance = 25.0
+
+[sub_resource type="BBNode" id="BBNode_qx0ci"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTPlayAnimation" id="BTPlayAnimation_mvhhj"]
+animation_player = SubResource("BBNode_qx0ci")
+animation_name = &"melee_attack"
+
+[sub_resource type="BBNode" id="BBNode_aa14d"]
+saved_value = NodePath("AnimationPlayer")
+resource_name = "AnimationPlayer"
+
+[sub_resource type="BTAwaitAnimation" id="BTAwaitAnimation_ueoe5"]
+animation_player = SubResource("BBNode_aa14d")
+animation_name = &"melee_attack"
+max_time = 5.0
+
+[sub_resource type="BTWait" id="BTWait_uipca"]
+duration = 0.1
+
+[sub_resource type="BTSequence" id="BTSequence_2441c"]
+custom_name = "Pursue Player"
+children = [SubResource("BTPlayAnimation_m1v6v"), SubResource("BTAction_n44jr"), SubResource("BTPlayAnimation_mvhhj"), SubResource("BTAwaitAnimation_ueoe5"), SubResource("BTWait_uipca")]
+
+[sub_resource type="BTRepeat" id="BTRepeat_n4j7v"]
+forever = true
+children = [SubResource("BTSequence_2441c")]
+
+[sub_resource type="BTSequence" id="BTSequence_a3fpp"]
+children = [SubResource("BTRunLimit_ij1bv"), SubResource("BTSequence_ou5o3"), SubResource("BTRepeat_n4j7v")]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_vekl3")
+root_task = SubResource("BTSequence_a3fpp")

@@ -29,7 +29,6 @@ func _ready() -> void:
 	init_collectibles()
 	
 	if FileAccess.file_exists(SAVE_PATH):
-		print("Save data found.")
 		# If save data exists, load it using MetSys SaveManager.
 		var save_manager := SaveManager.new()
 		save_manager.load_from_text(SAVE_PATH)
@@ -45,7 +44,6 @@ func _ready() -> void:
 			if not loaded_starting_map.is_empty(): # Some compatibility problem.
 				starting_map = loaded_starting_map
 	else:
-		print("No save data found.")
 		# If no data exists, set empty one.
 		MetSys.set_save_data()
 	
