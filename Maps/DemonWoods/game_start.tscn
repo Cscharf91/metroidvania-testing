@@ -7,8 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://deqocaj33j8dt" path="res://Assets/Backgrounds/DemonWoods/parallax-demon-woods-far-trees.png" id="6_3op47"]
 [ext_resource type="Texture2D" uid="uid://dycnl0viuig4" path="res://Assets/Backgrounds/DemonWoods/parallax-demon-woods-mid-trees.png" id="7_md337"]
 [ext_resource type="Texture2D" uid="uid://7uxy82efxoep" path="res://Assets/Backgrounds/DemonWoods/parallax-demon-woods-close-trees.png" id="8_6pl1c"]
-[ext_resource type="PackedScene" uid="uid://dkvm4mpnpmer7" path="res://Entity/Enemies/metal_monster.tscn" id="9_18frx"]
 [ext_resource type="TileSet" uid="uid://bker8m4qv3fwg" path="res://Resources/TileSets/overgrown_temple.tres" id="9_544hq"]
+[ext_resource type="PackedScene" uid="uid://qg0d7ubor7v0" path="res://Entity/Enemies/metal_monster.tscn" id="9_a33ji"]
 
 [node name="Area1Base" type="Node2D"]
 
@@ -84,5 +84,5 @@ tile_set = ExtResource("9_544hq")
 
 [node name="Enemies" type="Node" parent="." groups=["enemies"]]
 
-[node name="MetalMonster" parent="Enemies" instance=ExtResource("9_18frx")]
-position = Vector2(227, 304)
+[node name="MetalMonster" parent="Enemies" instance=ExtResource("9_a33ji")]
+position = Vector2(235, 301)

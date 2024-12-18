@@ -5,22 +5,26 @@ extends BTAction
 func _generate_name() -> String:
 	return "MoveBackAndForth"
 
-
 # Called to initialize the task.
 func _setup() -> void:
 	pass
 
-
 # Called when the task is executed.
 func _tick(_delta: float) -> Status:
-	var curr_enemy: Enemy = agent
+	var curr_enemy: CharacterBody2D = agent
+	var enemy_movement: EnemyMovement = agent.find_child("EnemyMovement")
+	var player_detection_area: PlayerDetectionArea = agent.find_child("PlayerDetectionArea")
 
-	if curr_enemy.player_detected and curr_enemy.attacks_player:
+	if not enemy_movement:
+		print("No EnemyMovement found on agent in MoveBackAndForth")
+		return FAILURE
+
+	if player_detection_area and player_detection_area.is_player_detected:
 		return SUCCESS
 	
 	if curr_enemy.is_on_wall():
-		curr_enemy.reverse_direction()
+		enemy_movement.reverse_direction()
 		return RUNNING
 	
-	curr_enemy.move_in_direction(curr_enemy.facing_dir)
+	enemy_movement.move_in_direction(enemy_movement.facing_dir)
 	return RUNNING

@@ -110,6 +110,7 @@ func start_lost_timer() -> void:
 
 func detect_player() -> void:
 	if not is_player_detected:
+		print("this b detected")
 		is_player_detected = true
 		player_detected.emit()
 

@@ -1,13 +1,13 @@
 [gd_resource type="BehaviorTree" load_steps=22 format=3 uid="uid://boi82yfashbm6"]
 
-[ext_resource type="Script" path="res://ai/tasks/get_first_in_group.gd" id="1_prh7e"]
-[ext_resource type="Script" path="res://ai/tasks/move_back_and_forth.gd" id="2_ehlfj"]
-[ext_resource type="Script" path="res://ai/tasks/move_toward_player.gd" id="3_8mvvd"]
+[ext_resource type="Script" path="res://ai/tasks/get_first_in_group.gd" id="1_xwyqq"]
+[ext_resource type="Script" path="res://ai/tasks/move_back_and_forth.gd" id="2_5pxbd"]
+[ext_resource type="Script" path="res://ai/tasks/move_toward_player.gd" id="3_3qq1i"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vekl3"]
 
 [sub_resource type="BTAction" id="BTAction_qn4xq"]
-script = ExtResource("1_prh7e")
+script = ExtResource("1_xwyqq")
 group = &"player"
 output_var = &"target"
 
@@ -23,10 +23,10 @@ animation_player = SubResource("BBNode_r83hm")
 animation_name = &"move_forward"
 
 [sub_resource type="BTAction" id="BTAction_mnnv5"]
-script = ExtResource("2_ehlfj")
+script = ExtResource("2_5pxbd")
 
 [sub_resource type="BTSequence" id="BTSequence_ou5o3"]
-custom_name = "Patrol"
+custom_name = "Patrol (requires enemy_movement component)"
 children = [SubResource("BTPlayAnimation_mvlcq"), SubResource("BTAction_mnnv5")]
 
 [sub_resource type="BBNode" id="BBNode_5tfko"]
@@ -38,7 +38,7 @@ animation_player = SubResource("BBNode_5tfko")
 animation_name = &"move_forward"
 
 [sub_resource type="BTAction" id="BTAction_n44jr"]
-script = ExtResource("3_8mvvd")
+script = ExtResource("3_3qq1i")
 target_var = &"target"
 tolerance = 25.0
 

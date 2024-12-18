@@ -305,7 +305,7 @@ func allow_attack():
 	%Attack1Cooldown.start()
 
 func _on_combo_timer_timeout() -> void:
-	print("Combo ended!")
+	# print("Combo ended!")
 	combo = 0
 	combo_charges = 0
 
@@ -315,5 +315,5 @@ func set_combo(new_combo: int):
 	combo = new_combo
 	if combo % PlayerConfig.combo_charge_threshold == 0 and combo != 0:
 		combo_charges += 1
-		print("Combo charge added! Total: ", combo_charges)
-	print("Combo added to: ", combo)
+		# print("Combo charge added! Total: ", combo_charges)
+	# print("Combo added to: ", combo)

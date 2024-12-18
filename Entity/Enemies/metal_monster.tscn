@@ -1,18 +1,26 @@
-[gd_scene load_steps=15 format=3 uid="uid://dkvm4mpnpmer7"]
+[gd_scene load_steps=20 format=3 uid="uid://qg0d7ubor7v0"]
 
-[ext_resource type="PackedScene" uid="uid://d4kd8mcb3noes" path="res://Entity/Enemies/enemy.tscn" id="1_xok5k"]
-[ext_resource type="Script" path="res://Global/hitbox.gd" id="2_cbj0n"]
-[ext_resource type="Texture2D" uid="uid://c2pklexn4ogyw" path="res://Assets/Sprites/Enemies/MetalMonster/sheet-metal-monster-lila.png" id="2_i1wsq"]
-[ext_resource type="BehaviorTree" uid="uid://boi82yfashbm6" path="res://ai/trees/metal_monster.tres" id="4_my4qs"]
+[ext_resource type="Script" path="res://Scripts/Components/health.gd" id="1_v0cnp"]
+[ext_resource type="Texture2D" uid="uid://c2pklexn4ogyw" path="res://Assets/Sprites/Enemies/MetalMonster/sheet-metal-monster-lila.png" id="2_3c0qv"]
+[ext_resource type="Script" path="res://Global/hurtbox.gd" id="3_6ad23"]
+[ext_resource type="Script" path="res://Scripts/Components/enemy_movement.gd" id="4_odhtv"]
+[ext_resource type="Script" path="res://Scripts/Components/gravity.gd" id="4_wj0d0"]
+[ext_resource type="Script" path="res://Global/hitbox.gd" id="5_6m0up"]
+[ext_resource type="Script" path="res://Scripts/Components/enemy_orientation.gd" id="5_vtjg7"]
+[ext_resource type="Script" path="res://Scripts/Enemies/player_detection_area.gd" id="6_6dv0v"]
+[ext_resource type="BehaviorTree" uid="uid://boi82yfashbm6" path="res://ai/trees/pace_and_pursue.tres" id="7_3o1cd"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dkalw"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rfnon"]
 radius = 8.0
 height = 22.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ydcrj"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_16swl"]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_t76se"]
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_u36pg"]
 height = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s26pq"]
+radius = 108.042
 
 [sub_resource type="Animation" id="Animation_dpn8p"]
 length = 0.001
@@ -113,62 +121,88 @@ _data = {
 "move_forward": SubResource("Animation_yjb2s")
 }
 
-[sub_resource type="BlackboardPlan" id="BlackboardPlan_ullyn"]
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_t1be8"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_6lr2x"]
-radius = 104.307
-
-[node name="MetalMonster" instance=ExtResource("1_xok5k")]
+[node name="MetalMonster" type="CharacterBody2D"]
 collision_layer = 2
 collision_mask = 4
 
-[node name="Sprite2D" parent="." index="0"]
-texture = ExtResource("2_i1wsq")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_rfnon")
+
+[node name="Health" type="Node2D" parent="." node_paths=PackedStringArray("hurtbox")]
+script = ExtResource("1_v0cnp")
+hurtbox = NodePath("../Hurtbox")
+max_health = 80.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_3c0qv")
 hframes = 11
 vframes = 8
 frame = 1
 
-[node name="CollisionShape2D" parent="." index="1"]
-position = Vector2(0, 2)
-shape = SubResource("CapsuleShape2D_dkalw")
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 8
+script = ExtResource("3_6ad23")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" index="0"]
-shape = SubResource("CapsuleShape2D_ydcrj")
-debug_color = Color(0.982816, 0.0190217, 0.341634, 0.42)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CapsuleShape2D_16swl")
 
-[node name="MeleeHitbox" type="Area2D" parent="Hitboxes" index="0"]
-position = Vector2(8, 4)
+[node name="Gravity" type="Node2D" parent="."]
+script = ExtResource("4_wj0d0")
+
+[node name="EnemyOrientation" type="Node" parent="." node_paths=PackedStringArray("sprite", "collision_shape", "ray_casts_pivot", "hitboxes_parent", "player_detection_area")]
+script = ExtResource("5_vtjg7")
+sprite = NodePath("../Sprite2D")
+collision_shape = NodePath("../CollisionShape2D")
+ray_casts_pivot = NodePath("../RayCastPivot")
+hitboxes_parent = NodePath("../Hitboxes")
+player_detection_area = NodePath("../PlayerDetectionArea")
+
+[node name="EnemyMovement" type="Node2D" parent="." node_paths=PackedStringArray("ledge_ray_cast", "orientation", "player_detection_area")]
+script = ExtResource("4_odhtv")
+ledge_ray_cast = NodePath("../RayCastPivot/LedgeRayCast")
+orientation = NodePath("../EnemyOrientation")
+player_detection_area = NodePath("../PlayerDetectionArea")
+
+[node name="Hitboxes" type="Node2D" parent="."]
+
+[node name="MeleeHitbox" type="Area2D" parent="Hitboxes"]
 collision_layer = 8
 collision_mask = 16
-script = ExtResource("2_cbj0n")
+script = ExtResource("5_6m0up")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/MeleeHitbox" index="0"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitboxes/MeleeHitbox"]
 rotation = 1.5708
-shape = SubResource("CapsuleShape2D_t76se")
+shape = SubResource("CapsuleShape2D_u36pg")
 disabled = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="5"]
-libraries = {
-"": SubResource("AnimationLibrary_jhflf")
-}
+[node name="PlayerDetectionArea" type="Area2D" parent="." node_paths=PackedStringArray("primary_raycast")]
+script = ExtResource("6_6dv0v")
+primary_raycast = NodePath("../RayCastPivot/PlayerDetectionRayCast")
 
-[node name="BTPlayer" type="BTPlayer" parent="." index="6"]
-behavior_tree = ExtResource("4_my4qs")
-blackboard_plan = SubResource("BlackboardPlan_ullyn")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea"]
+visible = false
+shape = SubResource("CircleShape2D_s26pq")
 
-[node name="LedgeRayCast" type="RayCast2D" parent="RayCasts" index="0"]
-target_position = Vector2(0, 16)
+[node name="RayCastPivot" type="Marker2D" parent="."]
+
+[node name="LedgeRayCast" type="RayCast2D" parent="RayCastPivot"]
+target_position = Vector2(0, 17)
 collision_mask = 4
 
-[node name="PlayerDetectionRayCast" type="RayCast2D" parent="RayCasts" index="1"]
+[node name="PlayerDetectionRayCast" type="RayCast2D" parent="RayCastPivot"]
 rotation = -1.5708
 target_position = Vector2(-4.54598e-06, 104)
 collision_mask = 5
 
-[node name="PlayerDetectionArea" parent="." index="8" node_paths=PackedStringArray("primary_raycast")]
-collision_layer = 0
-primary_raycast = NodePath("../RayCasts/PlayerDetectionRayCast")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_jhflf")
+}
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea" index="0"]
-visible = false
-shape = SubResource("CircleShape2D_6lr2x")
+[node name="BTPlayer" type="BTPlayer" parent="."]
+behavior_tree = ExtResource("7_3o1cd")
+blackboard_plan = SubResource("BlackboardPlan_t1be8")

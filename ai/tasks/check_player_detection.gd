@@ -14,7 +14,7 @@ func _setup() -> void:
 
 # Called when the task is executed.
 func _tick(_delta: float) -> Status:
-	var curr_enemy: Enemy = agent
+	var curr_enemy: CharacterBody2D = agent
 
 	if curr_enemy.player_detected:
 		return FAILURE

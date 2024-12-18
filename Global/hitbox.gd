@@ -8,7 +8,6 @@ func _ready() -> void:
 	connect("area_entered", _on_area_entered)
 
 func _on_area_entered(area: Hurtbox) -> void:
-	print("this hitbox entered an area: ", area)
 	if area is not Hurtbox or area.owner == self.owner:
 		return
 	area.hit(self)
