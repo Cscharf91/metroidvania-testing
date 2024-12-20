@@ -48,7 +48,7 @@ func _update(_delta: float) -> void:
 		PlayerConfig.current_jumps -= 1
 		dispatch("in_air")
   
-	if player.is_on_floor() and InputBuffer.is_action_press_buffered("ground_pound") and player.can_attack:
+	if player.is_on_floor() and InputBuffer.is_action_press_buffered("slide") and player.can_attack:
 		dispatch("slide")
 	
 	if player.direction != 0 and player.can_attack:

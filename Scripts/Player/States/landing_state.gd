@@ -15,7 +15,6 @@ func _enter() -> void:
 	if height_fallen > 200 or previous_state == "GroundPoundState":
 		# amplitude increases based on height fallen, or if the player was in a ground pound state
 		var amplitude = clamp(height_fallen / 25, 1.0, 30.0) if previous_state != "GroundPoundState" else 15.0
-		print("Screen Shake Amplitude: ", amplitude)
 		Events.screen_shake.emit(amplitude + 0.0, 0.15)
 	player.animation_player.play("land")
 	if player.combo > 0:

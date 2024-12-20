@@ -36,7 +36,7 @@ func _update(delta: float) -> void:
 		player.jump()
 		dispatch("in_air")
 	
-	if player.is_on_floor() and Input.is_action_just_pressed("ground_pound") and &"slide" in PlayerConfig.abilities and not %SlideCooldown.time_left:
+	if player.is_on_floor() and Input.is_action_just_pressed("slide") and &"slide" in PlayerConfig.abilities and not %SlideCooldown.time_left:
 		dispatch("slide")
 	
 	if InputBuffer.is_action_press_buffered("attack") and not %Attack1Cooldown.time_left:

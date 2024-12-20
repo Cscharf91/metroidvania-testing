@@ -19,7 +19,6 @@ func _enter() -> void:
 	player.gravity_multiplier = 1.0
 
 func _exit() -> void:
-	print("Leaving wall jump state")
 	can_wall_jump = false
 	wall_coyote_timer_active = false
 

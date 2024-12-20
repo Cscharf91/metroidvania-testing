@@ -12,6 +12,6 @@ func _ready() -> void:
 func _on_area_entered(area: Hurtbox) -> void:
 	if area is not Hurtbox or area.owner == self.owner:
 		return
-	area.hit(self)
 	if screenshake_amplitude > 0.0 and screenshake_duration > 0.0:
 		Events.screen_shake.emit(screenshake_amplitude, screenshake_duration)
+	area.hit(self)

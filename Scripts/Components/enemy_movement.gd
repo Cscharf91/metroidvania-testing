@@ -20,6 +20,8 @@ func move(new_velocity: Vector2) -> void:
 
 func move_in_direction(dir: float, skip_ledge_check: bool = false) -> void:
 	if enemy.is_on_floor() and not skip_ledge_check and check_for_ledge():
+		if player_detection_area.is_player_detected:
+			return
 		reverse_direction()
 		return
 	

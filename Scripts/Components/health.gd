@@ -14,7 +14,6 @@ func _ready() -> void:
 
 func _on_hurt(hitbox: Hitbox) -> void:
 	current_health -= hitbox.damage
-	print("owww, enemy got fucked, curr health: ", current_health)
 	if current_health <= 0.0:
 		died.emit()
 	

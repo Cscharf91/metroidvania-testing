@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://qg0d7ubor7v0"]
+[gd_scene load_steps=21 format=3 uid="uid://qg0d7ubor7v0"]
 
 [ext_resource type="Script" path="res://Scripts/Components/health.gd" id="1_v0cnp"]
 [ext_resource type="Texture2D" uid="uid://c2pklexn4ogyw" path="res://Assets/Sprites/Enemies/MetalMonster/sheet-metal-monster-lila.png" id="2_3c0qv"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Scripts/Components/enemy_orientation.gd" id="5_vtjg7"]
 [ext_resource type="Script" path="res://Scripts/Enemies/player_detection_area.gd" id="6_6dv0v"]
 [ext_resource type="BehaviorTree" uid="uid://boi82yfashbm6" path="res://ai/trees/pace_and_pursue.tres" id="7_3o1cd"]
+[ext_resource type="Script" path="res://Scripts/Components/death.gd" id="10_a4u10"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rfnon"]
 radius = 8.0
@@ -206,3 +207,9 @@ libraries = {
 [node name="BTPlayer" type="BTPlayer" parent="."]
 behavior_tree = ExtResource("7_3o1cd")
 blackboard_plan = SubResource("BlackboardPlan_t1be8")
+
+[node name="Death" type="AnimationPlayer" parent="." node_paths=PackedStringArray("health", "hitbox", "hurtbox")]
+script = ExtResource("10_a4u10")
+health = NodePath("../Health")
+hitbox = NodePath("../Hitboxes/MeleeHitbox")
+hurtbox = NodePath("../Hurtbox")
