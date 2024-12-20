@@ -134,7 +134,7 @@ shape = SubResource("CapsuleShape2D_rfnon")
 [node name="Health" type="Node2D" parent="." node_paths=PackedStringArray("hurtbox")]
 script = ExtResource("1_v0cnp")
 hurtbox = NodePath("../Hurtbox")
-max_health = 80.0
+max_health = 20.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_3c0qv")

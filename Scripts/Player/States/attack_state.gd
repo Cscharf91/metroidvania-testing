@@ -43,7 +43,9 @@ func _update(_delta: float) -> void:
 		dispatch("in_air")
 		return
   
-	if InputBuffer.is_action_press_buffered("jump") and player.can_attack and not is_air_attack:
+	if InputBuffer.is_action_press_buffered("jump") and player.can_attack and is_air_attack and PlayerConfig.current_jumps > 0:
+		player.jump()
+		PlayerConfig.current_jumps -= 1
 		dispatch("in_air")
   
 	if player.is_on_floor() and InputBuffer.is_action_press_buffered("ground_pound") and player.can_attack:
@@ -66,6 +68,7 @@ func _update(_delta: float) -> void:
 		var new_animation = animation.replace("air_", "")
 		player.animation_player.play(new_animation)
 		player.animation_player.seek(frame, true) # Sync frame
+		player.handle_landing()
 		
 		var new_dispatch = "landed_melee_attack" + ("1" if animation.ends_with("1") else "2")
 		dispatch(new_dispatch)

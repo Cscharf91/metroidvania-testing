@@ -80,7 +80,7 @@ func reset_map_starting_coords():
 	$UI/MapWindow.reset_starting_coords()
 
 func init_room():
-	MetSys.get_current_room_instance().adjust_camera_limits($Player/Camera2D)
+	MetSys.get_current_room_instance().adjust_camera_limits($Player/PhantomCamera2D)
 	player.on_enter()
 
 func init_collectibles():
@@ -101,7 +101,7 @@ func init_collectibles():
 					}
 			file_name = dir.get_next()
 		dir.list_dir_end()
-	print("Collectibles initialized: ", collectibles)
+	# print("Collectibles initialized: ", collectibles)
 
 func collect(type_name: String):
 	collectibles[type_name]["count"] += 1

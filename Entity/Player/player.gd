@@ -41,6 +41,7 @@ var combo := 0: set = set_combo
 var combo_charges := 0
 var combo_charged := false
 var last_jump_position: Vector2
+var fall_start_position: Vector2
 
 var can_move := true
 var can_attack := true
@@ -140,7 +141,9 @@ func _unhandled_input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("combo_charge") and combo_charges > 0:
 		combo_charged = true
 		combo_charges -= 1
-
+	
+	if Input.is_action_just_pressed("debug_unlock_all"):
+		PlayerConfig.unlock_all()
 
 func _physics_process(delta: float) -> void:
 	previous_active_state = current_active_state
@@ -203,8 +206,8 @@ func jump():
 		combo_charged = false
 		velocity.y = PlayerConfig.jump_velocity * 1.25
 	else:
-		if can_boost_jump_forward:
-			velocity.x = (air_dash_speed / 1.4) * PlayerConfig.facing_direction
+		if can_boost_jump_forward and (Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")):
+			velocity.x = (air_dash_speed / 1.3) * PlayerConfig.facing_direction
 
 		velocity.y = PlayerConfig.jump_velocity
 
@@ -246,11 +249,11 @@ func _on_action_detection_area_area_entered(area: Area2D) -> void:
 
 func create_dash_effect():
 	var dash_effect = %Sprite2D.duplicate()
-	get_parent().add_child(dash_effect)
 	dash_effect.position = position
 	dash_effect.flip_h = %Sprite2D.flip_h
 	var tint_color = Color(0.2, 0.2, 1, 0.4)
 	dash_effect.modulate = dash_effect.modulate.blend(tint_color)
+	get_parent().add_child(dash_effect)
 
 
 	var animation_time = %FastMovementEffectTimer.wait_time / 3
@@ -273,8 +276,12 @@ func do_sick_flip():
 		0.5
 	).set_trans(Tween.TRANS_CIRC)
 
+func handle_landing() -> void:
+	PlayerConfig.current_air_dashes = PlayerConfig.max_air_dashes
+	PlayerConfig.current_jumps = PlayerConfig.max_jumps
+	gravity_multiplier = 1.0
+
 func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
-	print("owwww! ", hitbox.get_children(), " ", hitbox.damage)
 	PlayerConfig.health -= hitbox.damage
 	$Hurtbox.is_invincible = true
 	$BlinkingAnimationPlayer.play("blink")

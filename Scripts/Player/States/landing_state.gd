@@ -8,8 +8,16 @@ const BOOST_JUMP_STATES = ["GroundPoundState"]
 const BOOST_JUMP__FORWARDSTATES = ["AirDashState"]
 
 func _enter() -> void:
-	player.animation_player.play("land")
 	previous_state = %LimboHSM.get_previous_active_state().name
+
+	var landing_position = player.global_position
+	var height_fallen = abs(player.fall_start_position.y - landing_position.y)
+	if height_fallen > 200 or previous_state == "GroundPoundState":
+		# amplitude increases based on height fallen, or if the player was in a ground pound state
+		var amplitude = clamp(height_fallen / 25, 1.0, 30.0) if previous_state != "GroundPoundState" else 15.0
+		print("Screen Shake Amplitude: ", amplitude)
+		Events.screen_shake.emit(amplitude + 0.0, 0.15)
+	player.animation_player.play("land")
 	if player.combo > 0:
 		%ComboTimer.start()
 	# print("Entering Landing State from: ", previous_state)
@@ -21,9 +29,7 @@ func _enter() -> void:
 	
 	%Sprite2D.scale = Vector2(1.0, 1.0)
 	%Sprite2D.rotation_degrees = 0.0
-	PlayerConfig.current_air_dashes = PlayerConfig.max_air_dashes
-	PlayerConfig.current_jumps = PlayerConfig.max_jumps
-	player.gravity_multiplier = 1.0
+	player.handle_landing()
 
 	player.can_boost_jump = previous_state in BOOST_JUMP_STATES
 	player.can_boost_jump_forward = previous_state in BOOST_JUMP__FORWARDSTATES

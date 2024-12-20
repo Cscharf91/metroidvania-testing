@@ -31,8 +31,8 @@ func _update(_delta: float) -> void:
 	
 	if player.velocity.y >= 0 and not started_falling:
 		if player.animation_player.current_animation != "fall" and not started_falling:
-			print("fawlin")
 			%FastMovementEffectTimer.stop()
+			player.fall_start_position = player.global_position
 			player.animation_player.play("fall")
 		started_falling = true
 	

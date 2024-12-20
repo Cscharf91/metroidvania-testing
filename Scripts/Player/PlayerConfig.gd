@@ -31,8 +31,23 @@ func unlock_ability(ability: StringName) -> void:
 		max_air_dashes = 1
 		current_air_dashes = max_air_dashes
 
+func unlock_all() -> void:
+	print("unlocking all abilities, sup?")
+	var unlockable_abilities = [
+		&"double_jump",
+		&"air_dash",
+		&"wall_jump",
+		&"glide",
+		&"ground_pound",
+		&"slide",
+	]
+	for ability in unlockable_abilities:
+		unlock_ability(ability)
+	
+	print("unlocked all abilities")
+
 func set_health(new_health: float) -> void:
-	health = clamp(new_health, 0, max_health)
+	health = max(new_health, 0)
 	if health <= 0:
 		# TODO - handle death logic
 		print("Oh no! U ded!")

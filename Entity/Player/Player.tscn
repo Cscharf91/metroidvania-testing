@@ -1,4 +1,4 @@
-[gd_scene load_steps=54 format=3 uid="uid://7pmlpxqxdfqm"]
+[gd_scene load_steps=62 format=3 uid="uid://7pmlpxqxdfqm"]
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
 [ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
@@ -26,6 +26,12 @@
 [ext_resource type="Script" path="res://Scripts/Player/States/slide_state.gd" id="17_xkbqy"]
 [ext_resource type="Script" path="res://Scripts/Player/States/attack_state.gd" id="21_e0ogm"]
 [ext_resource type="PackedScene" uid="uid://bjf05t6w3ch8t" path="res://Global/hitbox.tscn" id="22_yopii"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="27_w2nyl"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="28_uljth"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="29_lenl0"]
+[ext_resource type="Script" path="res://Scripts/Components/camera_shake.gd" id="30_iqlra"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_noise_emitter_2d.gd" id="31_1mffc"]
+[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_2d.gd" id="32_7dk0o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41ra8"]
 size = Vector2(11, 29)
@@ -1328,6 +1334,24 @@ height = 32.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s4dtp"]
 size = Vector2(10, 27)
 
+[sub_resource type="Resource" id="Resource_ufo1t"]
+script = ExtResource("29_lenl0")
+duration = 0.25
+transition = 0
+ease = 2
+
+[sub_resource type="Resource" id="Resource_7p6pm"]
+script = ExtResource("32_7dk0o")
+amplitude = 20.0
+frequency = 10.0
+randomize_noise_seed = 1
+noise_seed = 968
+positional_noise = true
+rotational_noise = false
+positional_multiplier_x = 1.0
+positional_multiplier_y = 1.0
+rotational_multiplier = 1.0
+
 [node name="Player" groups=["Persist", "player"] instance=ExtResource("1_l5me4")]
 z_index = 50
 collision_mask = 36
@@ -1343,9 +1367,6 @@ unique_name_in_owner = true
 visible = false
 position = Vector2(0, 1.5)
 shape = SubResource("RectangleShape2D_41ra8")
-
-[node name="Camera2D" type="Camera2D" parent="." index="2"]
-zoom = Vector2(1.4, 1.4)
 
 [node name="FastMovementEffectTimer" type="Timer" parent="Timers" index="0"]
 unique_name_in_owner = true
@@ -1366,18 +1387,18 @@ unique_name_in_owner = true
 wait_time = 0.4
 one_shot = true
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 libraries = {
 "": SubResource("AnimationLibrary_ufq85")
 }
 autoplay = "idle"
 
-[node name="BlinkingAnimationPlayer" type="AnimationPlayer" parent="." index="5"]
+[node name="BlinkingAnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 libraries = {
 "": SubResource("AnimationLibrary_en4rh")
 }
 
-[node name="LimboHSM" type="LimboHSM" parent="." index="6"]
+[node name="LimboHSM" type="LimboHSM" parent="." index="5"]
 unique_name_in_owner = true
 
 [node name="IdleState" type="LimboState" parent="LimboHSM" index="0"]
@@ -1428,7 +1449,7 @@ script = ExtResource("21_e0ogm")
 animation = "katana_air_attack_2"
 is_air_attack = true
 
-[node name="DirectionPointer" type="Marker2D" parent="." index="7"]
+[node name="DirectionPointer" type="Marker2D" parent="." index="6"]
 position = Vector2(16, 0)
 
 [node name="ActionDetectionArea" type="Area2D" parent="DirectionPointer" index="0"]
@@ -1443,25 +1464,60 @@ shape = SubResource("CircleShape2D_kqtiw")
 [node name="Hitbox" parent="DirectionPointer" index="1" instance=ExtResource("22_yopii")]
 position = Vector2(-16, 0)
 damage = 34.0
+screenshake_duration = 0.025
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DirectionPointer/Hitbox" index="0"]
+visible = false
 position = Vector2(14, -2)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_d86qr")
 disabled = true
 
-[node name="OverheadPlatformDetector" type="RayCast2D" parent="." index="8"]
+[node name="OverheadPlatformDetector" type="RayCast2D" parent="." index="7"]
 unique_name_in_owner = true
+visible = false
 position = Vector2(0, 6)
 target_position = Vector2(0, -15)
 collision_mask = 4
 
-[node name="Hurtbox" parent="." index="9" instance=ExtResource("11_6amkq")]
+[node name="Hurtbox" parent="." index="8" instance=ExtResource("11_6amkq")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" index="0"]
+visible = false
 position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_s4dtp")
 debug_color = Color(0.964237, 0.171512, 0.212351, 0.42)
+
+[node name="Camera2D" type="Camera2D" parent="." index="9"]
+physics_interpolation_mode = 1
+zoom = Vector2(1.5, 1.5)
+process_callback = 0
+
+[node name="PhantomCameraHost" type="Node" parent="Camera2D" index="0"]
+process_priority = 300
+process_physics_priority = 300
+script = ExtResource("27_w2nyl")
+
+[node name="CameraShake" type="Node2D" parent="." index="10"]
+script = ExtResource("30_iqlra")
+
+[node name="PhantomCamera2D" type="Node2D" parent="." index="11" node_paths=PackedStringArray("follow_target")]
+top_level = true
+script = ExtResource("28_uljth")
+follow_mode = 5
+follow_target = NodePath("..")
+zoom = Vector2(1.5, 1.5)
+tween_resource = SubResource("Resource_ufo1t")
+tween_on_load = false
+draw_limits = true
+noise_emitter_layer = 1
+
+[node name="PhantomCameraNoiseEmitter2D" type="Node2D" parent="." index="12"]
+unique_name_in_owner = true
+script = ExtResource("31_1mffc")
+noise = SubResource("Resource_7p6pm")
+duration = 0.1
+decay_time = 0.1
 
 [connection signal="timeout" from="Timers/FastMovementEffectTimer" to="." method="_on_fast_movement_effect_timer_timeout"]
 [connection signal="timeout" from="Timers/ComboTimer" to="." method="_on_combo_timer_timeout"]

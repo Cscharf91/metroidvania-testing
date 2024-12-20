@@ -53,8 +53,10 @@ func air_dash(is_boosted: bool) -> void:
 
 	# Directly set velocity.x with respect to direction and terminal velocity
 	var dash_tween = create_tween()
-	var total_air_dash_speed = player.air_dash_speed if not is_boosted else player.air_dash_speed * 1.2
+	var total_air_dash_speed = player.air_dash_speed if not is_boosted else player.air_dash_speed * 2
 	dash_tween.tween_property(player, "velocity:x", PlayerConfig.facing_direction * total_air_dash_speed, 0.1)
+	if is_boosted:
+		dash_tween.tween_property(player, "velocity:y", player.terminal_velocity_y / 2.0, 0.1)
 	dash_tween.connect("finished", _on_dash_tween_completed)
 
 func _on_dash_tween_completed() -> void:

@@ -9,7 +9,7 @@ var is_invincible = false:
 		disable.call_deferred(value)
 
 func hit(hitbox: Hitbox) -> void:
-	print("this hurtbox was hit by a hitbox: ", hitbox)
+	print("owwiee, I'm hurt")
 	hurt.emit(hitbox)
 
 func disable(value):
