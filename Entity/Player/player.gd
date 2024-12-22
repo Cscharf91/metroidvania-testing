@@ -207,7 +207,6 @@ func jump():
 		velocity.y = PlayerConfig.jump_velocity * 1.25
 	else:
 		var has_move_input = Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
-		print("Has move input: ", has_move_input)
 		if can_boost_jump_forward and has_move_input:
 			velocity.x = (air_dash_speed / 1.3) * PlayerConfig.facing_direction
 
