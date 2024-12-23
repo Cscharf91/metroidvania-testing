@@ -40,6 +40,7 @@ func unlock_all() -> void:
 		&"glide",
 		&"ground_pound",
 		&"slide",
+		&"katana_attack",
 	]
 	for ability in unlockable_abilities:
 		unlock_ability(ability)

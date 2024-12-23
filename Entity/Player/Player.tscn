@@ -1355,6 +1355,9 @@ rotational_multiplier = 1.0
 [node name="Player" groups=["Persist", "player"] instance=ExtResource("1_l5me4")]
 z_index = 50
 collision_mask = 36
+floor_constant_speed = true
+floor_max_angle = 0.872665
+floor_snap_length = 10.0
 script = ExtResource("2_wcreg")
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]

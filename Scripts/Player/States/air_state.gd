@@ -52,7 +52,12 @@ func _update(_delta: float) -> void:
 	if Input.is_action_pressed("glide") and &"glide" in PlayerConfig.abilities:
 		dispatch("glide")
 	
-	if InputBuffer.is_action_press_buffered("attack"):
+	if (
+		InputBuffer.is_action_press_buffered("attack")
+		and PlayerConfig.abilities.has("katana_attack")
+		and player.can_attack
+		and not %Attack1Cooldown.time_left
+	):
 		dispatch("melee_air_attack1")
 
 	player.move_and_slide()

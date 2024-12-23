@@ -35,3 +35,7 @@ tile_set = SubResource("TileSet_81b40")
 [node name="Collectibles" type="Node" parent="."]
 
 [node name="Enemies" type="Node" parent="." groups=["enemies"]]
+
+[node name="Checkpoints" type="Node" parent="."]
+
+[node name="ResetAreas" type="Node" parent="."]

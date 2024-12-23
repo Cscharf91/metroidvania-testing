@@ -16,6 +16,8 @@ class_name Player
 @onready var melee_attack2_state: AttackState = $LimboHSM/MeleeAttack2State
 @onready var melee_air_attack1_state: AttackState = $LimboHSM/MeleeAirAttack1State
 @onready var melee_air_attack2_state: AttackState = $LimboHSM/MeleeAirAttack2State
+@onready var sprite: Sprite2D = $Sprite2D
+@onready var collision_shape = %CollisionShape2D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var direction_pointer: Marker2D = $DirectionPointer
@@ -48,6 +50,7 @@ var can_attack := true
 
 func _ready():
 	handle_unlocks()
+	on_enter()
 	_init_state_machine()
 	%Sprite2D.flip_h = PlayerConfig.facing_direction < 0
 
@@ -316,6 +319,11 @@ func _on_combo_timer_timeout() -> void:
 	# print("Combo ended!")
 	combo = 0
 	combo_charges = 0
+
+func reset_to_checkpoint():
+	position = reset_position
+	velocity = Vector2.ZERO
+	gravity_multiplier = 1.0
 
 func set_combo(new_combo: int):
 	if %ComboTimer.time_left:

@@ -22,6 +22,7 @@ func _exit() -> void:
 	if player.animation_player.is_connected("animation_finished", _on_animation_finished):
 		player.animation_player.disconnect("animation_finished", _on_animation_finished)
 	
+	player.sprite.rotation_degrees = 0
 	%CollisionShape2D.shape.size = Vector2(10, 20)
 	%CollisionShape2D.position = Vector2(0, 6)
 	%FastMovementEffectTimer.stop()
@@ -29,6 +30,7 @@ func _exit() -> void:
 	
 func _update(_delta: float) -> void:
 	check_for_overhead_platform()
+	handle_slopes()
 	if PlayerConfig.facing_direction == 1 and player.velocity.x >= PlayerConfig.slide_speed or PlayerConfig.facing_direction == -1 and player.velocity.x <= -PlayerConfig.slide_speed:
 		player.velocity.x = lerp(player.velocity.x, PlayerConfig.slide_speed * PlayerConfig.facing_direction, 0.1)
 	else:
@@ -72,3 +74,15 @@ func check_for_overhead_platform() -> void:
 		is_sliding_under_platform = false
 		if dash_ended_while_under_platform:
 			print("Sliding out from under platform")
+			
+func handle_slopes() -> void:
+	if player.is_on_wall_only() or not player.is_on_floor():
+		return
+	
+	var floor_angle = player.get_floor_angle()
+	var floor_normal = player.get_floor_normal()
+
+	if floor_normal.x > 0:
+		player.sprite.rotation = floor_angle
+	else:
+		player.sprite.rotation = -floor_angle
