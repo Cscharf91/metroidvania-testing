@@ -3,22 +3,10 @@ class_name Player
 
 @onready var ImpactEffect: PackedScene = preload("res://Effects/impact_effect.tscn")
 @onready var hsm: LimboHSM = $LimboHSM
-@onready var idle_state: IdleState = $LimboHSM/IdleState
-@onready var move_state: MoveState = $LimboHSM/MoveState
-@onready var air_state: AirState = $LimboHSM/AirState
-@onready var air_dash_state: AirDashState = $LimboHSM/AirDashState
-@onready var ground_pound_state: GroundPoundState = $LimboHSM/GroundPoundState
-@onready var landing_state: LandingState = $LimboHSM/LandingState
-@onready var wall_jump_state: WallJumpState = $LimboHSM/WallJumpState
-@onready var glide_state: GlideState = $LimboHSM/GlideState
-@onready var slide_state: SlideState = $LimboHSM/SlideState
-@onready var melee_attack1_state: AttackState = $LimboHSM/MeleeAttack1State
-@onready var melee_attack2_state: AttackState = $LimboHSM/MeleeAttack2State
-@onready var melee_air_attack1_state: AttackState = $LimboHSM/MeleeAirAttack1State
-@onready var melee_air_attack2_state: AttackState = $LimboHSM/MeleeAirAttack2State
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var collision_shape = %CollisionShape2D
-
+@onready var state_transitions = $StateTransitions
+@onready var idle_state: IdleState = %LimboHSM/IdleState
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var direction_pointer: Marker2D = $DirectionPointer
 
@@ -30,6 +18,7 @@ class_name Player
 @export var turnaround_friction_multiplier := 2.0
 
 var reset_position: Vector2
+var mid_level_checkpoint_position: Vector2
 var gravity_multiplier := 1.0
 var direction := 0.0
 var is_coyote_time := false: set = set_is_coyote_time
@@ -55,78 +44,12 @@ func _ready():
 	%Sprite2D.flip_h = PlayerConfig.facing_direction < 0
 
 func _init_state_machine():
-	# Transitions into landed_state
-	hsm.add_transition(air_state, landing_state, &"landed")
-	hsm.add_transition(air_dash_state, landing_state, &"landed")
-	hsm.add_transition(ground_pound_state, landing_state, &"ground_pound_landed")
-	hsm.add_transition(wall_jump_state, landing_state, &"landed")
-	hsm.add_transition(glide_state, landing_state, &"landed")
-
-	# Transitions into air_state
-	hsm.add_transition(landing_state, air_state, &"in_air")
-	hsm.add_transition(idle_state, air_state, &"in_air")
-	hsm.add_transition(move_state, air_state, &"in_air")
-	hsm.add_transition(air_dash_state, air_state, &"in_air")
-	hsm.add_transition(wall_jump_state, air_state, &"in_air")
-	hsm.add_transition(glide_state, air_state, &"in_air")
-	hsm.add_transition(slide_state, air_state, &"in_air")
-	hsm.add_transition(melee_attack1_state, air_state, &"in_air")
-	hsm.add_transition(melee_attack2_state, air_state, &"in_air")
-	hsm.add_transition(melee_air_attack1_state, air_state, &"in_air")
-	hsm.add_transition(melee_air_attack2_state, air_state, &"in_air")
-	
-	# Transitions into air_dash_state
-	hsm.add_transition(air_state, air_dash_state, &"air_dash")
-	hsm.add_transition(glide_state, air_dash_state, &"air_dash")
-	hsm.add_transition(ground_pound_state, air_dash_state, &"boosted_air_dash")
-
-	# Transitions into ground_pound_state (if unlocked)
-	hsm.add_transition(air_state, ground_pound_state, &"ground_pound")
-	hsm.add_transition(air_dash_state, ground_pound_state, &"ground_pound")
-	hsm.add_transition(glide_state, ground_pound_state, &"ground_pound")
-
-	# Transitions into wall_jump_state
-	hsm.add_transition(air_state, wall_jump_state, &"wall_jump")
-	hsm.add_transition(air_dash_state, wall_jump_state, &"wall_jump")
-	hsm.add_transition(glide_state, wall_jump_state, &"wall_jump")
-
-	# Transitions into glide_state
-	hsm.add_transition(air_state, glide_state, &"glide")
-	hsm.add_transition(air_dash_state, glide_state, &"glide")
-
-	# Transitions into slide_state
-	hsm.add_transition(idle_state, slide_state, &"slide")
-	hsm.add_transition(move_state, slide_state, &"slide")
-	hsm.add_transition(melee_attack1_state, slide_state, &"slide")
-	hsm.add_transition(melee_attack2_state, slide_state, &"slide")
-
-	# Transitions into idle_state
-	hsm.add_transition(move_state, idle_state, &"movement_stopped")
-	hsm.add_transition(landing_state, idle_state, &"movement_stopped")
-	hsm.add_transition(slide_state, idle_state, &"movement_stopped")
-	hsm.add_transition(melee_attack1_state, idle_state, &"attack_ended")
-	hsm.add_transition(melee_attack2_state, idle_state, &"attack_ended")
-
-	# Transitions into move_state
-	hsm.add_transition(idle_state, move_state, &"movement_started")
-	hsm.add_transition(landing_state, move_state, &"movement_started")
-	hsm.add_transition(slide_state, move_state, &"movement_started")
-	hsm.add_transition(melee_attack1_state, move_state, &"movement_started")
-	hsm.add_transition(melee_attack2_state, move_state, &"movement_started")
-
-	# Transitions into melee_attack_states
-	hsm.add_transition(idle_state, melee_attack1_state, &"melee_attack1")
-	hsm.add_transition(idle_state, melee_attack2_state, &"attack2")
-	hsm.add_transition(move_state, melee_attack1_state, &"melee_attack1")
-	hsm.add_transition(move_state, melee_attack2_state, &"melee_attack2")
-	hsm.add_transition(melee_attack1_state, melee_attack2_state, &"melee_attack2")
-	hsm.add_transition(air_state, melee_air_attack1_state, &"melee_air_attack1")
-	hsm.add_transition(air_state, melee_air_attack2_state, &"melee_air_attack2")
-	hsm.add_transition(melee_air_attack1_state, melee_attack2_state, &"melee_attack2")
-	hsm.add_transition(melee_air_attack1_state, melee_attack1_state, &"landed_melee_attack1")
-	hsm.add_transition(melee_air_attack2_state, melee_attack2_state, &"landed_melee_attack2")
-	hsm.add_transition(melee_air_attack1_state, melee_air_attack2_state, &"melee_air_attack2")
-
+	var transition_table = state_transitions.transition_table
+	for state in transition_table.keys():
+		var transitions = transition_table[state]
+		for event in transitions.keys():
+			var target_state = transitions[event]
+			hsm.add_transition(state, target_state, event)
 
 	hsm.initialize(self)
 	hsm.set_initial_state(idle_state)
@@ -149,6 +72,9 @@ func _unhandled_input(_event: InputEvent) -> void:
 		PlayerConfig.unlock_all()
 
 func _physics_process(delta: float) -> void:
+	if not can_move:
+		return
+	
 	previous_active_state = current_active_state
 	current_active_state = hsm.get_active_state().name
 	apply_gravity(delta)
@@ -216,9 +142,9 @@ func jump():
 		velocity.y = PlayerConfig.jump_velocity
 
 func set_is_coyote_time(new_value: bool):
+	is_coyote_time = new_value
 	if new_value != true:
 		return
-	is_coyote_time = new_value
 	await get_tree().create_timer(coyote_timer).timeout
 	is_coyote_time = false
 
@@ -306,6 +232,14 @@ func on_enter():
 	# Position for kill system. Assigned when entering new room (see Game.gd).
 	reset_position = position
 
+func disable_movement():
+	can_move = false
+	hsm.set_active(false)
+
+func enable_movement():
+	can_move = true
+	hsm.set_active(true)
+
 func set_cannot_turnaround(new_val: bool):
 	cannot_turnaround = new_val
 	await get_tree().create_timer(no_turnaround_timer).timeout
@@ -321,7 +255,8 @@ func _on_combo_timer_timeout() -> void:
 	combo_charges = 0
 
 func reset_to_checkpoint():
-	position = reset_position
+	Events.screen_shake.emit(10.0, 0.5)
+	position = mid_level_checkpoint_position
 	velocity = Vector2.ZERO
 	gravity_multiplier = 1.0
 

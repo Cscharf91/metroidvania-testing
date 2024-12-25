@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://7pmlpxqxdfqm"]
+[gd_scene load_steps=63 format=3 uid="uid://7pmlpxqxdfqm"]
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
 [ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
@@ -23,6 +23,7 @@
 [ext_resource type="Texture2D" uid="uid://bko6uvr67kopn" path="res://Assets/Sprites/Player/Player Punch Cross 64x64.png" id="12_em20i"]
 [ext_resource type="Texture2D" uid="uid://c5ntwo17vcf8g" path="res://Assets/Sprites/Player/player katana continuous attack 80x64.png" id="13_2ebu1"]
 [ext_resource type="Texture2D" uid="uid://sat1ghjy6a0e" path="res://Assets/Sprites/Player/player katana air attack full 80x64-Sheet.png" id="14_vrhh8"]
+[ext_resource type="Script" path="res://Entity/Player/state_transitions.gd" id="15_mtmte"]
 [ext_resource type="Script" path="res://Scripts/Player/States/slide_state.gd" id="17_xkbqy"]
 [ext_resource type="Script" path="res://Scripts/Player/States/attack_state.gd" id="21_e0ogm"]
 [ext_resource type="PackedScene" uid="uid://bjf05t6w3ch8t" path="res://Global/hitbox.tscn" id="22_yopii"]
@@ -1401,7 +1402,10 @@ libraries = {
 "": SubResource("AnimationLibrary_en4rh")
 }
 
-[node name="LimboHSM" type="LimboHSM" parent="." index="5"]
+[node name="StateTransitions" type="Node" parent="." index="5"]
+script = ExtResource("15_mtmte")
+
+[node name="LimboHSM" type="LimboHSM" parent="." index="6"]
 unique_name_in_owner = true
 
 [node name="IdleState" type="LimboState" parent="LimboHSM" index="0"]
@@ -1452,7 +1456,7 @@ script = ExtResource("21_e0ogm")
 animation = "katana_air_attack_2"
 is_air_attack = true
 
-[node name="DirectionPointer" type="Marker2D" parent="." index="6"]
+[node name="DirectionPointer" type="Marker2D" parent="." index="7"]
 position = Vector2(16, 0)
 
 [node name="ActionDetectionArea" type="Area2D" parent="DirectionPointer" index="0"]
@@ -1476,14 +1480,14 @@ rotation = 1.5708
 shape = SubResource("CapsuleShape2D_d86qr")
 disabled = true
 
-[node name="OverheadPlatformDetector" type="RayCast2D" parent="." index="7"]
+[node name="OverheadPlatformDetector" type="RayCast2D" parent="." index="8"]
 unique_name_in_owner = true
 visible = false
 position = Vector2(0, 6)
 target_position = Vector2(0, -15)
 collision_mask = 4
 
-[node name="Hurtbox" parent="." index="8" instance=ExtResource("11_6amkq")]
+[node name="Hurtbox" parent="." index="9" instance=ExtResource("11_6amkq")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" index="0"]
 visible = false
@@ -1491,7 +1495,7 @@ position = Vector2(0, 2.5)
 shape = SubResource("RectangleShape2D_s4dtp")
 debug_color = Color(0.964237, 0.171512, 0.212351, 0.42)
 
-[node name="Camera2D" type="Camera2D" parent="." index="9"]
+[node name="Camera2D" type="Camera2D" parent="." index="10"]
 physics_interpolation_mode = 1
 zoom = Vector2(1.5, 1.5)
 process_callback = 0
@@ -1501,10 +1505,10 @@ process_priority = 300
 process_physics_priority = 300
 script = ExtResource("27_w2nyl")
 
-[node name="CameraShake" type="Node2D" parent="." index="10"]
+[node name="CameraShake" type="Node2D" parent="." index="11"]
 script = ExtResource("30_iqlra")
 
-[node name="PhantomCamera2D" type="Node2D" parent="." index="11" node_paths=PackedStringArray("follow_target")]
+[node name="PhantomCamera2D" type="Node2D" parent="." index="12" node_paths=PackedStringArray("follow_target")]
 top_level = true
 script = ExtResource("28_uljth")
 follow_mode = 5
@@ -1515,7 +1519,7 @@ tween_on_load = false
 draw_limits = true
 noise_emitter_layer = 1
 
-[node name="PhantomCameraNoiseEmitter2D" type="Node2D" parent="." index="12"]
+[node name="PhantomCameraNoiseEmitter2D" type="Node2D" parent="." index="13"]
 unique_name_in_owner = true
 script = ExtResource("31_1mffc")
 noise = SubResource("Resource_7p6pm")

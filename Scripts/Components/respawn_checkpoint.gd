@@ -19,6 +19,6 @@ func _on_player_entered(body: Player) -> void:
 		return
 
 	# this area can be large to ensure the player crosses it, so the reset position will have to be the bottom of the area, then up a bit - the player's collision shape height
-	body.reset_position = global_position if not checkpoint_spawn_marker else checkpoint_spawn_marker.global_position
+	body.mid_level_checkpoint_position = global_position if not checkpoint_spawn_marker else checkpoint_spawn_marker.global_position
 	if one_shot:
 		queue_free()

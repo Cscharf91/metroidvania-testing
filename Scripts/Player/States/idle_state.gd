@@ -38,6 +38,10 @@ func _update(_delta: float) -> void:
 		dispatch("movement_stopped")
 		return
 	
+	if not player.is_on_floor() and not player.is_coyote_time:
+		dispatch("in_air")
+		return
+	
 	if player.velocity.x == 0 and player.is_on_floor() and player.animation_player.current_animation == "run":
 		player.animation_player.play("idle")
 	
