@@ -1,4 +1,4 @@
-[gd_scene load_steps=63 format=3 uid="uid://7pmlpxqxdfqm"]
+[gd_scene load_steps=65 format=3 uid="uid://7pmlpxqxdfqm"]
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
 [ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
@@ -24,6 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://c5ntwo17vcf8g" path="res://Assets/Sprites/Player/player katana continuous attack 80x64.png" id="13_2ebu1"]
 [ext_resource type="Texture2D" uid="uid://sat1ghjy6a0e" path="res://Assets/Sprites/Player/player katana air attack full 80x64-Sheet.png" id="14_vrhh8"]
 [ext_resource type="Script" path="res://Entity/Player/state_transitions.gd" id="15_mtmte"]
+[ext_resource type="Texture2D" uid="uid://bffshqtbldbug" path="res://Assets/Sprites/Player/Player Reaching Up.png" id="15_okj8q"]
 [ext_resource type="Script" path="res://Scripts/Player/States/slide_state.gd" id="17_xkbqy"]
 [ext_resource type="Script" path="res://Scripts/Player/States/attack_state.gd" id="21_e0ogm"]
 [ext_resource type="PackedScene" uid="uid://bjf05t6w3ch8t" path="res://Global/hitbox.tscn" id="22_yopii"]
@@ -146,6 +147,18 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(14, -2)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Sprite2D:vframes")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
 }
 
 [sub_resource type="Animation" id="Animation_3a8gc"]
@@ -1263,6 +1276,45 @@ tracks/2/keys = {
 "values": [ExtResource("7_qa5ps")]
 }
 
+[sub_resource type="Animation" id="Animation_hmrlg"]
+resource_name = "reaching_up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:vframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:texture")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("15_okj8q")]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ufq85"]
 _data = {
 "RESET": SubResource("Animation_4r26t"),
@@ -1279,6 +1331,7 @@ _data = {
 "land": SubResource("Animation_qw87k"),
 "melee_attack_cross": SubResource("Animation_v2o7k"),
 "melee_attack_jab": SubResource("Animation_1rkb6"),
+"reaching_up": SubResource("Animation_hmrlg"),
 "run": SubResource("Animation_2gl68"),
 "slide": SubResource("Animation_uunqd"),
 "wall_land": SubResource("Animation_0k3vs"),
@@ -1346,7 +1399,7 @@ script = ExtResource("32_7dk0o")
 amplitude = 20.0
 frequency = 10.0
 randomize_noise_seed = 1
-noise_seed = 968
+noise_seed = 768
 positional_noise = true
 rotational_noise = false
 positional_multiplier_x = 1.0
@@ -1365,6 +1418,20 @@ script = ExtResource("2_wcreg")
 unique_name_in_owner = true
 texture = ExtResource("3_8ggpf")
 hframes = 10
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": ""
+}
+}
 
 [node name="CollisionShape2D" parent="." index="1"]
 unique_name_in_owner = true
@@ -1511,6 +1578,7 @@ script = ExtResource("30_iqlra")
 [node name="PhantomCamera2D" type="Node2D" parent="." index="12" node_paths=PackedStringArray("follow_target")]
 top_level = true
 script = ExtResource("28_uljth")
+priority = 1
 follow_mode = 5
 follow_target = NodePath("..")
 zoom = Vector2(1.5, 1.5)

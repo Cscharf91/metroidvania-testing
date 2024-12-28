@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://bb6r2wp1fvx6d"
+path="res://.godot/imported/entry-booth.aseprite-75d55ffa02db451e45a54322442982cf.res"
+
+[deps]
+
+source_file="res://Assets/Aseprite/entry-booth.aseprite"
+dest_files=["res://.godot/imported/entry-booth.aseprite-75d55ffa02db451e45a54322442982cf.res"]
+
+[params]
+

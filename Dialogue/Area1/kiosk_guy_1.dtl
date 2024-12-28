@@ -1,0 +1,15 @@
+join kiosk_guy center
+kiosk_guy: ...
+[signal arg="kiosk_peek"]
+[wait time="2.0"]
+kiosk_guy: Oh, man. I thought you were one of [shake rate=20.0 level=5 connected=1]THEM.[/shake]
+kiosk_guy: You didn't hear? Somebody smuggled tons of monsters into the trail. [shake rate=20.0 level=5 connected=1]I'M FREAKING OUT, MAN!![/shake]
+kiosk_guy: I'm sorry, dude, but you're gonna need a weapon if you want to enter.
+kiosk_guy: [shake rate=20.0 level=5 connected=1]HOLD UP, WHAT'S THAT UP THERE?![/shake]
+[signal arg="sword_falling"]
+[wait time="8.5"]
+kiosk_guy: ...huh.
+kiosk_guy: I was gonna say; that was some insane timing on that katana falling from the sky.
+kiosk_guy: That is, until that inconvienent gust of wind came out of nowhere!
+kiosk_guy: It looks like it opened up a path over that way, maybe you should check it out.
+[signal arg="cutscene_ended"]
