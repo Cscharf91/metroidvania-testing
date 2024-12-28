@@ -66,3 +66,6 @@ func set_max_jumps(new_jumps: int) -> void:
 func set_max_air_dashes(new_air_dashes: int) -> void:
 	max_air_dashes = new_air_dashes
 	current_air_dashes = max_air_dashes
+
+func get_player() -> Player:
+	return get_tree().get_first_node_in_group("player") as Player

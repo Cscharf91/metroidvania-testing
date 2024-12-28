@@ -39,6 +39,7 @@ var can_attack := true
 
 func _ready():
 	handle_unlocks()
+	_connect_signals()
 	on_enter()
 	_init_state_machine()
 	%Sprite2D.flip_h = PlayerConfig.facing_direction < 0
@@ -56,7 +57,7 @@ func _init_state_machine():
 	hsm.set_active(true)
 
 func _unhandled_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("ui_accept"):
+	if Input.is_action_just_pressed("interact") and is_on_floor():
 		var actionables = %ActionDetectionArea.get_overlapping_areas().filter(
 			func(area): return area is Actionable
 		)
@@ -268,3 +269,11 @@ func set_combo(new_combo: int):
 		combo_charges += 1
 		# print("Combo charge added! Total: ", combo_charges)
 	# print("Combo added to: ", combo)
+
+func _connect_signals():
+	Dialogic.signal_event.connect(_on_dialogic_event)
+	
+func _on_dialogic_event(event_name: String) -> void:
+	if event_name == "cutscene_ended":
+		enable_movement()
+		TransitionLayer.animation_player.play("cutscene_end")

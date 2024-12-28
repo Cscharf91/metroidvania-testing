@@ -1,0 +1,118 @@
+[gd_scene load_steps=17 format=3 uid="uid://ddp7b6lwpu23r"]
+
+[ext_resource type="Script" path="res://Scripts/Components/Cutscenes/george_knocked_out.gd" id="1_1vc0y"]
+[ext_resource type="Texture2D" uid="uid://de1k0e0ijxwri" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_0.png" id="1_bo2wn"]
+[ext_resource type="Texture2D" uid="uid://dp4878q4tuu7j" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_1.png" id="2_dhha2"]
+[ext_resource type="Texture2D" uid="uid://cq2tb13vmi1dd" path="res://Assets/Sprites/NPCs/George/Character1M_1_jump_1.png" id="2_sfbbn"]
+[ext_resource type="Texture2D" uid="uid://cdupua47jbpmh" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_2.png" id="3_hbmlo"]
+[ext_resource type="Texture2D" uid="uid://dwj56f64t620w" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_3.png" id="4_p6ck3"]
+[ext_resource type="Texture2D" uid="uid://buw226vyjlxt2" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_4.png" id="5_xmtic"]
+[ext_resource type="Texture2D" uid="uid://c4xykpco64mp4" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_5.png" id="6_x3gn6"]
+[ext_resource type="Texture2D" uid="uid://h0ex4c7swtxd" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_6.png" id="7_yuojb"]
+[ext_resource type="Texture2D" uid="uid://b7kswmdd7c54m" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_7.png" id="8_7aj2o"]
+[ext_resource type="Script" path="res://Scripts/Components/hitstop.gd" id="11_dga70"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n1usk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_sfbbn")
+}],
+"loop": true,
+"name": &"in_air",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_bo2wn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_dhha2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hbmlo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_p6ck3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xmtic")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_x3gn6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_yuojb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_7aj2o")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kemrr"]
+size = Vector2(9, 32)
+
+[sub_resource type="Animation" id="Animation_emmsn"]
+resource_name = "blink"
+length = 0.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sr7i1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qbu0p"]
+_data = {
+"RESET": SubResource("Animation_sr7i1"),
+"blink": SubResource("Animation_emmsn")
+}
+
+[node name="GeorgeKnockedOut" type="Area2D"]
+collision_layer = 512
+collision_mask = 512
+script = ExtResource("1_1vc0y")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_n1usk")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_kemrr")
+
+[node name="Hitstop" type="Node2D" parent="."]
+script = ExtResource("11_dga70")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_qbu0p")
+}

@@ -1,6 +1,10 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bker8m4qv3fwg"]
+[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://bker8m4qv3fwg"]
 
 [ext_resource type="Texture2D" uid="uid://mk6g3u2o4jru" path="res://Assets/Tilesets/overgrown_temple_tileset.png" id="1_kdkup"]
+[ext_resource type="Texture2D" uid="uid://b3qdwut1qkmbj" path="res://Assets/Tilesets/overgrown_temple_breakable_side.png" id="1_up8df"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lgrdc"]
+texture = ExtResource("1_up8df")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_62hjl"]
 texture = ExtResource("1_kdkup")
@@ -383,6 +387,7 @@ terrain_set_0/terrain_2/name = "Decorative"
 terrain_set_0/terrain_2/color = Color(0.849876, 1.05888e-06, 0.49407, 1)
 navigation_layer_0/layers = 1
 sources/2 = SubResource("TileSetAtlasSource_62hjl")
+sources/0 = SubResource("TileSetAtlasSource_lgrdc")
 metadata/_better_terrain = {
 "decoration": ["Decoration", Color(0.411765, 0.411765, 0.411765, 1), 3, [], {
 "path": "res://addons/better-terrain/icons/Decoration.svg"

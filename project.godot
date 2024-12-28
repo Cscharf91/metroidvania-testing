@@ -29,10 +29,25 @@ InputBuffer="*res://Scripts/Global/input_buffer.gd"
 BetterTerrain="*res://addons/better-terrain/BetterTerrain.gd"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 Events="*res://Scripts/Global/events.gd"
+Dialogic="*res://addons/dialogic/Core/DialogicGameHandler.gd"
+Utils="*res://Scripts/Global/utils.gd"
 
 [debug]
 
 gdscript/warnings/unused_signal=0
+
+[dialogic]
+
+directories/dch_directory={
+"kiosk_guy": "res://Dialogue/Characters/kiosk_guy.dch",
+"player": "res://Dialogue/Characters/player.dch"
+}
+directories/dtl_directory={
+"kiosk_guy_1": "res://Dialogue/Area1/kiosk_guy_1.dtl",
+"kiosk_guy_2": "res://Dialogue/Area1/kiosk_guy_2.dtl"
+}
+layout/style_list=["res://Resources/dialogic_text_bubble_style.tres"]
+layout/default_style="res://Resources/dialogic_text_bubble_style.tres"
 
 [dialogue_manager]
 
@@ -48,13 +63,14 @@ window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/MetroidvaniaSystem/EditorExtension/plugin.cfg", "res://addons/MetroidvaniaSystem/plugin.cfg", "res://addons/better-terrain/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/MetroidvaniaSystem/EditorExtension/plugin.cfg", "res://addons/MetroidvaniaSystem/plugin.cfg", "res://addons/better-terrain/plugin.cfg", "res://addons/dialogic/plugin.cfg", "res://addons/dialogue_manager/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [global_group]
 
 player="it's the player, duh"
 Persist=""
 enemies=""
+ui=""
 
 [input]
 
@@ -153,6 +169,20 @@ slide={
 , Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+dialogic_default_action={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":4194309,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":true,"double_click":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":32,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":88,"physical_keycode":0,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":0,"button_index":0,"pressure":0.0,"pressed":false,"script":null)
+]
+}
+interact={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":67,"key_label":0,"unicode":99,"location":0,"echo":false,"script":null)
+]
+}
 
 [internationalization]
 
@@ -168,6 +198,8 @@ locale/translations_pot_files=PackedStringArray("res://test1.dialogue")
 2d_physics/layer_6="TransitionGate"
 2d_physics/layer_7="Actionable"
 2d_physics/layer_8="Pickups/Unlocks"
+2d_physics/layer_9="World"
+2d_physics/layer_10="Cutscene Related"
 
 [physics]
 

@@ -111,7 +111,7 @@ starting_map = "DemonWoods/game_start.tscn"
 [node name="Player" parent="." instance=ExtResource("4_tmbcq")]
 position = Vector2(74, 203)
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." groups=["ui"]]
 
 [node name="Minimap" parent="UI" instance=ExtResource("3_bb8wv")]
 anchors_preset = 1
