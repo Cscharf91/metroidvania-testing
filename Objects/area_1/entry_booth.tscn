@@ -1,27 +1,25 @@
-[gd_scene load_steps=12 format=3 uid="uid://cgax2oryw2r8g"]
+[gd_scene load_steps=11 format=3 uid="uid://cgax2oryw2r8g"]
 
 [ext_resource type="Texture2D" uid="uid://472w3fk2qsr4" path="res://Objects/area_1/entry-booth.png" id="1_t6bjd"]
 [ext_resource type="Script" path="res://Scripts/Objects/Area1/entry_booth.gd" id="1_xvp3q"]
 [ext_resource type="PackedScene" uid="uid://xvb10atpf1qh" path="res://Global/actionable.tscn" id="3_rtwls"]
-[ext_resource type="Resource" path="res://Dialogue/Area1/kiosk_guy_1.dtl" id="4_fvd10"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j8nhe"]
 size = Vector2(119, 41)
 
-[sub_resource type="Animation" id="Animation_u5ltx"]
-length = 0.6
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_godib"]
+length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
-tracks/0/loop_wrap = false
+tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [0, 1, 2, 1, 0, 0]
+"values": [5]
 }
 
 [sub_resource type="Animation" id="Animation_fynu6"]
@@ -39,6 +37,22 @@ tracks/0/keys = {
 "values": [3, 4, 5, 6, 7, 8]
 }
 
+[sub_resource type="Animation" id="Animation_u5ltx"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1, 0, 0]
+}
+
 [sub_resource type="Animation" id="Animation_0x0sg"]
 resource_name = "peek"
 length = 2.0
@@ -53,21 +67,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [9, 7, 10, 10, 10, 11, 11, 11, 11, 10, 10, 10, 11, 11, 11, 11, 5, 4, 2]
-}
-
-[sub_resource type="Animation" id="Animation_godib"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite2D:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [5]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0ika5"]
@@ -120,7 +119,7 @@ libraries = {
 autoplay = "idle"
 
 [node name="Actionable" parent="." instance=ExtResource("3_rtwls")]
-dialog_timeline = ExtResource("4_fvd10")
+dialog_timeline = "kiosk_guy_1"
 character_name = "kiosk_guy"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]

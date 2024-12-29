@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var sword_stop_time := 1.0
+@export var sword_stop_time := 2
 
 var is_falling := false
 var is_blown_by_wind := false
@@ -38,7 +38,6 @@ func _on_dialogic_event(event_name: String) -> void:
 		sprite.visible = true
 
 func _on_area_entered(area: Area2D) -> void:
-	print("area name: ", area.name)
 	match area.name:
 		"SwordSlower":
 			area.queue_free()
@@ -48,20 +47,19 @@ func _on_area_entered(area: Area2D) -> void:
 			return
 		"SwordStopper":
 			area.queue_free()
-			camera.zoom = Vector2(13, 13)
+			camera.zoom = Vector2(11, 11)
 			is_falling = false
 			Engine.time_scale = 1.0
-			var wind_instance = Utils.spawn(wind, player.global_position + Vector2(20, -25))
+			var wind_instance = Utils.spawn(wind, player.global_position + Vector2(20, -15))
 			await get_tree().create_timer(sword_stop_time).timeout
 			Utils.spawn(george, player.global_position - Vector2(650, 0))
 			wind_instance.queue_free()
 			player.animation_player.play("idle")
-			global_position += Vector2(0, 15)
-			camera.zoom = Vector2(4, 4)
+			camera.zoom = Vector2(3, 3)
+			await get_tree().create_timer(0.1).timeout
 			is_blown_by_wind = true
 			return
 		"SwordArea":
 			await get_tree().create_timer(0.5).timeout
 			queue_free()
-		_:
 			return

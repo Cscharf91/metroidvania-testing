@@ -187,7 +187,6 @@ func start(timeline:Variant, label:Variant="") -> Node:
 		scene.ready.connect(start_timeline.bind(timeline, label))
 	else:
 		start_timeline(timeline, label)
-	print("returning the scene? ", scene)
 	return scene
 
 

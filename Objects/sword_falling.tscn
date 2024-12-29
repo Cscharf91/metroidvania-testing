@@ -42,11 +42,11 @@ texture = ExtResource("2_3c0lj")
 
 [node name="PhantomCamera2D" type="Node2D" parent="." node_paths=PackedStringArray("follow_target")]
 top_level = true
-position = Vector2(153.6, 0)
+position = Vector2(76.8, 0)
 script = ExtResource("3_u5d1w")
 follow_mode = 1
 follow_target = NodePath("..")
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(5, 5)
 tween_resource = SubResource("Resource_gbjii")
 draw_limits = true
 limit_left = 0

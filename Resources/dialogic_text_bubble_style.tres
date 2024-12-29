@@ -19,7 +19,13 @@ overrides = {}
 [sub_resource type="Resource" id="Resource_ng6yx"]
 script = ExtResource("1_lr4tg")
 scene = ExtResource("3_vmtny")
-overrides = {}
+overrides = {
+"behaviour_distance": "25.0",
+"box_padding": "Vector2(5, 5)",
+"name_label_font_size": "12.0",
+"name_label_padding": "Vector2(3, 3)",
+"text_size": "13.0"
+}
 
 [resource]
 script = ExtResource("4_qvahh")

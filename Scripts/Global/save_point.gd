@@ -20,5 +20,6 @@ func on_body_entered(player: Player) -> void:
 	print("Game saved.")
 
 func _draw() -> void:
+	pass
 	# Draws the circle.
-	$CollisionShape2D.shape.draw(get_canvas_item(), Color.BLUE)
+	#$CollisionShape2D.shape.draw(get_canvas_item(), Color.BLUE)

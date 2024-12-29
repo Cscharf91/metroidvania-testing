@@ -57,11 +57,13 @@ func _init_state_machine():
 	hsm.set_active(true)
 
 func _unhandled_input(_event: InputEvent) -> void:
-	if Input.is_action_just_pressed("interact") and is_on_floor():
+	if Input.is_action_just_pressed("interact") and is_on_floor() and can_move:
 		var actionables = %ActionDetectionArea.get_overlapping_areas().filter(
 			func(area): return area is Actionable
 		)
+		actionables.reverse() # reorders the array: top -> bottom of the scene tree
 		if actionables.size() > 0:
+			print("actionables: ", actionables)
 			var actionable: Actionable = actionables[0]
 			actionable.action()
 	
@@ -275,5 +277,4 @@ func _connect_signals():
 	
 func _on_dialogic_event(event_name: String) -> void:
 	if event_name == "cutscene_ended":
-		enable_movement()
-		TransitionLayer.animation_player.play("cutscene_end")
+		Utils.handle_cutscene_end()
