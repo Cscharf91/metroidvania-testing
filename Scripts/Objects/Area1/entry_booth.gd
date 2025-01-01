@@ -22,6 +22,9 @@ func _on_dialogic_event(event_name: String) -> void:
 		animation_player.stop()
 	if event_name == "kiosk_resume_animation":
 		animation_player.play("idle")
+		var player = PlayerConfig.get_player()
+		if player:
+			player.animation_player.play("idle")
 
 func _kiosk_peek() -> void:
 	animation_player.play("peek")

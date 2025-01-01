@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var sword_stop_time := 2
+@export var sword_stop_time := 2.5
 
 var is_falling := false
 var is_blown_by_wind := false
@@ -54,7 +54,6 @@ func _on_area_entered(area: Area2D) -> void:
 			await get_tree().create_timer(sword_stop_time).timeout
 			Utils.spawn(george, player.global_position - Vector2(650, 0))
 			wind_instance.queue_free()
-			player.animation_player.play("idle")
 			camera.zoom = Vector2(3, 3)
 			await get_tree().create_timer(0.1).timeout
 			is_blown_by_wind = true

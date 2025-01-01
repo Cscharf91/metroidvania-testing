@@ -37,6 +37,7 @@ func _ready() -> void:
 		collectibles = save_manager.get_value("collectible_count")
 		generated_rooms.assign(save_manager.get_value("generated_rooms"))
 		events.assign(save_manager.get_value("events"))
+		Dialog.dialog_data = save_manager.get_value("dialog_data")
 		for ability in save_manager.get_value("abilities"):
 			PlayerConfig.unlock_ability(ability)
 		
@@ -72,6 +73,7 @@ func save_game():
 	var save_manager := SaveManager.new()
 	save_manager.set_value("collectible_count", collectibles)
 	save_manager.set_value("generated_rooms", generated_rooms)
+	save_manager.set_value("dialog_data", Dialog.dialog_data)
 	save_manager.set_value("events", events)
 	save_manager.set_value("current_room", MetSys.get_current_room_name())
 	save_manager.set_value("abilities", PlayerConfig.abilities)

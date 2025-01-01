@@ -17,7 +17,7 @@ func handle_cutscene_start() -> void:
 	TransitionLayer.animation_player.play("cutscene_start")
 	fade_out_all_ui_elements()
 
-func handle_cutscene_end() -> void:
+func handle_cutscene_end(character_name = null, timeline = null) -> void:
 	var player: Player = PlayerConfig.get_player()
 
 	if not player:
@@ -27,6 +27,9 @@ func handle_cutscene_end() -> void:
 	player.enable_movement()
 	TransitionLayer.animation_player.play("cutscene_end")
 	fade_in_all_ui_elements()
+
+	if character_name:
+		Dialog.set_timeline(character_name, timeline)
 
 func fade_out_all_ui_elements() -> void:
 	var ui_node: CanvasLayer = get_tree().get_first_node_in_group("ui")

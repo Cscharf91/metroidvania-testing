@@ -119,7 +119,6 @@ libraries = {
 autoplay = "idle"
 
 [node name="Actionable" parent="." instance=ExtResource("3_rtwls")]
-dialog_timeline = "kiosk_guy_1"
 character_name = "kiosk_guy"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable"]
