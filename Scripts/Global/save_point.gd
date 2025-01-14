@@ -6,7 +6,6 @@ extends Area2D
 func _ready() -> void:
 	body_entered.connect(on_body_entered)
 
-# Player enter save point. Note that in a legit code this should check whether body is really a player.
 func on_body_entered(player: Player) -> void:
 	if player == null:
 		return

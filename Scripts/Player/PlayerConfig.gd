@@ -10,6 +10,7 @@ var current_air_dashes := max_air_dashes
 var acceleration := 1000
 var friction := 2100
 var jump_velocity := -400
+var bounce_velocity := -400
 var ground_pound_speed := 2000
 var facing_direction := 1
 var wall_jump_velocity := 400

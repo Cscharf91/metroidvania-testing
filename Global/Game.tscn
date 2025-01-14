@@ -110,6 +110,12 @@ starting_map = "DemonWoods/game_start.tscn"
 
 [node name="Player" parent="." instance=ExtResource("4_tmbcq")]
 position = Vector2(74, 227)
+terminal_velocity_y = 1000
+coyote_timer = 0.15
+boost_jump_timer = 0.15
+no_turnaround_timer = 0.15
+air_dash_speed = 900.0
+turnaround_friction_multiplier = 2.0
 
 [node name="UI" type="CanvasLayer" parent="." groups=["ui"]]
 

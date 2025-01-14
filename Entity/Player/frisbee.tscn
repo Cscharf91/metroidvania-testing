@@ -1,0 +1,45 @@
+[gd_scene load_steps=5 format=3 uid="uid://ddwqlvccxhrgt"]
+
+[ext_resource type="Script" path="res://Scripts/Player/frisbee.gd" id="1_g25f8"]
+[ext_resource type="Texture2D" uid="uid://1ti50e5lpp83" path="res://icon.svg" id="2_5inbe"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vqwa1"]
+radius = 2.0
+height = 20.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_std2w"]
+radius = 2.0
+height = 28.0
+
+[node name="Frisbee" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 4
+script = ExtResource("1_g25f8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.15625, 0.03125)
+texture = ExtResource("2_5inbe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_vqwa1")
+
+[node name="BounceArea" type="Area2D" parent="."]
+unique_name_in_owner = true
+collision_layer = 1024
+collision_mask = 1025
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BounceArea"]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_std2w")
+debug_color = Color(0.665762, 0.324416, 0.982801, 0.42)
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="MoveTimer" type="Timer" parent="Timers"]
+wait_time = 0.25
+one_shot = true
+
+[node name="HoldTimer" type="Timer" parent="Timers"]
+wait_time = 1.25
+one_shot = true

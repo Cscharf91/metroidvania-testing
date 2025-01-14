@@ -28,8 +28,8 @@ func _ready() -> void:
 	set_player($Player)
 	init_collectibles()
 	
-	# if FileAccess.file_exists(SAVE_PATH):
-	if false:
+	if FileAccess.file_exists(SAVE_PATH):
+	# if false:
 		# If save data exists, load it using MetSys SaveManager.
 		var save_manager := SaveManager.new()
 		save_manager.load_from_text(SAVE_PATH)

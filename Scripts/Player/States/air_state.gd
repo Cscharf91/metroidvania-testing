@@ -23,11 +23,11 @@ func _update(_delta: float) -> void:
 	if not player.can_move:
 		return
 		
-	# if (
-	# 	Input.is_action_just_released("jump")
-	# 	and previous_state != "WallJumpState"
-	# ):
-	# 	player.velocity.y *= 0.5
+	if (
+		Input.is_action_just_released("jump")
+		and previous_state != "WallJumpState"
+	):
+		player.velocity.y *= 0.5
 	
 	if player.velocity.y >= 0 and not started_falling:
 		if player.animation_player.current_animation != "fall" and not started_falling:

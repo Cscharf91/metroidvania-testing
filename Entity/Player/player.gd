@@ -9,6 +9,8 @@ class_name Player
 @onready var idle_state: IdleState = %LimboHSM/IdleState
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var direction_pointer: Marker2D = $DirectionPointer
+@onready var frisbee: PackedScene = preload("res://Entity/Player/frisbee.tscn")
+@onready var air_state: AirState = $LimboHSM/AirState
 
 @export var terminal_velocity_y := 1000
 @export var coyote_timer := 0.15
@@ -33,6 +35,7 @@ var combo_charges := 0
 var combo_charged := false
 var last_jump_position: Vector2
 var fall_start_position: Vector2
+var current_frisbee: Frisbee
 
 var can_move := true
 var can_attack := true
@@ -90,7 +93,11 @@ func _physics_process(delta: float) -> void:
 		direction_pointer.position.x = facing_direction * 16
 		%Sprite2D.flip_h = facing_direction < 0
 
+	handle_frisbee()
 	handle_movement(delta)
+
+func clear_frisbee_reference() -> void:
+	current_frisbee = null
 
 func handle_movement(delta: float) -> void:
 	if direction != 0 and can_move:
@@ -120,6 +127,16 @@ func handle_movement(delta: float) -> void:
 	velocity.x = clamp(velocity.x, -PlayerConfig.max_speed, PlayerConfig.max_speed)
 	velocity.y = clamp(velocity.y, -terminal_velocity_y, terminal_velocity_y)
 
+func handle_frisbee():
+	if current_frisbee and Input.is_action_pressed("throw_frisbee"):
+		current_frisbee.is_throw_button_held = true
+	elif current_frisbee:
+		current_frisbee.is_throw_button_held = false
+	
+	if Input.is_action_just_pressed("throw_frisbee") and not current_frisbee:
+		var frisbee_instance := Utils.spawn(frisbee, global_position + Vector2(15 * PlayerConfig.facing_direction, 2)) as Frisbee
+		current_frisbee = frisbee_instance
+		frisbee_instance.direction.x = PlayerConfig.facing_direction
 
 func apply_gravity(delta: float):
 	if not is_on_floor() and gravity_multiplier > 0.0:
@@ -140,9 +157,18 @@ func jump():
 	else:
 		var has_move_input = Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
 		if can_boost_jump_forward and has_move_input:
-			velocity.x = (air_dash_speed / 1.3) * PlayerConfig.facing_direction
+			if current_active_state == "AirDashState":
+				velocity.x = (air_dash_speed) * PlayerConfig.facing_direction
+			else:
+				velocity.x = (air_dash_speed / 1.2) * PlayerConfig.facing_direction
 
 		velocity.y = PlayerConfig.jump_velocity
+
+func bounce(bounce_velocity := 0):
+	air_state.started_falling = false
+	animation_player.play("jump")
+	
+	velocity.y = PlayerConfig.bounce_velocity if bounce_velocity == 0.0 else bounce_velocity
 
 func set_is_coyote_time(new_value: bool):
 	is_coyote_time = new_value
@@ -259,9 +285,11 @@ func _on_combo_timer_timeout() -> void:
 
 func reset_to_checkpoint():
 	Events.screen_shake.emit(10.0, 0.5)
-	position = mid_level_checkpoint_position
+	position = mid_level_checkpoint_position if mid_level_checkpoint_position else reset_position
 	velocity = Vector2.ZERO
 	gravity_multiplier = 1.0
+	if current_frisbee:
+		current_frisbee.queue_free_safely()
 
 func set_combo(new_combo: int):
 	if %ComboTimer.time_left:
@@ -274,6 +302,11 @@ func set_combo(new_combo: int):
 
 func _connect_signals():
 	Dialogic.signal_event.connect(_on_dialogic_event)
+	MetSys.room_changed.connect(_on_room_changed)
+
+func _on_room_changed(_room_name: String) -> void:
+	await get_tree().create_timer(0.1).timeout # wait until position updates
+	mid_level_checkpoint_position = global_position
 	
 func _on_dialogic_event(event_name: String) -> void:
 	if event_name == "cutscene_ended":

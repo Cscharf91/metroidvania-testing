@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bo8pgygfcooid"]
+
+[ext_resource type="Texture2D" uid="uid://1ti50e5lpp83" path="res://icon.svg" id="1_ws8da"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1qvbp"]
+size = Vector2(16, 16)
+
+[node name="FrisbounceBoost" type="Area2D"]
+collision_layer = 1024
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("1_ws8da")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_1qvbp")
