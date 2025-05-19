@@ -8,7 +8,7 @@ enum STATES {
 }
 
 @export var speed := 300
-@export var return_speed := 400
+@export var return_speed := 500
 @export var bounce_velocity := -400
 @export var boosted_velocity := -600
 @export var bounce_to_return_time := 0.25

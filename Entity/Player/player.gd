@@ -136,13 +136,16 @@ func handle_frisbee():
 		current_frisbee.is_throw_button_held = false
 	
 	if Input.is_action_just_pressed("throw_frisbee") and not current_frisbee:
-		animation_player.play("throw_frisbee")
-		animation_player.animation_finished.connect(_end_frisbee_throw)
-		if not is_on_floor():
-			velocity.y = frisbee_throw_velocity
-		var frisbee_instance := Utils.spawn(frisbee, global_position + Vector2(15 * PlayerConfig.facing_direction, 2)) as Frisbee
-		current_frisbee = frisbee_instance
-		frisbee_instance.direction.x = PlayerConfig.facing_direction
+		if is_on_floor() or PlayerConfig.current_frisbee_throws > 0:
+			if not is_on_floor():
+				PlayerConfig.current_frisbee_throws -= 1
+			animation_player.play("throw_frisbee")
+			animation_player.animation_finished.connect(_end_frisbee_throw)
+			if not is_on_floor():
+				velocity.y = frisbee_throw_velocity
+			var frisbee_instance := Utils.spawn(frisbee, global_position + Vector2(15 * PlayerConfig.facing_direction, 2)) as Frisbee
+			current_frisbee = frisbee_instance
+			frisbee_instance.direction.x = PlayerConfig.facing_direction
 
 func apply_gravity(delta: float):
 	if not is_on_floor() and gravity_multiplier > 0.0:
@@ -175,6 +178,7 @@ func bounce(bounce_velocity := 0):
 	animation_player.play("jump")
 	
 	velocity.y = PlayerConfig.bounce_velocity if bounce_velocity == 0.0 else bounce_velocity
+	PlayerConfig.current_frisbee_throws = min(PlayerConfig.current_frisbee_throws + 1, PlayerConfig.max_frisbee_throws)
 
 func set_is_coyote_time(new_value: bool):
 	is_coyote_time = new_value
@@ -244,6 +248,7 @@ func do_sick_flip():
 func handle_landing() -> void:
 	PlayerConfig.current_air_dashes = PlayerConfig.max_air_dashes
 	PlayerConfig.current_jumps = PlayerConfig.max_jumps
+	PlayerConfig.current_frisbee_throws = PlayerConfig.max_frisbee_throws
 	can_bounce = true
 	gravity_multiplier = 1.0
 

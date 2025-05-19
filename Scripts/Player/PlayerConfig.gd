@@ -7,6 +7,8 @@ var max_jumps := 1: set = set_max_jumps
 var current_jumps := max_jumps: set = set_current_jumps
 var max_air_dashes := 0: set = set_max_air_dashes
 var current_air_dashes := max_air_dashes
+var max_frisbee_throws := 1
+var current_frisbee_throws := max_frisbee_throws
 var acceleration := 1000
 var friction := 2100
 var jump_velocity := -400
