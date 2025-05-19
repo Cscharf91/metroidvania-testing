@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=5 format=3 uid="uid://kkw5b2hdtt40"]
 
 [ext_resource type="Texture2D" uid="uid://u3h7efr7bfkv" path="res://addons/MetroidvaniaSystem/Themes/Exquisite/PlayerLocation.png" id="1_8k1h2"]
 
@@ -35,8 +35,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_dyruj"]
 _data = {
-"RESET": SubResource("Animation_ff42g"),
-"Spin": SubResource("Animation_2cmdj")
+&"RESET": SubResource("Animation_ff42g"),
+&"Spin": SubResource("Animation_2cmdj")
 }
 
 [node name="PlayerLocation" type="Sprite2D"]

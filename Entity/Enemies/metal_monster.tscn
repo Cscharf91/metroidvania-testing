@@ -1,15 +1,15 @@
 [gd_scene load_steps=21 format=3 uid="uid://qg0d7ubor7v0"]
 
-[ext_resource type="Script" path="res://Scripts/Components/health.gd" id="1_v0cnp"]
+[ext_resource type="Script" uid="uid://b4wr7kbsdfbg6" path="res://Scripts/Components/health.gd" id="1_v0cnp"]
 [ext_resource type="Texture2D" uid="uid://c2pklexn4ogyw" path="res://Assets/Sprites/Enemies/MetalMonster/sheet-metal-monster-lila.png" id="2_3c0qv"]
-[ext_resource type="Script" path="res://Global/hurtbox.gd" id="3_6ad23"]
-[ext_resource type="Script" path="res://Scripts/Components/enemy_movement.gd" id="4_odhtv"]
-[ext_resource type="Script" path="res://Scripts/Components/gravity.gd" id="4_wj0d0"]
-[ext_resource type="Script" path="res://Global/hitbox.gd" id="5_6m0up"]
-[ext_resource type="Script" path="res://Scripts/Components/enemy_orientation.gd" id="5_vtjg7"]
-[ext_resource type="Script" path="res://Scripts/Enemies/player_detection_area.gd" id="6_6dv0v"]
+[ext_resource type="Script" uid="uid://co7m6rdgeay33" path="res://Global/hurtbox.gd" id="3_6ad23"]
+[ext_resource type="Script" uid="uid://b6dqg2t1qqm8c" path="res://Scripts/Components/enemy_movement.gd" id="4_odhtv"]
+[ext_resource type="Script" uid="uid://dw51eh46cys57" path="res://Scripts/Components/gravity.gd" id="4_wj0d0"]
+[ext_resource type="Script" uid="uid://bcrmbpt2oqadc" path="res://Global/hitbox.gd" id="5_6m0up"]
+[ext_resource type="Script" uid="uid://dbmr21s1c5iix" path="res://Scripts/Components/enemy_orientation.gd" id="5_vtjg7"]
+[ext_resource type="Script" uid="uid://scv8xpnwuuy2" path="res://Scripts/Enemies/player_detection_area.gd" id="6_6dv0v"]
 [ext_resource type="BehaviorTree" uid="uid://boi82yfashbm6" path="res://ai/trees/pace_and_pursue.tres" id="7_3o1cd"]
-[ext_resource type="Script" path="res://Scripts/Components/death.gd" id="10_a4u10"]
+[ext_resource type="Script" uid="uid://bm0v4kka4ymrk" path="res://Scripts/Components/death.gd" id="10_a4u10"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rfnon"]
 radius = 8.0
@@ -116,10 +116,10 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jhflf"]
 _data = {
-"RESET": SubResource("Animation_dpn8p"),
-"idle": SubResource("Animation_2qfle"),
-"melee_attack": SubResource("Animation_s3ufb"),
-"move_forward": SubResource("Animation_yjb2s")
+&"RESET": SubResource("Animation_dpn8p"),
+&"idle": SubResource("Animation_2qfle"),
+&"melee_attack": SubResource("Animation_s3ufb"),
+&"move_forward": SubResource("Animation_yjb2s")
 }
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_t1be8"]

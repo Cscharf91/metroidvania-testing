@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=4 uid="uid://c2pia1nydqv83"]
 
-[ext_resource type="Script" path="res://Scripts/Global/dynamic_parallax.gd" id="1_84drg"]
+[ext_resource type="Script" uid="uid://csi5qv4ufx0cr" path="res://Scripts/Global/dynamic_parallax.gd" id="1_84drg"]
 [ext_resource type="PackedScene" uid="uid://bsg0351mx3b4u" path="res://addons/MetroidvaniaSystem/Nodes/RoomInstance.tscn" id="1_cxhe8"]
 [ext_resource type="TileSet" uid="uid://bdxsuqsqed26x" path="res://Resources/TileSets/new_tileset_template.tres" id="2_cq4oi"]
 [ext_resource type="Texture2D" uid="uid://bmi11t7ijmywt" path="res://Assets/Backgrounds/SunnyLand/back.png" id="2_sylcv"]

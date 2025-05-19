@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://rwtynb8ur3lp"]
 
-[ext_resource type="Script" path="res://Scripts/Objects/breakable_side_piece_cutscene.gd" id="1_2ye53"]
+[ext_resource type="Script" uid="uid://d3q5n2myc4bk5" path="res://Scripts/Objects/breakable_side_piece_cutscene.gd" id="1_2ye53"]
 [ext_resource type="Texture2D" uid="uid://b3qdwut1qkmbj" path="res://Assets/Tilesets/overgrown_temple_breakable_side.png" id="1_btptr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_komg6"]

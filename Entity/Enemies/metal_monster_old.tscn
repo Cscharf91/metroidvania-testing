@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d4kd8mcb3noes" path="res://Entity/Enemies/enemy.tscn" id="1_4b4u1"]
 [ext_resource type="Texture2D" uid="uid://c2pklexn4ogyw" path="res://Assets/Sprites/Enemies/MetalMonster/sheet-metal-monster-lila.png" id="2_8mgat"]
-[ext_resource type="Script" path="res://Global/hitbox.gd" id="3_wu4mc"]
+[ext_resource type="Script" uid="uid://bcrmbpt2oqadc" path="res://Global/hitbox.gd" id="3_wu4mc"]
 [ext_resource type="BehaviorTree" uid="uid://boi82yfashbm6" path="res://ai/trees/pace_and_pursue.tres" id="4_kx332"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dkalw"]
@@ -107,10 +107,10 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_jhflf"]
 _data = {
-"RESET": SubResource("Animation_dpn8p"),
-"idle": SubResource("Animation_2qfle"),
-"melee_attack": SubResource("Animation_s3ufb"),
-"move_forward": SubResource("Animation_yjb2s")
+&"RESET": SubResource("Animation_dpn8p"),
+&"idle": SubResource("Animation_2qfle"),
+&"melee_attack": SubResource("Animation_s3ufb"),
+&"move_forward": SubResource("Animation_yjb2s")
 }
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_ullyn"]

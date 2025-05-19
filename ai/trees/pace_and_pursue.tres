@@ -1,8 +1,8 @@
 [gd_resource type="BehaviorTree" load_steps=22 format=3 uid="uid://boi82yfashbm6"]
 
-[ext_resource type="Script" path="res://ai/tasks/get_first_in_group.gd" id="1_xwyqq"]
-[ext_resource type="Script" path="res://ai/tasks/move_back_and_forth.gd" id="2_5pxbd"]
-[ext_resource type="Script" path="res://ai/tasks/move_toward_player.gd" id="3_3qq1i"]
+[ext_resource type="Script" uid="uid://dlyi1ytv66gap" path="res://ai/tasks/get_first_in_group.gd" id="1_xwyqq"]
+[ext_resource type="Script" uid="uid://f88nx28ywq8m" path="res://ai/tasks/move_back_and_forth.gd" id="2_5pxbd"]
+[ext_resource type="Script" uid="uid://c0oflmj6jdt6i" path="res://ai/tasks/move_toward_player.gd" id="3_3qq1i"]
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_vekl3"]
 

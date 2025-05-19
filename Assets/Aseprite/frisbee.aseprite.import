@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://dopbwumd1auxa"
+path="res://.godot/imported/frisbee.aseprite-c89874906f7cb1d75712adaa35fbe6ff.res"
+
+[deps]
+
+source_file="res://Assets/Aseprite/frisbee.aseprite"
+dest_files=["res://.godot/imported/frisbee.aseprite-c89874906f7cb1d75712adaa35fbe6ff.res"]
+
+[params]
+

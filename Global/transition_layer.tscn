@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://bf7pj5un7a2d1"]
 
-[ext_resource type="Script" path="res://Global/transition_layer.gd" id="1_3b86b"]
+[ext_resource type="Script" uid="uid://c3veecqumnfq8" path="res://Global/transition_layer.gd" id="1_3b86b"]
 
 [sub_resource type="Animation" id="Animation_fgdwc"]
 length = 0.001
@@ -204,11 +204,11 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4sr6m"]
 _data = {
-"RESET": SubResource("Animation_fgdwc"),
-"cutscene_end": SubResource("Animation_2vijh"),
-"cutscene_start": SubResource("Animation_h0cpm"),
-"fade_in": SubResource("Animation_1yp7g"),
-"fade_out": SubResource("Animation_vccrn")
+&"RESET": SubResource("Animation_fgdwc"),
+&"cutscene_end": SubResource("Animation_2vijh"),
+&"cutscene_start": SubResource("Animation_h0cpm"),
+&"fade_in": SubResource("Animation_1yp7g"),
+&"fade_out": SubResource("Animation_vccrn")
 }
 
 [node name="TransitionLayer" type="CanvasLayer"]

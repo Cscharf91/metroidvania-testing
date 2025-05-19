@@ -53,15 +53,19 @@ func queue_free_safely() -> void:
 func _physics_process(_delta: float) -> void:
 	match state:
 		STATES.Moving:
+			sprite.material.set_shader_parameter("width", 0)
 			velocity = direction * speed
 			move_and_slide()
 		STATES.Holding:
+			sprite.material.set_shader_parameter("width", 1)
+			sprite.material.set_shader_parameter("outline_color", Vector4i(50, 50, 50, 50) if is_boosted else Vector4i(0, 0, 0, 0))
 			can_bounce = true
 			velocity = Vector2.ZERO
 			# Transition to Returning if the button is not held
 			if not is_throw_button_held:
 				state = STATES.Returning
 		STATES.Returning:
+			sprite.material.set_shader_parameter("width", 0)
 			can_bounce = false
 			is_boosted = false
 			collision_shape.disabled = true
@@ -90,8 +94,9 @@ func _on_bounce_area_body_entered(body: Player) -> void:
 	if body and state == STATES.Returning:
 		body.current_frisbee = null
 		deactivate_frisbee()
-	elif body and state == STATES.Holding and can_bounce:
+	elif body and state == STATES.Holding and can_bounce and body.can_bounce:
 		body.bounce(bounce_velocity if not is_boosted else boosted_velocity)
+		body.can_bounce = false
 		await get_tree().create_timer(bounce_to_return_time).timeout
 		state = STATES.Returning
 

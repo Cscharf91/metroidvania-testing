@@ -1,12 +1,12 @@
 [gd_scene load_steps=11 format=3 uid="uid://c47y4py0uc1t3"]
 
-[ext_resource type="Script" path="res://Scripts/Components/Cutscenes/sword_falling.gd" id="1_3pl4r"]
+[ext_resource type="Script" uid="uid://k447nqavhxpo" path="res://Scripts/Components/Cutscenes/sword_falling.gd" id="1_3pl4r"]
 [ext_resource type="Texture2D" uid="uid://t1aty2at1sdf" path="res://Assets/Sprites/Objects/katana.png" id="2_3c0lj"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="3_u5d1w"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_w1svc"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_noise_emitter_2d.gd" id="5_bm1ke"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_2d.gd" id="6_673pp"]
-[ext_resource type="Script" path="res://Scripts/Components/camera_shake.gd" id="7_sasc1"]
+[ext_resource type="Script" uid="uid://dvsn4ue68hcil" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="3_u5d1w"]
+[ext_resource type="Script" uid="uid://duduuhe8marl6" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="4_w1svc"]
+[ext_resource type="Script" uid="uid://df50s384kdjoh" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_noise_emitter_2d.gd" id="5_bm1ke"]
+[ext_resource type="Script" uid="uid://0wppbjy3ht15" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_2d.gd" id="6_673pp"]
+[ext_resource type="Script" uid="uid://bl11vwvfnknkh" path="res://Scripts/Components/camera_shake.gd" id="7_sasc1"]
 
 [sub_resource type="Resource" id="Resource_gbjii"]
 script = ExtResource("4_w1svc")

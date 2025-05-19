@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CollectibleType" load_steps=3 format=3 uid="uid://bk0hwe86ejx28"]
 
 [ext_resource type="Texture2D" uid="uid://wiq0mic5m6is" path="res://SampleProject/Sprites/Collectible.png" id="1_abg1e"]
-[ext_resource type="Script" path="res://Resources/Collectibles/collectible_type.gd" id="2_60wn2"]
+[ext_resource type="Script" uid="uid://c6pixjqvuch85" path="res://Resources/Collectibles/collectible_type.gd" id="2_60wn2"]
 
 [resource]
 script = ExtResource("2_60wn2")

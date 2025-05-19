@@ -1,7 +1,7 @@
 [gd_scene load_steps=11 format=3 uid="uid://cgax2oryw2r8g"]
 
 [ext_resource type="Texture2D" uid="uid://472w3fk2qsr4" path="res://Objects/area_1/entry-booth.png" id="1_t6bjd"]
-[ext_resource type="Script" path="res://Scripts/Objects/Area1/entry_booth.gd" id="1_xvp3q"]
+[ext_resource type="Script" uid="uid://bs4jfhnrtsk31" path="res://Scripts/Objects/Area1/entry_booth.gd" id="1_xvp3q"]
 [ext_resource type="PackedScene" uid="uid://xvb10atpf1qh" path="res://Global/actionable.tscn" id="3_rtwls"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j8nhe"]
@@ -71,10 +71,10 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_0ika5"]
 _data = {
-"RESET": SubResource("Animation_godib"),
-"alert": SubResource("Animation_fynu6"),
-"idle": SubResource("Animation_u5ltx"),
-"peek": SubResource("Animation_0x0sg")
+&"RESET": SubResource("Animation_godib"),
+&"alert": SubResource("Animation_fynu6"),
+&"idle": SubResource("Animation_u5ltx"),
+&"peek": SubResource("Animation_0x0sg")
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3440v"]

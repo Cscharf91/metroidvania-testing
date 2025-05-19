@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=4 uid="uid://rkmxmw1ha1py"]
 
 [ext_resource type="PackedScene" uid="uid://bsg0351mx3b4u" path="res://addons/MetroidvaniaSystem/Nodes/RoomInstance.tscn" id="1_uacnk"]
-[ext_resource type="Script" path="res://MapAreaBases/background_layers.gd" id="3_buemd"]
-[ext_resource type="Script" path="res://Scripts/Global/dynamic_parallax.gd" id="4_b6giv"]
+[ext_resource type="Script" uid="uid://bb8u43670bdvl" path="res://MapAreaBases/background_layers.gd" id="3_buemd"]
+[ext_resource type="Script" uid="uid://csi5qv4ufx0cr" path="res://Scripts/Global/dynamic_parallax.gd" id="4_b6giv"]
 [ext_resource type="Texture2D" uid="uid://r437cpejmwhs" path="res://Assets/Backgrounds/DemonWoods/parallax-demon-woods-bg.png" id="5_8u7s2"]
 [ext_resource type="Texture2D" uid="uid://deqocaj33j8dt" path="res://Assets/Backgrounds/DemonWoods/parallax-demon-woods-far-trees.png" id="6_7xjhs"]
 [ext_resource type="Texture2D" uid="uid://dycnl0viuig4" path="res://Assets/Backgrounds/DemonWoods/parallax-demon-woods-mid-trees.png" id="7_51l2e"]

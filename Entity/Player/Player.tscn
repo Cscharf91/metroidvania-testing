@@ -1,39 +1,39 @@
-[gd_scene load_steps=65 format=3 uid="uid://7pmlpxqxdfqm"]
+[gd_scene load_steps=66 format=3 uid="uid://7pmlpxqxdfqm"]
 
 [ext_resource type="PackedScene" uid="uid://3hwbhpcivc68" path="res://Entity/entity.tscn" id="1_l5me4"]
-[ext_resource type="Script" path="res://Entity/Player/player.gd" id="2_wcreg"]
+[ext_resource type="Script" uid="uid://dwww3ls7ir652" path="res://Entity/Player/player.gd" id="2_wcreg"]
 [ext_resource type="Texture2D" uid="uid://bft5pq0ep863h" path="res://Assets/Sprites/Player/Player Idle 48x48.png" id="3_8ggpf"]
 [ext_resource type="Texture2D" uid="uid://cspbb0im7dyb0" path="res://Assets/Sprites/Player/player new jump 48x48.png" id="4_0tglj"]
-[ext_resource type="Script" path="res://Scripts/Player/States/idle_state.gd" id="4_k3wbj"]
-[ext_resource type="Script" path="res://Scripts/Player/States/move_state.gd" id="5_blfqf"]
+[ext_resource type="Script" uid="uid://frni4nqsxb5l" path="res://Scripts/Player/States/idle_state.gd" id="4_k3wbj"]
+[ext_resource type="Script" uid="uid://dpru30pidmds2" path="res://Scripts/Player/States/move_state.gd" id="5_blfqf"]
 [ext_resource type="Texture2D" uid="uid://dpcfsdl2j4tmw" path="res://Assets/Sprites/Player/player run 48x48.png" id="5_gtoxl"]
 [ext_resource type="Texture2D" uid="uid://b2rlluawtyx6x" path="res://Assets/Sprites/Player/player wall land 48x48.png" id="6_hv4p5"]
-[ext_resource type="Script" path="res://Scripts/Player/States/air_state.gd" id="6_jdmad"]
-[ext_resource type="Script" path="res://Scripts/Player/States/air_dash_state.gd" id="7_82mli"]
+[ext_resource type="Script" uid="uid://7vhioilxqpie" path="res://Scripts/Player/States/air_state.gd" id="6_jdmad"]
+[ext_resource type="Script" uid="uid://k5rp0j0os4co" path="res://Scripts/Player/States/air_dash_state.gd" id="7_82mli"]
 [ext_resource type="Texture2D" uid="uid://c7teukb85fo2u" path="res://Assets/Sprites/Player/player wall slide 48x48.png" id="7_qa5ps"]
-[ext_resource type="Script" path="res://Scripts/Player/States/ground_pound_state.gd" id="8_8np8y"]
+[ext_resource type="Script" uid="uid://cprkbuvmwk8qa" path="res://Scripts/Player/States/ground_pound_state.gd" id="8_8np8y"]
 [ext_resource type="Texture2D" uid="uid://dq36xig3dt04j" path="res://Assets/Sprites/Player/player land 48x48.png" id="8_liqw2"]
 [ext_resource type="Texture2D" uid="uid://b7nxpcl0phsyp" path="res://Assets/Sprites/Player/Player Slide 48x48.png" id="9_i2a4u"]
-[ext_resource type="Script" path="res://Scripts/Player/States/landing_state.gd" id="9_mbwam"]
+[ext_resource type="Script" uid="uid://rnpo8uu8ok72" path="res://Scripts/Player/States/landing_state.gd" id="9_mbwam"]
 [ext_resource type="Texture2D" uid="uid://g72wcoc3e5ao" path="res://Assets/Sprites/Player/player air spin 48x48.png" id="10_3bcqi"]
-[ext_resource type="Script" path="res://Scripts/Player/States/wall_jump_state.gd" id="10_gf6co"]
+[ext_resource type="Script" uid="uid://odp3vdtjhrkx" path="res://Scripts/Player/States/wall_jump_state.gd" id="10_gf6co"]
 [ext_resource type="PackedScene" uid="uid://bmkcho1uyhjf5" path="res://Global/hurtbox.tscn" id="11_6amkq"]
-[ext_resource type="Script" path="res://Scripts/Player/States/glide_state.gd" id="11_cvyh6"]
+[ext_resource type="Script" uid="uid://6q6j82pcwg6s" path="res://Scripts/Player/States/glide_state.gd" id="11_cvyh6"]
 [ext_resource type="Texture2D" uid="uid://d1hr3mqxuamge" path="res://Assets/Sprites/Player/Player Jab 48x48.png" id="11_wur2f"]
 [ext_resource type="Texture2D" uid="uid://bko6uvr67kopn" path="res://Assets/Sprites/Player/Player Punch Cross 64x64.png" id="12_em20i"]
 [ext_resource type="Texture2D" uid="uid://c5ntwo17vcf8g" path="res://Assets/Sprites/Player/player katana continuous attack 80x64.png" id="13_2ebu1"]
 [ext_resource type="Texture2D" uid="uid://sat1ghjy6a0e" path="res://Assets/Sprites/Player/player katana air attack full 80x64-Sheet.png" id="14_vrhh8"]
-[ext_resource type="Script" path="res://Entity/Player/state_transitions.gd" id="15_mtmte"]
+[ext_resource type="Script" uid="uid://dn0qt3lvvkvue" path="res://Entity/Player/state_transitions.gd" id="15_mtmte"]
 [ext_resource type="Texture2D" uid="uid://bffshqtbldbug" path="res://Assets/Sprites/Player/Player Reaching Up.png" id="15_okj8q"]
-[ext_resource type="Script" path="res://Scripts/Player/States/slide_state.gd" id="17_xkbqy"]
-[ext_resource type="Script" path="res://Scripts/Player/States/attack_state.gd" id="21_e0ogm"]
+[ext_resource type="Script" uid="uid://m7d8cx4jk41i" path="res://Scripts/Player/States/slide_state.gd" id="17_xkbqy"]
+[ext_resource type="Script" uid="uid://cacit71usgmki" path="res://Scripts/Player/States/attack_state.gd" id="21_e0ogm"]
 [ext_resource type="PackedScene" uid="uid://bjf05t6w3ch8t" path="res://Global/hitbox.tscn" id="22_yopii"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="27_w2nyl"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="28_uljth"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="29_lenl0"]
-[ext_resource type="Script" path="res://Scripts/Components/camera_shake.gd" id="30_iqlra"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_noise_emitter_2d.gd" id="31_1mffc"]
-[ext_resource type="Script" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_2d.gd" id="32_7dk0o"]
+[ext_resource type="Script" uid="uid://de5nhli5fgo4c" path="res://addons/phantom_camera/scripts/phantom_camera_host/phantom_camera_host.gd" id="27_w2nyl"]
+[ext_resource type="Script" uid="uid://dvsn4ue68hcil" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="28_uljth"]
+[ext_resource type="Script" uid="uid://duduuhe8marl6" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="29_lenl0"]
+[ext_resource type="Script" uid="uid://bl11vwvfnknkh" path="res://Scripts/Components/camera_shake.gd" id="30_iqlra"]
+[ext_resource type="Script" uid="uid://df50s384kdjoh" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_noise_emitter_2d.gd" id="31_1mffc"]
+[ext_resource type="Script" uid="uid://0wppbjy3ht15" path="res://addons/phantom_camera/scripts/resources/phantom_camera_noise_2d.gd" id="32_7dk0o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_41ra8"]
 size = Vector2(11, 29)
@@ -1219,6 +1219,109 @@ tracks/2/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7]
 }
 
+[sub_resource type="Animation" id="Animation_0hrf6"]
+resource_name = "throw_frisbee"
+length = 0.2
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:hframes")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [10]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("11_wur2f")]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+tracks/4/type = "method"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"allow_attack"
+}]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:shape:radius")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [9.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:shape:height")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [32.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("DirectionPointer/Hitbox/CollisionShape2D:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(14, -2)]
+}
+
 [sub_resource type="Animation" id="Animation_0k3vs"]
 resource_name = "wall_land"
 length = 0.6
@@ -1317,25 +1420,26 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ufq85"]
 _data = {
-"RESET": SubResource("Animation_4r26t"),
-"air_dash": SubResource("Animation_3a8gc"),
-"air_dash_left": SubResource("Animation_eib75"),
-"air_dash_right": SubResource("Animation_syhy0"),
-"fall": SubResource("Animation_2rkyo"),
-"idle": SubResource("Animation_lb5y0"),
-"jump": SubResource("Animation_5idqk"),
-"katana_air_attack_1": SubResource("Animation_0d4m4"),
-"katana_air_attack_2": SubResource("Animation_rntoe"),
-"katana_attack_1": SubResource("Animation_vb2ym"),
-"katana_attack_2": SubResource("Animation_m7glf"),
-"land": SubResource("Animation_qw87k"),
-"melee_attack_cross": SubResource("Animation_v2o7k"),
-"melee_attack_jab": SubResource("Animation_1rkb6"),
-"reaching_up": SubResource("Animation_hmrlg"),
-"run": SubResource("Animation_2gl68"),
-"slide": SubResource("Animation_uunqd"),
-"wall_land": SubResource("Animation_0k3vs"),
-"wall_slide": SubResource("Animation_2y57p")
+&"RESET": SubResource("Animation_4r26t"),
+&"air_dash": SubResource("Animation_3a8gc"),
+&"air_dash_left": SubResource("Animation_eib75"),
+&"air_dash_right": SubResource("Animation_syhy0"),
+&"fall": SubResource("Animation_2rkyo"),
+&"idle": SubResource("Animation_lb5y0"),
+&"jump": SubResource("Animation_5idqk"),
+&"katana_air_attack_1": SubResource("Animation_0d4m4"),
+&"katana_air_attack_2": SubResource("Animation_rntoe"),
+&"katana_attack_1": SubResource("Animation_vb2ym"),
+&"katana_attack_2": SubResource("Animation_m7glf"),
+&"land": SubResource("Animation_qw87k"),
+&"melee_attack_cross": SubResource("Animation_v2o7k"),
+&"melee_attack_jab": SubResource("Animation_1rkb6"),
+&"reaching_up": SubResource("Animation_hmrlg"),
+&"run": SubResource("Animation_2gl68"),
+&"slide": SubResource("Animation_uunqd"),
+&"throw_frisbee": SubResource("Animation_0hrf6"),
+&"wall_land": SubResource("Animation_0k3vs"),
+&"wall_slide": SubResource("Animation_2y57p")
 }
 
 [sub_resource type="Animation" id="Animation_ymccg"]
@@ -1372,8 +1476,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_en4rh"]
 _data = {
-"RESET": SubResource("Animation_ymccg"),
-"blink": SubResource("Animation_qt41r")
+&"RESET": SubResource("Animation_ymccg"),
+&"blink": SubResource("Animation_qt41r")
 }
 
 [sub_resource type="BlackboardPlan" id="BlackboardPlan_5eqfa"]
@@ -1459,13 +1563,13 @@ one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
 libraries = {
-"": SubResource("AnimationLibrary_ufq85")
+&"": SubResource("AnimationLibrary_ufq85")
 }
 autoplay = "idle"
 
 [node name="BlinkingAnimationPlayer" type="AnimationPlayer" parent="." index="4"]
 libraries = {
-"": SubResource("AnimationLibrary_en4rh")
+&"": SubResource("AnimationLibrary_en4rh")
 }
 
 [node name="StateTransitions" type="Node" parent="." index="5"]

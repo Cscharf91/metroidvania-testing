@@ -1,6 +1,6 @@
 [gd_scene load_steps=17 format=3 uid="uid://ddp7b6lwpu23r"]
 
-[ext_resource type="Script" path="res://Scripts/Components/Cutscenes/george_knocked_out.gd" id="1_1vc0y"]
+[ext_resource type="Script" uid="uid://b58qeh4wxj6ak" path="res://Scripts/Components/Cutscenes/george_knocked_out.gd" id="1_1vc0y"]
 [ext_resource type="Texture2D" uid="uid://de1k0e0ijxwri" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_0.png" id="1_bo2wn"]
 [ext_resource type="Texture2D" uid="uid://dp4878q4tuu7j" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_1.png" id="2_dhha2"]
 [ext_resource type="Texture2D" uid="uid://cq2tb13vmi1dd" path="res://Assets/Sprites/NPCs/George/Character1M_1_jump_1.png" id="2_sfbbn"]
@@ -10,7 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://c4xykpco64mp4" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_5.png" id="6_x3gn6"]
 [ext_resource type="Texture2D" uid="uid://h0ex4c7swtxd" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_6.png" id="7_yuojb"]
 [ext_resource type="Texture2D" uid="uid://b7kswmdd7c54m" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_7.png" id="8_7aj2o"]
-[ext_resource type="Script" path="res://Scripts/Components/hitstop.gd" id="11_dga70"]
+[ext_resource type="Script" uid="uid://d3s0lbfnb53tc" path="res://Scripts/Components/hitstop.gd" id="11_dga70"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_n1usk"]
 animations = [{
@@ -55,6 +55,21 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kemrr"]
 size = Vector2(9, 32)
 
+[sub_resource type="Animation" id="Animation_sr7i1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
 [sub_resource type="Animation" id="Animation_emmsn"]
 resource_name = "blink"
 length = 0.5
@@ -73,25 +88,10 @@ tracks/0/keys = {
 "values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
 }
 
-[sub_resource type="Animation" id="Animation_sr7i1"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("AnimatedSprite2D:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(1, 1, 1, 1)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_qbu0p"]
 _data = {
-"RESET": SubResource("Animation_sr7i1"),
-"blink": SubResource("Animation_emmsn")
+&"RESET": SubResource("Animation_sr7i1"),
+&"blink": SubResource("Animation_emmsn")
 }
 
 [node name="GeorgeKnockedOut" type="Area2D"]

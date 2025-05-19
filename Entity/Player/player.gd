@@ -18,6 +18,7 @@ class_name Player
 @export var no_turnaround_timer := 0.15
 @export var air_dash_speed := 900.0
 @export var turnaround_friction_multiplier := 2.0
+@export var frisbee_throw_velocity := -250
 
 var reset_position: Vector2
 var mid_level_checkpoint_position: Vector2
@@ -36,6 +37,7 @@ var combo_charged := false
 var last_jump_position: Vector2
 var fall_start_position: Vector2
 var current_frisbee: Frisbee
+var can_bounce := false
 
 var can_move := true
 var can_attack := true
@@ -134,6 +136,10 @@ func handle_frisbee():
 		current_frisbee.is_throw_button_held = false
 	
 	if Input.is_action_just_pressed("throw_frisbee") and not current_frisbee:
+		animation_player.play("throw_frisbee")
+		animation_player.animation_finished.connect(_end_frisbee_throw)
+		if not is_on_floor():
+			velocity.y = frisbee_throw_velocity
 		var frisbee_instance := Utils.spawn(frisbee, global_position + Vector2(15 * PlayerConfig.facing_direction, 2)) as Frisbee
 		current_frisbee = frisbee_instance
 		frisbee_instance.direction.x = PlayerConfig.facing_direction
@@ -238,6 +244,7 @@ func do_sick_flip():
 func handle_landing() -> void:
 	PlayerConfig.current_air_dashes = PlayerConfig.max_air_dashes
 	PlayerConfig.current_jumps = PlayerConfig.max_jumps
+	can_bounce = true
 	gravity_multiplier = 1.0
 
 func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
@@ -311,3 +318,8 @@ func _on_room_changed(_room_name: String) -> void:
 func _on_dialogic_event(event_name: String) -> void:
 	if event_name == "cutscene_ended":
 		Utils.handle_cutscene_end()
+
+func _end_frisbee_throw(animation_name: String = ""):
+	if animation_name == "throw_frisbee":
+		animation_player.play("idle" if is_on_floor() else "jump")
+		animation_player.animation_finished.disconnect(_end_frisbee_throw)

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=3 format=3 uid="uid://cfiqeq1w4kbk"]
 
-[ext_resource type="Script" path="res://addons/MetroidvaniaSystem/Scripts/Settings.gd" id="1_xjm7n"]
+[ext_resource type="Script" uid="uid://dqftda4p0l7kv" path="res://addons/MetroidvaniaSystem/Scripts/Settings.gd" id="1_xjm7n"]
 [ext_resource type="Resource" uid="uid://dtpk6t0nnpjb" path="res://addons/MetroidvaniaSystem/Themes/BS/Theme.tres" id="2_hio6n"]
 
 [resource]

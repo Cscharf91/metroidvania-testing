@@ -16,7 +16,7 @@ metroidvania_system/settings_file="res://MetSysSettings.tres"
 
 config/name="practice mv"
 run/main_scene="res://Global/Game.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
