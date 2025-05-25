@@ -297,6 +297,8 @@ func _on_combo_timer_timeout() -> void:
 
 func reset_to_checkpoint():
 	Events.screen_shake.emit(10.0, 0.5)
+	Events.player_reset_for_challenge.emit()
+	
 	position = mid_level_checkpoint_position if mid_level_checkpoint_position else reset_position
 	velocity = Vector2.ZERO
 	gravity_multiplier = 1.0
