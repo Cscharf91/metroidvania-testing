@@ -14,12 +14,28 @@ var challenge_active: bool = false
 var challenge_has_been_won: bool = false
 var timer: Timer
 
+# Unique ID for MetSys storage
+@export var metsys_id_suffix: String = "default_collect_all_controller"
+var unique_metsys_id: String
+
 func _ready() -> void:
+	unique_metsys_id = name + "_" + metsys_id_suffix
+	self.set_meta(&"object_id", unique_metsys_id)
+
+	# MetSys.register_storable_object will call _handle_challenge_already_won if this object_id
+	# was previously stored, which will then set challenge_has_been_won to true.
 	challenge_has_been_won = false
+	MetSys.register_storable_object(self, _handle_challenge_already_won)
+
+	if challenge_has_been_won:
+		print(name + ": Challenge state loaded from MetSys - was already won. Performing cleanup.")
+		_post_win_cleanup()
+		if reward_item:
+			reward_item.activate()
+		return
+
 	if not reward_item:
 		printerr(name + ": Reward Item node not assigned!")
-	else:
-		reward_item.reset_reward()
 
 	if time_limit > 0:
 		timer = Timer.new()
@@ -32,11 +48,13 @@ func _ready() -> void:
 
 	if collectible_items.is_empty():
 		printerr(name + ": No collectible items assigned to the controller.")
-		return
 
 	for item in collectible_items:
 		if not item is CollectibleItem:
 			printerr(name + ": Item in collectible_items is not a CollectibleItem instance: ", item)
+			continue
+		if not is_instance_valid(item):
+			printerr(name + ": Item in collectible_items is not valid: ", item)
 			continue
 		if not item.collected.is_connected(_on_item_interaction):
 			item.collected.connect(_on_item_interaction)
@@ -45,7 +63,22 @@ func _ready() -> void:
 	if reward_item:
 		reward_item.reset_reward()
 
+func _handle_challenge_already_won() -> void:
+	print(name + ": MetSys callback indicates challenge was previously won.")
+	challenge_has_been_won = true
+	challenge_active = false
+
+func _post_win_cleanup() -> void:
+	print(name + ": Post-win cleanup. Removing collectibles.")
+	for item_node in collectible_items:
+		if item_node is CollectibleItem:
+			if is_instance_valid(item_node):
+				item_node.queue_free()
+
 func _on_item_interaction(item_instance: CollectibleItem) -> void:
+	if challenge_has_been_won:
+		return
+
 	if not challenge_active:
 		start_challenge(item_instance)
 	else:
@@ -55,9 +88,11 @@ func _on_item_interaction(item_instance: CollectibleItem) -> void:
 			_succeed_challenge()
 
 func start_challenge(triggering_item: CollectibleItem = null) -> void:
-	if challenge_active and triggering_item != null:
+	if challenge_has_been_won:
 		return
 
+	if challenge_active and triggering_item != null:
+		return
 	if challenge_active and not triggering_item:
 		return
 
@@ -68,12 +103,20 @@ func start_challenge(triggering_item: CollectibleItem = null) -> void:
 
 	for item_node in collectible_items:
 		if item_node != triggering_item:
-			item_node.reset_collectible()
+			if item_node is CollectibleItem and is_instance_valid(item_node):
+				item_node.reset_collectible()
 
 	if triggering_item:
+		if not is_instance_valid(triggering_item):
+			printerr(name + ": start_challenge called with an invalid triggering_item.")
+			challenge_active = false
+			return
+		
 		collected_count = 1
-		print(name + ": Item collected! Progress: ", collected_count, "/", collectible_items.size())
+		print(name + ": Item '" + triggering_item.name + "' initiated challenge. Progress: " + str(collected_count) + "/" + str(collectible_items.size()))
+		
 		if collected_count >= collectible_items.size():
+			print(name + ": start_challenge - First item is the only item. Calling _succeed_challenge.")
 			_succeed_challenge()
 			return
 
@@ -81,10 +124,11 @@ func start_challenge(triggering_item: CollectibleItem = null) -> void:
 		timer.start()
 
 func _succeed_challenge() -> void:
-	if not challenge_active and challenge_has_been_won:
+	if challenge_has_been_won or not challenge_active:
+		if challenge_has_been_won:
+			# print(name + ": _succeed_challenge - Already won, aborting redundant success call.")
+			pass
 		return
-	if not challenge_active and not challenge_has_been_won:
-		pass
 
 	print(name + ": Collect-all challenge succeeded!")
 	challenge_active = false
@@ -92,10 +136,15 @@ func _succeed_challenge() -> void:
 	if timer:
 		timer.stop()
 	
+	MetSys.store_object(self)
 	challenge_success.emit()
-	
+	_post_win_cleanup()
+
 	if reward_item:
-		reward_item.activate()
+		if is_instance_valid(reward_item):
+			reward_item.activate()
+		else:
+			printerr(name + ": Reward item is invalid when trying to activate in _succeed_challenge.")
 	else:
 		printerr(name + ": Reward item node not assigned to controller.")
 
