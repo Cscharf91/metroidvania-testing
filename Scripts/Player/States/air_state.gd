@@ -25,6 +25,7 @@ func _update(_delta: float) -> void:
 		
 	if (
 		Input.is_action_just_released("jump")
+		and player.velocity.y < 0
 		and previous_state != "WallJumpState"
 	):
 		player.velocity.y *= 0.5
