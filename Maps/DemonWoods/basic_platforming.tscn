@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=4 uid="uid://drylocs84x32m"]
+[gd_scene load_steps=13 format=4 uid="uid://drylocs84x32m"]
 
 [ext_resource type="PackedScene" uid="uid://bsg0351mx3b4u" path="res://addons/MetroidvaniaSystem/Nodes/RoomInstance.tscn" id="1_uhc5g"]
 [ext_resource type="Script" uid="uid://bb8u43670bdvl" path="res://MapAreaBases/background_layers.gd" id="3_plfu8"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" uid="uid://cuffngsdgm1hl" path="res://Scripts/Components/player_respawner.gd" id="9_4lw5m"]
 [ext_resource type="TileSet" uid="uid://bker8m4qv3fwg" path="res://Resources/TileSets/overgrown_temple.tres" id="9_sw7b7"]
 [ext_resource type="PackedScene" uid="uid://bo8pgygfcooid" path="res://Objects/frisbounce_boost.tscn" id="10_al7nm"]
+[ext_resource type="PackedScene" uid="uid://dwf4ar5o2s870" path="res://Global/bounce_shroom.tscn" id="11_cfrkm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u3a5e"]
 size = Vector2(1160, 42)
@@ -94,5 +95,10 @@ script = ExtResource("9_4lw5m")
 position = Vector2(60, 78)
 shape = SubResource("RectangleShape2D_u3a5e")
 
-[node name="FrisbounceBoost" parent="." instance=ExtResource("10_al7nm")]
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="FrisbounceBoost" parent="Environment" instance=ExtResource("10_al7nm")]
 position = Vector2(392, 256)
+
+[node name="BounceShroom" parent="Environment" instance=ExtResource("11_cfrkm")]
+position = Vector2(864, 256)

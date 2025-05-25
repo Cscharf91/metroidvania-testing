@@ -1,0 +1,14 @@
+[remap]
+
+importer="aseprite_wizard.plugin.noop"
+type="PackedDataContainer"
+uid="uid://6ewbj2fmys7y"
+path="res://.godot/imported/bounce-shroom.aseprite-fe4b3e1c5ba13f85940499cd308d8434.res"
+
+[deps]
+
+source_file="res://Assets/Aseprite/bounce-shroom.aseprite"
+dest_files=["res://.godot/imported/bounce-shroom.aseprite-fe4b3e1c5ba13f85940499cd308d8434.res"]
+
+[params]
+

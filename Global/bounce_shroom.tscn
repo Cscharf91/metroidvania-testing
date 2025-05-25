@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://dwf4ar5o2s870"]
+
+[ext_resource type="Texture2D" uid="uid://b6mn5tq6ynib" path="res://Global/bounce-shroom.png" id="1_raeih"]
+[ext_resource type="Script" uid="uid://dbno4b1e0sn5g" path="res://Scripts/Components/bounce.gd" id="1_rwnvj"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_raeih"]
+radius = 5.0
+height = 34.0
+
+[sub_resource type="Animation" id="Animation_rwnvj"]
+resource_name = "bounce"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 1, 0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wltc4"]
+_data = {
+&"bounce": SubResource("Animation_rwnvj")
+}
+
+[node name="BounceShroom" type="Area2D" node_paths=PackedStringArray("animation_player")]
+collision_layer = 1024
+script = ExtResource("1_rwnvj")
+animation_player = NodePath("AnimationPlayer")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = ExtResource("1_raeih")
+hframes = 2
+metadata/_aseprite_wizard_interface_config_ = {
+"animation_section": false,
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"i_mode": -1,
+"keep_anim_length": false,
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"player": "AnimationPlayer",
+"slice": "",
+"source": "res://Assets/Aseprite/bounce-shroom.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "710525298d40b6f9ac26a3b44d7fd953"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -10)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_raeih")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wltc4")
+}

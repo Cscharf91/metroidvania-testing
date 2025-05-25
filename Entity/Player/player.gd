@@ -177,7 +177,7 @@ func bounce(bounce_velocity := 0):
 	air_state.started_falling = false
 	animation_player.play("jump")
 	
-	velocity.y = PlayerConfig.bounce_velocity if bounce_velocity == 0.0 else bounce_velocity
+	velocity.y = PlayerConfig.bounce_velocity if bounce_velocity == 0.0 else bounce_velocity * 1.0
 	PlayerConfig.current_frisbee_throws = min(PlayerConfig.current_frisbee_throws + 1, PlayerConfig.max_frisbee_throws)
 
 func set_is_coyote_time(new_value: bool):
