@@ -1,5 +1,5 @@
 class_name RewardItem
-extends Area2D
+extends Collectible
 
 signal reward_activated
 
@@ -11,25 +11,8 @@ signal reward_activated
 var is_active: bool = false
 
 func _ready() -> void:
-	MetSys.register_storable_object(self, _handle_already_collected)
-	
-	if not body_entered.is_connected(_on_body_entered):
-		body_entered.connect(_on_body_entered)
-		
+	super._ready()
 	set_reward_active(false, true)
-
-func _handle_already_collected() -> void:
-	print(name + ": Reward item was already collected (MetSys).")
-	queue_free()
-
-func _on_body_entered(body: Node2D) -> void:
-	if not is_active:
-		return
-	
-	if body is Player:
-		print(name + ": Player collected reward " + name)
-		MetSys.store_object(self)
-		queue_free()
 
 func set_reward_active(active: bool, silent_set: bool = false) -> void:
 	if not is_instance_valid(self):

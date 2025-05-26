@@ -13,5 +13,3 @@ script = ExtResource("1_16y6x")
 shape = SubResource("RectangleShape2D_v5e3t")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-
-[connection signal="body_entered" from="." to="." method="collect"]
