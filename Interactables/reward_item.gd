@@ -44,7 +44,7 @@ func set_reward_active(active: bool, silent_set: bool = false) -> void:
 		visible = true
 		var collision_shape: CollisionShape2D = get_node_or_null("CollisionShape2D") as CollisionShape2D
 		if collision_shape:
-			collision_shape.disabled = false
+			collision_shape.set_deferred("disabled", false)
 		
 		if animation_player and animation_player.has_animation(activation_animation_name) and not silent_set:
 			animation_player.play(activation_animation_name)
@@ -57,7 +57,7 @@ func set_reward_active(active: bool, silent_set: bool = false) -> void:
 		visible = false
 		var collision_shape: CollisionShape2D = get_node_or_null("CollisionShape2D") as CollisionShape2D
 		if collision_shape:
-			collision_shape.disabled = true
+			collision_shape.set_deferred("disabled", true)
 		
 		if animation_player and animation_player.has_animation(idle_animation_name) and not silent_set:
 			animation_player.play(idle_animation_name)
