@@ -136,11 +136,11 @@ func handle_frisbee():
 		current_frisbee.is_throw_button_held = false
 	
 	if Input.is_action_just_pressed("throw_frisbee") and not current_frisbee:
-		if is_on_floor() or PlayerConfig.current_frisbee_throws > 0:
-			if not is_on_floor():
-				PlayerConfig.current_frisbee_throws -= 1
+		if PlayerConfig.current_frisbee_throws > 0:
+			PlayerConfig.current_frisbee_throws -= 1
 			animation_player.play("throw_frisbee")
-			animation_player.animation_finished.connect(_end_frisbee_throw)
+			if not animation_player.animation_finished.is_connected(_end_frisbee_throw):
+				animation_player.animation_finished.connect(_end_frisbee_throw)
 			if not is_on_floor():
 				velocity.y = frisbee_throw_velocity
 			var frisbee_instance := Utils.spawn(frisbee, global_position + Vector2(15 * PlayerConfig.facing_direction, 2)) as Frisbee

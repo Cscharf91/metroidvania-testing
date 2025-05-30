@@ -7,6 +7,7 @@ const MetSysModule = preload("res://addons/MetroidvaniaSystem/Template/Scripts/M
 
 var player: Node2D
 var map: Node2D
+var map_changing: bool
 
 var modules: Array[MetSysModule]
 
@@ -18,31 +19,46 @@ func set_player(p_player: Node2D):
 	player = p_player
 	player.get_tree().physics_frame.connect(_physics_tick, CONNECT_DEFERRED)
 
-## Adds a module. [param module_name] refers to a file located in [code]Template/Scripts/Modules[/code]. The script must extend [code]MetSysModule.gd[/code].
-func add_module(module_name: String):
-	module_name = "res://addons/MetroidvaniaSystem/Template/Scripts/Modules/".path_join(module_name)
+## Adds a module. [param module_name] is either a file located in [code]Template/Scripts/Modules[/code] or a full path to the script. The script must extend [code]MetSysModule.gd[/code]. Returns a module object that can be customized if needed.
+func add_module(module_name: String) -> MetSysModule:
+	# If a full path was passed in, use that. Otherwise assume it is a MetSys module.
+	if not module_name.is_absolute_path():
+		module_name = "res://addons/MetroidvaniaSystem/Template/Scripts/Modules/".path_join(module_name)
+	
 	var module: MetSysModule = load(module_name).new(self)
 	modules.append(module)
+	return module
 
 func _physics_tick():
 	if can_process():
 		MetSys.set_player_position(player.position)
 
 ## Loads a map and adds as a child of this node. If a map already exists, it will be removed before the new one is loaded. This method is asynchronous, so you should call it with [code]await[/code] if you want to do something after the map is loaded. Alternatively, you can use [signal room_loaded].
+## [br][br][b]Note:[/b] If you call this method while a map is being loaded, it will fail silently. The earliest when you can load a map again is after [signal room_loaded] is emitted.
 func load_room(path: String):
-	if not path.is_absolute_path():
-		path = MetSys.get_full_room_path(path)
+	if map_changing:
+		return
+	
+	map_changing = true
 	
 	if map:
 		map.queue_free()
 		await map.tree_exited
 		map = null
 	
-	map = load(path).instantiate()
+	map = _load_map(path)
 	add_child(map)
 	
 	MetSys.current_layer = MetSys.get_current_room_instance().get_layer()
+	map_changing = false
 	room_loaded.emit()
+
+## Virtual method to be optionally overriden in your game class. Return a Node representing a scene under given path. Mostly useful for procedurally generated maps.
+func _load_map(path: String) -> Node:
+	if not path.is_absolute_path():
+		path = MetSys.get_full_room_path(path)
+	
+	return load(path).instantiate()
 
 func get_save_data() -> Dictionary:
 	var data: Dictionary

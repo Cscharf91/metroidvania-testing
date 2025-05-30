@@ -7,7 +7,7 @@ var max_jumps := 1: set = set_max_jumps
 var current_jumps := max_jumps: set = set_current_jumps
 var max_air_dashes := 0: set = set_max_air_dashes
 var current_air_dashes := max_air_dashes
-var max_frisbee_throws := 1
+var max_frisbee_throws := 0
 var current_frisbee_throws := max_frisbee_throws
 var acceleration := 1000
 var friction := 2100
@@ -33,6 +33,9 @@ func unlock_ability(ability: StringName) -> void:
 	if ability == &"air_dash":
 		max_air_dashes = 1
 		current_air_dashes = max_air_dashes
+	if ability == &"throw_frisbee":
+		max_frisbee_throws = 1
+		current_frisbee_throws = max_frisbee_throws
 
 func unlock_all() -> void:
 	print("unlocking all abilities, sup?")
@@ -44,6 +47,7 @@ func unlock_all() -> void:
 		&"ground_pound",
 		&"slide",
 		&"katana_attack",
+		&"throw_frisbee",
 	]
 	for ability in unlockable_abilities:
 		unlock_ability(ability)

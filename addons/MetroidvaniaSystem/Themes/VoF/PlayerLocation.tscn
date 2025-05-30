@@ -43,7 +43,7 @@ _data = {
 texture = ExtResource("1_paeov")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "new_animation"
 libraries = {
-"": SubResource("AnimationLibrary_vk7a8")
+&"": SubResource("AnimationLibrary_vk7a8")
 }
+autoplay = "new_animation"

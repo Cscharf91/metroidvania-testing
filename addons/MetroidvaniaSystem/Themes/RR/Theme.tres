@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://cmsf2ftu1nxv5" path="res://addons/MetroidvaniaSystem/Themes/RR/CornerInner.png" id="1_uvvyp"]
 [ext_resource type="Texture2D" uid="uid://bma4gpyfwxyol" path="res://addons/MetroidvaniaSystem/Themes/RR/CornerOuter.png" id="2_xnnlu"]
 [ext_resource type="Texture2D" uid="uid://binqbgqxhnx7j" path="res://addons/MetroidvaniaSystem/Themes/RR/BorderPassage.png" id="3_6c7r1"]
-[ext_resource type="Script" uid="uid://djo2s0efcw2ku" path="res://addons/MetroidvaniaSystem/Scripts/MapTheme.gd" id="5_bgi7a"]
+[ext_resource type="Script" uid="uid://b7ofctgav4kq4" path="res://addons/MetroidvaniaSystem/Scripts/MapTheme.gd" id="5_bgi7a"]
 [ext_resource type="PackedScene" uid="uid://d28u2q2eihye7" path="res://addons/MetroidvaniaSystem/Themes/RR/PlayerLocation.tscn" id="5_g1m6u"]
 [ext_resource type="Texture2D" uid="uid://8ehs32p4uca2" path="res://addons/MetroidvaniaSystem/Themes/RR/RoomFill.png" id="5_lncyc"]
 [ext_resource type="Texture2D" uid="uid://p0tx0kl4qk4i" path="res://addons/MetroidvaniaSystem/Themes/RR/Symbols/SavePoint.png" id="7_1emgp"]
@@ -27,7 +27,7 @@ show_exact_player_location = false
 mapped_display = 15
 separator_mode = 2
 use_shared_borders = false
-default_center_color = Color(0.235643, 0.65986, 0.900682, 1)
+default_center_color = Color(0.513726, 0.670588, 0.462745, 1)
 mapped_center_color = Color(0.45098, 0.443137, 0.45098, 1)
 default_border_color = Color(0.180392, 0.298039, 0.156863, 1)
 mapped_border_color = Color(0.309804, 0.301961, 0.309804, 1)

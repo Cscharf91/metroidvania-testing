@@ -1,5 +1,6 @@
 extends Node
 
+# TODO: way to handle save files creating dialog data BEFORE new characters added to dialog_data
 var dialog_data := [
 	{
 		"character_name": "kiosk_guy",
@@ -9,6 +10,14 @@ var dialog_data := [
 		],
 		"current_timeline": "kiosk_guy_1",
 	},
+	{
+		"character_name": "fris_throw_dude",
+		"timelines": [
+			"fris_guy_1",
+			# "fris_guy_2",
+		],
+		"current_timeline": "fris_guy_1",
+	}
 ]
 
 func get_dialog_data(character_name: String) -> Dictionary:

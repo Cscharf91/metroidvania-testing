@@ -1,0 +1,5 @@
+fris_throw_dude: QUICK! CATCH!
+[signal arg="throw_frisbee"]
+[wait time="1.0"]
+fris_throw_dude: WOAH, SICK CATCH! THROW IT BACK!
+[signal arg="player_can_throw"]

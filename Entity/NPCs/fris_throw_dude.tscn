@@ -1,0 +1,147 @@
+[gd_scene load_steps=20 format=3 uid="uid://b85vp7i8awptp"]
+
+[ext_resource type="Script" uid="uid://bhdsq1gw7fbii" path="res://Scripts/NPCs/fris_throw_dude.gd" id="1_ccuns"]
+[ext_resource type="Texture2D" uid="uid://cq2tb13vmi1dd" path="res://Assets/Sprites/NPCs/George/Character1M_1_jump_1.png" id="2_23a0d"]
+[ext_resource type="Texture2D" uid="uid://de1k0e0ijxwri" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_0.png" id="3_f7110"]
+[ext_resource type="Texture2D" uid="uid://dp4878q4tuu7j" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_1.png" id="4_8vwrk"]
+[ext_resource type="Texture2D" uid="uid://cdupua47jbpmh" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_2.png" id="5_xcfq3"]
+[ext_resource type="Texture2D" uid="uid://dwj56f64t620w" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_3.png" id="6_hwqe3"]
+[ext_resource type="Texture2D" uid="uid://buw226vyjlxt2" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_4.png" id="7_qqayp"]
+[ext_resource type="Texture2D" uid="uid://c4xykpco64mp4" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_5.png" id="8_2wk5q"]
+[ext_resource type="Texture2D" uid="uid://h0ex4c7swtxd" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_6.png" id="9_m8vu1"]
+[ext_resource type="Texture2D" uid="uid://b7kswmdd7c54m" path="res://Assets/Sprites/NPCs/George/Character1M_1_walk_7.png" id="10_qxaxn"]
+[ext_resource type="Script" uid="uid://d3s0lbfnb53tc" path="res://Scripts/Components/hitstop.gd" id="11_aecl1"]
+[ext_resource type="Script" uid="uid://dvsn4ue68hcil" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="12_f7110"]
+[ext_resource type="Script" uid="uid://duduuhe8marl6" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="13_8vwrk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n1usk"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_qxaxn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_23a0d")
+}],
+"loop": true,
+"name": &"in_air",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_xcfq3")
+}],
+"loop": true,
+"name": &"throw",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_f7110")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8vwrk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_xcfq3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_hwqe3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_qqayp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2wk5q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_m8vu1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_qxaxn")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kemrr"]
+size = Vector2(31.2812, 20)
+
+[sub_resource type="Animation" id="Animation_sr7i1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_emmsn"]
+resource_name = "blink"
+length = 0.5
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedSprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0, 0, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 0, 0, 1), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_qbu0p"]
+_data = {
+&"RESET": SubResource("Animation_sr7i1"),
+&"blink": SubResource("Animation_emmsn")
+}
+
+[sub_resource type="Resource" id="Resource_xcfq3"]
+script = ExtResource("13_8vwrk")
+duration = 1.0
+transition = 10
+ease = 2
+
+[node name="FrisThrowDude" type="Area2D"]
+collision_layer = 512
+collision_mask = 512
+script = ExtResource("1_ccuns")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_n1usk")
+animation = &"throw"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_kemrr")
+
+[node name="Hitstop" type="Node2D" parent="."]
+script = ExtResource("11_aecl1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_qbu0p")
+}
+
+[node name="PhantomCamera2D" type="Node2D" parent="."]
+script = ExtResource("12_f7110")
+tween_resource = SubResource("Resource_xcfq3")
+draw_limits = true
+metadata/_custom_type_script = "uid://dvsn4ue68hcil"

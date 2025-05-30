@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8bd2p2bnr3bn"]
+
+[ext_resource type="Script" uid="uid://cbgl8p3s8rt6i" path="res://Scripts/Objects/Cutscenes/cutscene_frisbee.gd" id="1_pudl1"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_pudl1"]
+load_path = "res://.godot/imported/frisbee.png-50b42c3cae0be402642e153324f605e3.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_04v0e"]
+atlas = SubResource("CompressedTexture2D_pudl1")
+region = Rect2(0, 0, 32, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bmoyn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04v0e")
+}],
+"loop": true,
+"name": &"collision",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_04v0e")
+}],
+"loop": true,
+"name": &"moving",
+"speed": 10.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pudl1"]
+radius = 17.0
+
+[node name="CutsceneFrisbee" type="Area2D"]
+collision_layer = 0
+collision_mask = 512
+script = ExtResource("1_pudl1")
+direction = 6
+move_speed = 350.0
+metadata/_custom_type_script = "uid://c77bi13jobojd"
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(0.8, 0.8)
+sprite_frames = SubResource("SpriteFrames_bmoyn")
+animation = &"collision"
+metadata/_aseprite_wizard_interface_config_ = {
+"pending_changes": {}
+}
+metadata/_aseprite_wizard_config_ = {
+"layers": [],
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"should_round_fps": true,
+"slice": "",
+"source": "res://Assets/Aseprite/frisbee.aseprite"
+}
+metadata/_aseprite_wizard_source_file_hash_ = "897c07ed29b31831df5b7a524281567c"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_pudl1")

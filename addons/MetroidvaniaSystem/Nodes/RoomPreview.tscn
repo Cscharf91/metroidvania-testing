@@ -37,7 +37,7 @@ func _ready() -> void:
 	%Label.text = tooltip_text
 
 func _notification(what: int) -> void:
-	if what == NOTIFICATION_THEME_CHANGED:
+	if what == NOTIFICATION_THEME_CHANGED and not is_part_of_edited_scene():
 		$Hover.border_color = get_theme_color(&\"hovered_room_preview_outline\", &\"MetSys\")
 		%Label.add_theme_color_override(&\"font_color\", get_theme_color(&\"hovered_room_preview_name\", &\"MetSys\"))
 
@@ -104,7 +104,7 @@ stretch = true
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 unique_name_in_owner = true
 handle_input_locally = false
-size = Vector2i(2, 2)
+size = Vector2i(100, 100)
 render_target_update_mode = 4
 
 [node name="Hover" type="ReferenceRect" parent="."]
@@ -122,5 +122,4 @@ anchor_right = 1.0
 offset_top = -26.0
 offset_bottom = 23.0
 grow_horizontal = 2
-theme_override_colors/font_color = Color(1, 1, 1, 1)
 horizontal_alignment = 1

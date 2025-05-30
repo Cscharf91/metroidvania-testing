@@ -8,10 +8,6 @@
 
 config_version=5
 
-[addons]
-
-metroidvania_system/settings_file="res://MetSysSettings.tres"
-
 [application]
 
 config/name="practice mv"
@@ -39,10 +35,13 @@ gdscript/warnings/unused_signal=0
 [dialogic]
 
 directories/dch_directory={
+"fris_throw_dude": "res://Dialogue/Characters/fris_throw_dude.dch",
 "kiosk_guy": "res://Dialogue/Characters/kiosk_guy.dch",
 "player": "res://Dialogue/Characters/player.dch"
 }
 directories/dtl_directory={
+"fris_guy_1": "res://Dialogue/Area1/fris_guy_1.dtl",
+"fris_guy_2": "res://Dialogue/Area1/fris_guy_2.dtl",
 "kiosk_guy_1": "res://Dialogue/Area1/kiosk_guy_1.dtl",
 "kiosk_guy_2": "res://Dialogue/Area1/kiosk_guy_2.dtl"
 }

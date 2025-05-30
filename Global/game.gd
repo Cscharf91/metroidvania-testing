@@ -30,6 +30,7 @@ func _ready() -> void:
 	
 	if FileAccess.file_exists(SAVE_PATH):
 	# if false:
+		# print("Save file found, loading...")
 		# If save data exists, load it using MetSys SaveManager.
 		var save_manager := SaveManager.new()
 		save_manager.load_from_text(SAVE_PATH)
