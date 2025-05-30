@@ -114,8 +114,8 @@ _data = {
 
 [sub_resource type="Resource" id="Resource_xcfq3"]
 script = ExtResource("13_8vwrk")
-duration = 1.0
-transition = 10
+duration = 1.5
+transition = 5
 ease = 2
 
 [node name="FrisThrowDude" type="Area2D"]

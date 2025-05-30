@@ -21,4 +21,3 @@ kiosk_guy: Oh, right.
 kiosk_guy: I'd love to help, but I have some important business work to do in this [fade start=1 length=6]shelter[/fade] --  [shake rate=30.0 level=5 connected=1]I mean[/shake], kiosk.
 kiosk_guy: [wave amp=20.0 freq=5.0 connected=1]Surely[/wave] he's fine, but feel free to check up on him if you see him!
 [signal arg="cutscene_ended"]
-do Utils.handle_cutscene_end("kiosk_guy", "kiosk_guy_2")

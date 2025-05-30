@@ -1,1 +1,6 @@
 fris_throw_dude: Seriously? That's the best you could do?
+fris_throw_dude: If you can't throw it back, just come here.
+player: Uh, I can't make that jump.
+fris_throw_dude: Oh dude, that's my frisbounce. Toss it and hold it in place, then jump on it. It'll give you a sweet bounce.
+[signal arg="cutscene_ended"]
+do Utils.handle_cutscene_end()

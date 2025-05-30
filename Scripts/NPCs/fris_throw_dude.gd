@@ -19,7 +19,7 @@ func _physics_process(_delta: float) -> void:
 		if player:
 			player.handle_frisbee()
 		if Input.is_action_just_pressed("throw_frisbee"):
-			await get_tree().create_timer(0.8).timeout
+			await get_tree().create_timer(0.4).timeout
 			Dialogic.start("fris_guy_2")
 			player_can_throw = false
 
@@ -27,9 +27,12 @@ func _on_body_entered(player_body: Player) -> void:
 	if not player_body:
 		return
 	
+	var current_timeline = Dialog.get_current_timeline("fris_throw_dude")
+	if current_timeline != "fris_guy_1":
+		return
+	
 	Utils.handle_cutscene_start()
 	camera.priority = 2
-	var current_timeline = Dialog.get_current_timeline("fris_throw_dude")
 	var layout = Dialogic.start(current_timeline)
 
 	layout.register_character("player", player_body)
@@ -43,3 +46,7 @@ func _on_dialogic_event(event_name: String) -> void:
 		_on_throw_frisbee()
 	if event_name == "player_can_throw":
 		player_can_throw = true
+	if event_name == "cutscene_ended":
+		Utils.handle_cutscene_end("fris_throw_dude")
+		camera.priority = 0
+		PlayerConfig.current_frisbee_throws = 1
