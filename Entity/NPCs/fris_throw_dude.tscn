@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://b85vp7i8awptp"]
+[gd_scene load_steps=22 format=3 uid="uid://b85vp7i8awptp"]
 
 [ext_resource type="Script" uid="uid://bhdsq1gw7fbii" path="res://Scripts/NPCs/fris_throw_dude.gd" id="1_ccuns"]
 [ext_resource type="Texture2D" uid="uid://cq2tb13vmi1dd" path="res://Assets/Sprites/NPCs/George/Character1M_1_jump_1.png" id="2_23a0d"]
@@ -13,6 +13,7 @@
 [ext_resource type="Script" uid="uid://d3s0lbfnb53tc" path="res://Scripts/Components/hitstop.gd" id="11_aecl1"]
 [ext_resource type="Script" uid="uid://dvsn4ue68hcil" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_2d.gd" id="12_f7110"]
 [ext_resource type="Script" uid="uid://duduuhe8marl6" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="13_8vwrk"]
+[ext_resource type="Texture2D" uid="uid://t1aty2at1sdf" path="res://Assets/Sprites/Objects/katana.png" id="14_8vwrk"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_n1usk"]
 animations = [{
@@ -130,6 +131,12 @@ script = ExtResource("1_ccuns")
 sprite_frames = SubResource("SpriteFrames_n1usk")
 animation = &"throw"
 autoplay = "walk"
+
+[node name="Sword" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(10, -5)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("14_8vwrk")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0.5, 0)

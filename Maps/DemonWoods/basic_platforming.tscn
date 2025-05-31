@@ -115,16 +115,21 @@ collision_mask = 1
 position = Vector2(-16, 8)
 animation = &"idle"
 
-[node name="CollisionShape2D" parent="FrisThrowDude" index="1"]
+[node name="Sword" parent="FrisThrowDude" index="1"]
+position = Vector2(-24, 0)
+rotation = -0.436332
+scale = Vector2(0.07, 0.07)
+
+[node name="CollisionShape2D" parent="FrisThrowDude" index="2"]
 position = Vector2(200.359, 18)
 
-[node name="PlayerStopper" parent="FrisThrowDude" index="2"]
+[node name="PlayerStopper" parent="FrisThrowDude" index="3"]
 position = Vector2(-104, 0)
 
 [node name="CollisionShape2D" parent="FrisThrowDude/PlayerStopper" index="0"]
 position = Vector2(0, -88)
 
-[node name="PhantomCamera2D" parent="FrisThrowDude" index="5"]
+[node name="PhantomCamera2D" parent="FrisThrowDude" index="6"]
 position = Vector2(96, -8)
 zoom = Vector2(1.5, 1.5)
 

@@ -1,1 +1,19 @@
 fris_throw_dude: You actually did it. You absolute MADMAN!
+player: Honestly, I just really wanted to get over here.
+player: I'm headed this way to find a sword. It got blown this way by a heavy gust of wind.
+fris_throw_dude: OH, NO WAY!
+[signal arg="ftg_pull_sword"]
+fris_throw_dude: You mean this sword?
+player: Yeah.
+player: Can I have it?
+fris_throw_dude: Sure.
+fris_throw_dude: Just give me money.
+player: Seriously? It's not even yours!
+fris_throw_dude: Really? Then why am I holding it?
+player: Whatever. How much do you want for it?
+fris_throw_dude: Nah, I'm messing with you. But seriously, after seeing you in action with that frisbounce, I think we could help each other.
+fris_throw_dude: See the cliff to the left? When you throw the frisbounce through those crystals, you get an extra boost on your bounce.
+fris_throw_dude: Head up that way, and find my lunch. It got blown away by an inconvienently timed gust of wind.
+fris_throw_dude: I need my burger, fries, and soda.
+fris_throw_dude: You get me those? You can keep the frisbounce and the sword.
+[signal arg="cutscene_ended"]

@@ -3,6 +3,7 @@ extends Area2D
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var camera: PhantomCamera2D = $PhantomCamera2D
 @onready var player_stopper: Area2D = $PlayerStopper
+@onready var sword: Sprite2D = $Sword
 
 var player_can_throw := false
 
@@ -53,6 +54,11 @@ func _on_dialogic_event(event_name: String) -> void:
 		Utils.handle_cutscene_end("fris_throw_dude")
 		camera.priority = 0
 		PlayerConfig.current_frisbee_throws = 1
+	if event_name == "ftg_pull_sword":
+		sword.visible = true
+	if event_name == "cutscene_ended":
+		Utils.handle_cutscene_end("fris_throw_dude")
+		player_stopper.queue_free()
 
 func _on_player_stopper_body_entered(player: Player) -> void:
 	if not player:
