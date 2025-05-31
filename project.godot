@@ -42,6 +42,7 @@ directories/dch_directory={
 directories/dtl_directory={
 "fris_guy_1": "res://Dialogue/Area1/fris_guy_1.dtl",
 "fris_guy_2": "res://Dialogue/Area1/fris_guy_2.dtl",
+"fris_guy_3": "res://Dialogue/Area1/fris_guy_3.dtl",
 "kiosk_guy_1": "res://Dialogue/Area1/kiosk_guy_1.dtl",
 "kiosk_guy_2": "res://Dialogue/Area1/kiosk_guy_2.dtl"
 }

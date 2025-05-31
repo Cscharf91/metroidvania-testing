@@ -81,6 +81,10 @@ func _unhandled_input(_event: InputEvent) -> void:
 
 func _physics_process(delta: float) -> void:
 	if not can_move:
+		if not is_on_floor():
+			velocity.x = 0
+			apply_gravity(delta)
+			move_and_slide()
 		return
 	
 	previous_active_state = current_active_state
@@ -303,6 +307,7 @@ func reset_to_checkpoint():
 	velocity = Vector2.ZERO
 	gravity_multiplier = 1.0
 	if current_frisbee:
+		PlayerConfig.current_frisbee_throws = PlayerConfig.max_frisbee_throws
 		current_frisbee.queue_free_safely()
 
 func set_combo(new_combo: int):

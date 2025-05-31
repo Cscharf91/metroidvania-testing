@@ -73,6 +73,7 @@ func _physics_process(_delta: float) -> void:
 				var direction_to_player = (player.global_position - global_position).normalized()
 				var distance_to_player = global_position.distance_to(player.global_position)
 				if distance_to_player < 10:
+					PlayerConfig.current_frisbee_throws = PlayerConfig.max_frisbee_throws
 					queue_free_safely()
 				velocity = direction_to_player * return_speed
 				move_and_slide()

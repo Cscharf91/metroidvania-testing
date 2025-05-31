@@ -118,7 +118,13 @@ animation = &"idle"
 [node name="CollisionShape2D" parent="FrisThrowDude" index="1"]
 position = Vector2(200.359, 18)
 
-[node name="PhantomCamera2D" parent="FrisThrowDude" index="4"]
+[node name="PlayerStopper" parent="FrisThrowDude" index="2"]
+position = Vector2(-104, 0)
+
+[node name="CollisionShape2D" parent="FrisThrowDude/PlayerStopper" index="0"]
+position = Vector2(0, -88)
+
+[node name="PhantomCamera2D" parent="FrisThrowDude" index="5"]
 position = Vector2(96, -8)
 zoom = Vector2(1.5, 1.5)
 

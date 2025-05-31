@@ -2,6 +2,7 @@ extends Area2D
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var camera: PhantomCamera2D = $PhantomCamera2D
+@onready var player_stopper: Area2D = $PlayerStopper
 
 var player_can_throw := false
 
@@ -11,6 +12,7 @@ func _ready() -> void:
 	animated_sprite.play("idle")
 
 	body_entered.connect(_on_body_entered)
+	player_stopper.body_entered.connect(_on_player_stopper_body_entered)
 	Dialogic.signal_event.connect(_on_dialogic_event)
 
 func _physics_process(_delta: float) -> void:
@@ -46,7 +48,19 @@ func _on_dialogic_event(event_name: String) -> void:
 		_on_throw_frisbee()
 	if event_name == "player_can_throw":
 		player_can_throw = true
+		PlayerConfig.unlock_ability(&"throw_frisbee")
 	if event_name == "cutscene_ended":
 		Utils.handle_cutscene_end("fris_throw_dude")
 		camera.priority = 0
 		PlayerConfig.current_frisbee_throws = 1
+
+func _on_player_stopper_body_entered(player: Player) -> void:
+	if not player:
+		return
+	
+	Utils.handle_cutscene_start()
+	var layout = Dialogic.start("fris_guy_3")
+	layout.register_character("player", player)
+	layout.register_character("fris_throw_dude", self)
+	animated_sprite.flip_h = true
+	player.sprite.flip_h = false
