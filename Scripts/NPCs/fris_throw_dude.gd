@@ -12,6 +12,8 @@ const CutsceneFrisbee := preload("res://Objects/Cutscenes/cutscene_frisbee.tscn"
 func _ready() -> void:
 	animated_sprite.play("idle")
 
+	MetSys.register_storable_object(self, _handle_intro_cutscene_ended)
+
 	body_entered.connect(_on_body_entered)
 	player_stopper.body_entered.connect(_on_player_stopper_body_entered)
 	Dialogic.signal_event.connect(_on_dialogic_event)
@@ -25,6 +27,7 @@ func _physics_process(_delta: float) -> void:
 			await get_tree().create_timer(0.4).timeout
 			Dialogic.start("fris_guy_2")
 			player_can_throw = false
+			player.can_bounce = true
 
 func _on_body_entered(player_body: Player) -> void:
 	if not player_body:
@@ -56,9 +59,10 @@ func _on_dialogic_event(event_name: String) -> void:
 		PlayerConfig.current_frisbee_throws = 1
 	if event_name == "ftg_pull_sword":
 		sword.visible = true
-	if event_name == "cutscene_ended":
+	if event_name == "cutscene_ended_2":
 		Utils.handle_cutscene_end("fris_throw_dude")
 		player_stopper.queue_free()
+		MetSys.store_object(self)
 
 func _on_player_stopper_body_entered(player: Player) -> void:
 	if not player:
@@ -70,3 +74,7 @@ func _on_player_stopper_body_entered(player: Player) -> void:
 	layout.register_character("fris_throw_dude", self)
 	animated_sprite.flip_h = true
 	player.sprite.flip_h = false
+
+func _handle_intro_cutscene_ended() -> void:
+	sword.visible = true
+	player_stopper.queue_free()

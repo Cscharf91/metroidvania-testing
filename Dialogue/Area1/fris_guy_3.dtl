@@ -16,4 +16,4 @@ fris_throw_dude: See the cliff to the left? When you throw the frisbounce throug
 fris_throw_dude: Head up that way, and find my lunch. It got blown away by an inconvienently timed gust of wind.
 fris_throw_dude: I need my burger, fries, and soda.
 fris_throw_dude: You get me those? You can keep the frisbounce and the sword.
-[signal arg="cutscene_ended"]
+[signal arg="cutscene_ended_2"]
