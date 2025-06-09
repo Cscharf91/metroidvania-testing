@@ -15,7 +15,7 @@ func collect(body: Node2D) -> void:
 	if not body.is_in_group(&\"player\"):
 		return
 	# Increase collectible counter.
-	Game.get_singleton().collectibles += 1
+	#Game.get_singleton().collectibles += 1
 	# Store the orb. This will automatically assign the collected marker.
 	MetSys.store_object(self)
 	# Storing object does not free it automatically.

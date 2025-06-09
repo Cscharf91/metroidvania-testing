@@ -50,5 +50,7 @@ func fade_in_all_ui_elements() -> void:
 		return
 	
 	for child in ui_node.get_children():
+		if child.name == "Minimap":
+			continue
 		var ui_tween := child.create_tween()
 		ui_tween.tween_property(child, "modulate:a", 1, 0.25)

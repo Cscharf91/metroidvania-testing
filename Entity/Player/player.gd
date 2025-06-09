@@ -163,9 +163,8 @@ func jump():
 	if combo == 0 or position.distance_to(last_jump_position) > 80:
 		last_jump_position = position
 		combo += 1
-	if can_boost_jump or combo_charged:
+	if can_boost_jump:
 		%FastMovementEffectTimer.start()
-		combo_charged = false
 		velocity.y = PlayerConfig.jump_velocity * 1.25
 	else:
 		var has_move_input = Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right")
@@ -333,5 +332,10 @@ func _on_dialogic_event(event_name: String) -> void:
 
 func _end_frisbee_throw(animation_name: String = ""):
 	if animation_name == "throw_frisbee":
-		animation_player.play("idle" if is_on_floor() else "jump")
 		animation_player.animation_finished.disconnect(_end_frisbee_throw)
+		if velocity.x == 0 and is_on_floor():
+			animation_player.play("idle")
+		elif velocity.x != 0 and is_on_floor():
+			animation_player.play("run")
+		elif not is_on_floor():
+			animation_player.play("jump")

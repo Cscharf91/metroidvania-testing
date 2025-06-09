@@ -61,6 +61,7 @@ func _on_dialogic_event(event_name: String) -> void:
 		sword.visible = true
 	if event_name == "cutscene_ended_2":
 		Utils.handle_cutscene_end("fris_throw_dude")
+		PlayerConfig.get_player().can_bounce = true
 		player_stopper.queue_free()
 		MetSys.store_object(self)
 
@@ -74,6 +75,7 @@ func _on_player_stopper_body_entered(player: Player) -> void:
 	layout.register_character("fris_throw_dude", self)
 	animated_sprite.flip_h = true
 	player.sprite.flip_h = false
+	PlayerConfig.facing_direction = 1
 
 func _handle_intro_cutscene_ended() -> void:
 	sword.visible = true
