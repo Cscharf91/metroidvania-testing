@@ -14,4 +14,4 @@ func _on_body_entered(body: Node) -> void:
         
         var current_bounce_velocity = bounce_velocity if bounce_velocity > 0 else PlayerConfig.bounce_velocity
         body.bounce(current_bounce_velocity)
-        body.handle_landing()
+        body.handle_air_reset()

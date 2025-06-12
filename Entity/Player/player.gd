@@ -255,6 +255,13 @@ func handle_landing() -> void:
 	can_bounce = true
 	gravity_multiplier = 1.0
 
+func handle_air_reset():
+	PlayerConfig.current_air_dashes = PlayerConfig.max_air_dashes
+	PlayerConfig.current_frisbee_throws = PlayerConfig.max_frisbee_throws
+	PlayerConfig.current_jumps = PlayerConfig.max_jumps - 1
+	can_bounce = true
+	gravity_multiplier = 1.0
+
 func _on_hurtbox_hurt(hitbox: Hitbox) -> void:
 	PlayerConfig.health -= hitbox.damage
 	$Hurtbox.is_invincible = true
