@@ -13,11 +13,10 @@ kiosk_guy: [shake rate=30.0 level=5 connected=1]WAIT A SEC! WHAT'S THAT UP THERE
 [wait time="5.0"]
 [signal arg="kiosk_resume_animation"]
 [wait time="4.5"]
-kiosk_guy: ...huh.
-kiosk_guy: Insane timing for a katana to fall from the sky seemingly at random. Too bad about that inconvienently timed gust of wind.
-kiosk_guy: It looks like it opened up a path over that way, maybe you should take a look. I'll let you in if you find that weapon.
+kiosk_guy: ...oh.
+kiosk_guy: I was gonna say, crazy timing for a katana to fall from the sky, seemingly at random.
+kiosk_guy: Too bad about that inconvienently timed gust of wind.
+kiosk_guy: If you want to head over that way and find that weapon, I'll let you through.
 player: I'll check it out. What about that dude who got slammed?
-kiosk_guy: Oh, right.
-kiosk_guy: I'd love to help, but I have some important business work to do in this [fade start=1 length=6]shelter[/fade] --  [shake rate=30.0 level=5 connected=1]I mean[/shake], kiosk.
-kiosk_guy: [wave amp=20.0 freq=5.0 connected=1]Surely[/wave] he's fine, but feel free to check up on him if you see him!
+kiosk_guy: Eh, I'm sure he's fiiiiiiiine, but feel free to check up on him if you see him out there!
 [signal arg="cutscene_ended"]
