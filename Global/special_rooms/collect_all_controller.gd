@@ -5,10 +5,10 @@ signal challenge_success
 signal challenge_failure
 signal challenge_reset
 
-@export var collectible_items: Array[CollectibleItem]
-@export var reward_item: RewardItem
 @export var time_limit: float = 0.0
 
+var collectible_items: Array[CollectibleItem] = []
+var reward_items: Array[RewardItem] = []
 var collected_count: int = 0
 var challenge_active: bool = false
 var challenge_has_been_won: bool = false
@@ -19,6 +19,12 @@ var timer: Timer
 var unique_metsys_id: String
 
 func _ready() -> void:
+	for child in get_children():
+		if child is CollectibleItem:
+			collectible_items.append(child)
+		elif child is RewardItem:
+			reward_items.append(child)
+
 	unique_metsys_id = name + "_" + metsys_id_suffix
 	self.set_meta(&"object_id", unique_metsys_id)
 
@@ -30,12 +36,9 @@ func _ready() -> void:
 	if challenge_has_been_won:
 		print(name + ": Challenge state loaded from MetSys - was already won. Performing cleanup.")
 		_post_win_cleanup()
-		if reward_item:
+		for reward_item in reward_items:
 			reward_item.activate()
 		return
-
-	if not reward_item:
-		printerr(name + ": Reward Item node not assigned!")
 
 	if time_limit > 0:
 		timer = Timer.new()
@@ -60,7 +63,7 @@ func _ready() -> void:
 			item.collected.connect(_on_item_interaction)
 		item.reset_collectible()
 
-	if reward_item:
+	for reward_item in reward_items:
 		reward_item.reset_reward()
 
 func _handle_challenge_already_won() -> void:
@@ -140,13 +143,11 @@ func _succeed_challenge() -> void:
 	challenge_success.emit()
 	_post_win_cleanup()
 
-	if reward_item:
+	for reward_item in reward_items:
 		if is_instance_valid(reward_item):
 			reward_item.activate()
 		else:
 			printerr(name + ": Reward item is invalid when trying to activate in _succeed_challenge.")
-	else:
-		printerr(name + ": Reward item node not assigned to controller.")
 
 func _on_timer_timeout() -> void:
 	if not challenge_active:
@@ -178,6 +179,6 @@ func _reset_internal_state(due_to_failure: bool) -> void:
 			if item_node is CollectibleItem:
 				item_node.reset_collectible()
 	
-	if reward_item:
+	for reward_item in reward_items:
 		if not challenge_has_been_won:
 			reward_item.reset_reward()
