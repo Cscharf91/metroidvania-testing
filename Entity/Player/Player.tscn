@@ -1678,6 +1678,7 @@ script = ExtResource("27_w2nyl")
 script = ExtResource("30_iqlra")
 
 [node name="PhantomCamera2D" type="Node2D" parent="." index="12" node_paths=PackedStringArray("follow_target")]
+unique_name_in_owner = true
 top_level = true
 script = ExtResource("28_uljth")
 priority = 1

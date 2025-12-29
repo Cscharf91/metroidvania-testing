@@ -11,6 +11,7 @@ class_name Player
 @onready var direction_pointer: Marker2D = $DirectionPointer
 @onready var frisbee: PackedScene = preload("res://Entity/Player/frisbee.tscn")
 @onready var air_state: AirState = $LimboHSM/AirState
+@onready var camera: PhantomCamera2D = %PhantomCamera2D
 
 @export var terminal_velocity_y := 1000
 @export var coyote_timer := 0.15
